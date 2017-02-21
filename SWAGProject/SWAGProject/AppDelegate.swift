@@ -13,10 +13,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        let mainController = BooksTableViewController() as UITableViewController
+        let navigationController = UINavigationController(rootViewController: mainController)
+        self.window?.rootViewController = navigationController
+        self.window?.makeKeyAndVisible()
+        
+        let navigationBarAppearace = UINavigationBar.appearance()
+        navigationBarAppearace.barTintColor = UIColor.themeBlue
+        navigationBarAppearace.tintColor = UIColor.white
+        navigationBarAppearace.layer.borderWidth = 0
+        navigationBarAppearace.isTranslucent = false
+        navigationBarAppearace.titleTextAttributes = [NSFontAttributeName: UIFont(name: "HelveticaNeue-Bold", size: 32), NSForegroundColorAttributeName: UIColor.white]
         return true
+
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

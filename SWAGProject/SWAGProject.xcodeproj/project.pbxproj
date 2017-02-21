@@ -8,20 +8,28 @@
 
 /* Begin PBXBuildFile section */
 		B50C843B1E5BA78D0093E5F1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50C843A1E5BA78D0093E5F1 /* AppDelegate.swift */; };
-		B50C843D1E5BA78D0093E5F1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50C843C1E5BA78D0093E5F1 /* ViewController.swift */; };
-		B50C84401E5BA78D0093E5F1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B50C843E1E5BA78D0093E5F1 /* Main.storyboard */; };
 		B50C84421E5BA78D0093E5F1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B50C84411E5BA78D0093E5F1 /* Assets.xcassets */; };
-		B50C84451E5BA78D0093E5F1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B50C84431E5BA78D0093E5F1 /* LaunchScreen.storyboard */; };
+		B50C844D1E5BB38D0093E5F1 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50C844C1E5BB38D0093E5F1 /* Extensions.swift */; };
+		B50C844F1E5BB3CA0093E5F1 /* BooksTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50C844E1E5BB3CA0093E5F1 /* BooksTableViewController.swift */; };
+		B50C84511E5BB7890093E5F1 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50C84501E5BB7890093E5F1 /* DetailViewController.swift */; };
+		B50C84541E5BBA300093E5F1 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50C84531E5BBA300093E5F1 /* DetailView.swift */; };
+		B50C84571E5BD46B0093E5F1 /* AddBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50C84561E5BD46B0093E5F1 /* AddBookViewController.swift */; };
+		B50C84591E5BD47C0093E5F1 /* AddBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50C84581E5BD47C0093E5F1 /* AddBookView.swift */; };
+		B50C845B1E5BE1030093E5F1 /* BookTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50C845A1E5BE1030093E5F1 /* BookTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		B50C84371E5BA78D0093E5F1 /* SWAGProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SWAGProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B50C843A1E5BA78D0093E5F1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		B50C843C1E5BA78D0093E5F1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		B50C843F1E5BA78D0093E5F1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B50C84411E5BA78D0093E5F1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		B50C84441E5BA78D0093E5F1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B50C84461E5BA78D0093E5F1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B50C844C1E5BB38D0093E5F1 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		B50C844E1E5BB3CA0093E5F1 /* BooksTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BooksTableViewController.swift; sourceTree = "<group>"; };
+		B50C84501E5BB7890093E5F1 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		B50C84531E5BBA300093E5F1 /* DetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
+		B50C84561E5BD46B0093E5F1 /* AddBookViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddBookViewController.swift; sourceTree = "<group>"; };
+		B50C84581E5BD47C0093E5F1 /* AddBookView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddBookView.swift; sourceTree = "<group>"; };
+		B50C845A1E5BE1030093E5F1 /* BookTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,13 +63,33 @@
 			isa = PBXGroup;
 			children = (
 				B50C843A1E5BA78D0093E5F1 /* AppDelegate.swift */,
-				B50C843C1E5BA78D0093E5F1 /* ViewController.swift */,
-				B50C843E1E5BA78D0093E5F1 /* Main.storyboard */,
+				B50C844C1E5BB38D0093E5F1 /* Extensions.swift */,
+				B50C84551E5BBA330093E5F1 /* Views */,
+				B50C84521E5BB9FE0093E5F1 /* ViewControllers */,
 				B50C84411E5BA78D0093E5F1 /* Assets.xcassets */,
-				B50C84431E5BA78D0093E5F1 /* LaunchScreen.storyboard */,
 				B50C84461E5BA78D0093E5F1 /* Info.plist */,
 			);
 			path = SWAGProject;
+			sourceTree = "<group>";
+		};
+		B50C84521E5BB9FE0093E5F1 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				B50C844E1E5BB3CA0093E5F1 /* BooksTableViewController.swift */,
+				B50C84501E5BB7890093E5F1 /* DetailViewController.swift */,
+				B50C84561E5BD46B0093E5F1 /* AddBookViewController.swift */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		B50C84551E5BBA330093E5F1 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B50C845A1E5BE1030093E5F1 /* BookTableViewCell.swift */,
+				B50C84531E5BBA300093E5F1 /* DetailView.swift */,
+				B50C84581E5BD47C0093E5F1 /* AddBookView.swift */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -124,9 +152,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B50C84451E5BA78D0093E5F1 /* LaunchScreen.storyboard in Resources */,
 				B50C84421E5BA78D0093E5F1 /* Assets.xcassets in Resources */,
-				B50C84401E5BA78D0093E5F1 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,31 +163,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B50C843D1E5BA78D0093E5F1 /* ViewController.swift in Sources */,
+				B50C845B1E5BE1030093E5F1 /* BookTableViewCell.swift in Sources */,
+				B50C84591E5BD47C0093E5F1 /* AddBookView.swift in Sources */,
+				B50C844D1E5BB38D0093E5F1 /* Extensions.swift in Sources */,
+				B50C844F1E5BB3CA0093E5F1 /* BooksTableViewController.swift in Sources */,
+				B50C84571E5BD46B0093E5F1 /* AddBookViewController.swift in Sources */,
 				B50C843B1E5BA78D0093E5F1 /* AppDelegate.swift in Sources */,
+				B50C84541E5BBA300093E5F1 /* DetailView.swift in Sources */,
+				B50C84511E5BB7890093E5F1 /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		B50C843E1E5BA78D0093E5F1 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				B50C843F1E5BA78D0093E5F1 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		B50C84431E5BA78D0093E5F1 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				B50C84441E5BA78D0093E5F1 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		B50C84471E5BA78D0093E5F1 /* Debug */ = {

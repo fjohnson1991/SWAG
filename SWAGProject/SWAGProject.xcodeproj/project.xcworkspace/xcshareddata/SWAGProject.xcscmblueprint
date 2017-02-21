@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "D02FBF8D561F99578E29253DE6F4AB762B93BF52",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "D02FBF8D561F99578E29253DE6F4AB762B93BF52" : 9223372036854775807,
+    "180B7C2FA5FCF0154D9EDE1262E510428BFDE810" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "7DC2A4B9-7C27-4F5C-98E4-1848026C6416",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "D02FBF8D561F99578E29253DE6F4AB762B93BF52" : "SWAG\/",
+    "180B7C2FA5FCF0154D9EDE1262E510428BFDE810" : ""
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "SWAGProject",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "SWAGProject\/SWAGProject.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:fjohnson1991\/GetSneaks.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "180B7C2FA5FCF0154D9EDE1262E510428BFDE810"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:fjohnson1991\/SWAG.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "D02FBF8D561F99578E29253DE6F4AB762B93BF52"
+    }
+  ]
+}
