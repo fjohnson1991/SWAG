@@ -9,13 +9,16 @@
 import UIKit
 
 class BooksTableViewController: UITableViewController {
-
+    
+    var bookArray = [Book]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         configLayout()
+        populateBookData()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -27,64 +30,75 @@ class BooksTableViewController: UITableViewController {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "AddButton"), style: .done, target: self, action: #selector(segueToAddBook))
         self.navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSFontAttributeName: UIFont.systemFont(ofSize: 12, weight: UIFontWeightSemibold), NSForegroundColorAttributeName: UIColor.white],for: UIControlState.normal)
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        self.tableView.register(BookTableViewCell.self, forCellReuseIdentifier: "bookCell")
+        self.tableView.rowHeight = 80
     }
-
+    
+    func populateBookData() {
+        BooksAPIRequest.serverRequest(with: "http://prolific-interview.herokuapp.com/58ab049e53fba2000ab50b6e/books") { (responseJSON) in
+            for response in responseJSON {
+                guard let newBook = Book(dict: response) else { print("Error populating book data in BTVC"); return }
+                self.bookArray.append(newBook)
+            }
+            OperationQueue.main.addOperation {
+                self.tableView.reloadData()
+            }
+        }
+    }
+    
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        return bookArray.count
     }
-
-    /*
+    
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: "bookCell", for: indexPath) as! BookTableViewCell
+        cell.titleLabel.text = bookArray[indexPath.row].title
+        cell.authorLabel.text = bookArray[indexPath.row].author
         return cell
     }
-    */
-
+    
+    
     /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
+     // Override to support conditional editing of the table view.
+     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+     // Return false if you do not want the specified item to be editable.
+     return true
+     }
+     */
+    
     /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
+     // Override to support editing the table view.
+     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+     if editingStyle == .delete {
+     // Delete the row from the data source
+     tableView.deleteRows(at: [indexPath], with: .fade)
+     } else if editingStyle == .insert {
+     // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+     }
+     }
+     */
+    
     /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
+     // Override to support rearranging the table view.
+     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
+     
+     }
+     */
+    
     /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
+     // Override to support conditional rearranging of the table view.
+     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+     // Return false if you do not want the item to be re-orderable.
+     return true
+     }
+     */
     
     // MARK: - Navigation
     func segueToAddBook() {

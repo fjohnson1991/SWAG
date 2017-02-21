@@ -26,42 +26,24 @@ class AddBookView: UIView {
     }
     
     func configViewItems() {
-        // labels
+        // textFields
         titleTextField = UITextField()
-        titleTextField.font = UIFont.themeSmallBold
-        titleTextField.textAlignment = .left
-        titleTextField.layer.borderWidth = 2.0
-        titleTextField.layer.cornerRadius = 5.0
-        titleTextField.layer.borderColor = UIColor.themeDarkBlue.cgColor
-        titleTextField.setLeftPaddingPoints(10)
         titleTextField.attributedPlaceholder = NSAttributedString(string: "Book Title")
         
         authorTextField = UITextField()
-        authorTextField.font = UIFont.themeSmallBold
-        authorTextField.textAlignment = .left
-        authorTextField.layer.borderWidth = 2.0
-        authorTextField.layer.cornerRadius = 5.0
-        authorTextField.layer.borderColor = UIColor.themeDarkBlue.cgColor
-        authorTextField.setLeftPaddingPoints(10)
         authorTextField.attributedPlaceholder = NSAttributedString(string: "Author")
         
         publisherTextField = UITextField()
-        publisherTextField.font = UIFont.themeSmallBold
-        publisherTextField.textAlignment = .left
-        publisherTextField.layer.borderWidth = 2.0
-        publisherTextField.layer.cornerRadius = 5.0
-        publisherTextField.layer.borderColor = UIColor.themeDarkBlue.cgColor
-        publisherTextField.setLeftPaddingPoints(10)
         publisherTextField.attributedPlaceholder = NSAttributedString(string: "Publisher")
         
         categoriesTextField = UITextField()
-        categoriesTextField.font = UIFont.themeSmallBold
-        categoriesTextField.textAlignment = .left
-        categoriesTextField.layer.borderWidth = 2.0
-        categoriesTextField.layer.cornerRadius = 5.0
-        categoriesTextField.layer.borderColor = UIColor.themeDarkBlue.cgColor
-        categoriesTextField.setLeftPaddingPoints(10)
         categoriesTextField.attributedPlaceholder = NSAttributedString(string: "Categories")
+        
+        let textFields = [titleTextField, authorTextField, publisherTextField, categoriesTextField]
+        for textField in textFields {
+            guard let unwrappedTextField = textField else { print("Error config textFields in ABV"); return }
+            config(unwrappedTextField)
+        }
         
         // submitButton
         submitButton = UIButton()
@@ -71,6 +53,15 @@ class AddBookView: UIView {
         submitButton.layer.borderWidth = 2.0
         submitButton.layer.cornerRadius = 5.0
         submitButton.layer.borderColor = UIColor.themeDarkBlue.cgColor
+    }
+    
+    func config(_ textField: UITextField) {
+        textField.font = UIFont.themeSmallBold
+        textField.textAlignment = .left
+        textField.layer.borderWidth = 2.0
+        textField.layer.cornerRadius = 5.0
+        textField.layer.borderColor = UIColor.themeDarkBlue.cgColor
+        textField.setLeftPaddingPoints(10)
     }
     
     func configViewLayout() {
