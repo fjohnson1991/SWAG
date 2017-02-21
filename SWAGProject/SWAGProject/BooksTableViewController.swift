@@ -24,7 +24,7 @@ class BooksTableViewController: UITableViewController {
     func configLayout() {
         self.view.backgroundColor = UIColor.white
         self.title = "Books"
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "AddButton"), style: .done, target: self, action: #selector(segueToDetail))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "AddButton"), style: .done, target: self, action: #selector(segueToAddBook))
         self.navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSFontAttributeName: UIFont.systemFont(ofSize: 12, weight: UIFontWeightSemibold), NSForegroundColorAttributeName: UIColor.white],for: UIControlState.normal)
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
@@ -87,8 +87,9 @@ class BooksTableViewController: UITableViewController {
 
     
     // MARK: - Navigation
-    func segueToDetail() {
-        let detailViewController: DetailViewController = DetailViewController()
-        self.navigationController?.pushViewController(detailViewController, animated: true)
+    func segueToAddBook() {
+        let addBookViewController: AddBookViewController = AddBookViewController()
+        let navOnModal: UINavigationController = UINavigationController(rootViewController: addBookViewController)
+        self.present(navOnModal, animated: true, completion: nil)
     }
 }
