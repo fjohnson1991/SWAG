@@ -15,8 +15,11 @@ class BooksTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+//        BookAPICalls.deleteLastBookFromServer(with: 6)
+
         configLayout()
         populateBookData()
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -27,7 +30,7 @@ class BooksTableViewController: UITableViewController {
     func configLayout() {
         self.view.backgroundColor = UIColor.white
         self.title = "Books"
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "AddButton"), style: .done, target: self, action: #selector(segueToAddBook))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "AddButton"), style: .done, target: self, action: #selector(segueToAddBookVC))
         self.navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSFontAttributeName: UIFont.systemFont(ofSize: 12, weight: UIFontWeightSemibold), NSForegroundColorAttributeName: UIColor.white],for: UIControlState.normal)
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         self.tableView.register(BookTableViewCell.self, forCellReuseIdentifier: "bookCell")
@@ -35,7 +38,7 @@ class BooksTableViewController: UITableViewController {
     }
     
     func populateBookData() {
-        BooksAPIRequest.serverRequest(with: "http://prolific-interview.herokuapp.com/58ab049e53fba2000ab50b6e/books") { (responseJSON) in
+        BookAPICalls.serverRequest { (responseJSON) in
             for response in responseJSON {
                 guard let newBook = Book(dict: response) else { print("Error populating book data in BTVC"); return }
                 self.bookArray.append(newBook)
@@ -56,7 +59,6 @@ class BooksTableViewController: UITableViewController {
         return bookArray.count
     }
     
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "bookCell", for: indexPath) as! BookTableViewCell
         cell.titleLabel.text = bookArray[indexPath.row].title
@@ -64,6 +66,9 @@ class BooksTableViewController: UITableViewController {
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        segueToDetailVC(with: indexPath)
+    }
     
     /*
      // Override to support conditional editing of the table view.
@@ -101,9 +106,19 @@ class BooksTableViewController: UITableViewController {
      */
     
     // MARK: - Navigation
-    func segueToAddBook() {
+    func segueToAddBookVC() {
         let addBookViewController: AddBookViewController = AddBookViewController()
         let navOnModal: UINavigationController = UINavigationController(rootViewController: addBookViewController)
         self.present(navOnModal, animated: true, completion: nil)
+    }
+    
+    func segueToDetailVC(with indexPath: IndexPath) {
+        let detailViewController: DetailViewController = DetailViewController()
+        self.navigationController?.pushViewController(detailViewController, animated: true)
+        detailViewController.detailView.titleLabel.text = bookArray[indexPath.row].title
+        detailViewController.detailView.authorLabel.text = bookArray[indexPath.row].author
+        detailViewController.detailView.publisherLabel.text = bookArray[indexPath.row].publisher
+        detailViewController.detailView.tagsLabel.text = bookArray[indexPath.row].categories
+        detailViewController.detailView.lastCheckedOutLabel.text = bookArray[indexPath.row].lastCheckedOut
     }
 }

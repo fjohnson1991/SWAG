@@ -53,6 +53,7 @@ class AddBookView: UIView {
         submitButton.layer.borderWidth = 2.0
         submitButton.layer.cornerRadius = 5.0
         submitButton.layer.borderColor = UIColor.themeDarkBlue.cgColor
+        submitButton.addTarget(self, action: #selector(submitButtonPressedChecks), for: .touchUpInside)
     }
     
     func config(_ textField: UITextField) {
@@ -91,5 +92,43 @@ class AddBookView: UIView {
         submitButton.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 10).isActive = true
         submitButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
         submitButton.widthAnchor.constraint(equalToConstant: 150).isActive = true
+    }
+    
+    func submitButtonPressedChecks() {
+        if titleTextField.text == "" || authorTextField.text == "" {
+            NotificationCenter.default.post(name: Notification.Name("empty-entries-error"), object: nil)
+        }
+        
+        if titleTextField.text != "" && authorTextField.text != "" && categoriesTextField.text == "" || publisherTextField.text == "" {
+            NotificationCenter.default.post(name: Notification.Name("are-you-sure"), object: nil)
+        }
+        
+        if titleTextField.text != "" && authorTextField.text != "" && categoriesTextField.text != "" && publisherTextField.text != "" {
+            submitButtonPressed()
+        }
+    }
+    
+    func submitButtonPressed() {
+        guard
+            let title = titleTextField.text,
+            let author = authorTextField.text
+            else { print("titleTextField and authorTextField error unwrapping in ABV"); return }
+        let categories = categoriesTextField.text ?? ""
+        let publisher = publisherTextField.text ?? ""
+        
+        print("author: \(author)")
+        print("title: \(title)")
+        print("categories: \(categories)")
+        print("publisher: \(publisher)")
+        
+        BookAPICalls.server(post: author, categories: categories, title: title, publisher: publisher) {
+            print("author: \(author)")
+            print("title: \(title)")
+            print("categories: \(categories)")
+            print("publisher: \(publisher)")
+            OperationQueue.main.addOperation {
+                NotificationCenter.default.post(name: Notification.Name("successful-submit-book"), object: nil)
+            }
+        }
     }
 }
