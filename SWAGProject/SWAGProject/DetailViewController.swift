@@ -7,15 +7,17 @@
 //
 
 import UIKit
+import Social
+import FBSDKShareKit
 
 class DetailViewController: UIViewController {
     
     let detailView = DetailView()
     let shareDropDownView = ShareDropDownView()
-    var passedBookID = Int()
-    var clickToShare = false
     weak var shareClickedConstraint: NSLayoutConstraint?
     weak var shareRemovedConstraint: NSLayoutConstraint?
+    var passedBookID = Int()
+    var clickToShare = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,7 +78,16 @@ class DetailViewController: UIViewController {
     }
     
     func facebookShare() {
+        guard
+            let title = detailView.titleLabel.text,
+            let author = detailView.authorLabel.text
+            else { print("Error unwrapping title and author for fbShare in DVC"); return }
         
+        let content : FBSDKShareLinkContent = FBSDKShareLinkContent()
+        content.contentURL = URL(string: "http://www.SWAG4PI.com")
+        content.contentTitle = "\(title)"
+        content.contentDescription = "By: \(author)"
+        FBSDKShareDialog.show(from: self, with: content, delegate: self)
     }
     
     func twitterShare() {
@@ -101,5 +112,21 @@ class DetailViewController: UIViewController {
         self.present(alert, animated: true, completion: nil)
         //        let booksTableViewController: BooksTableViewController = BooksTableViewController()
         //        self.navigationController?.pushViewController(booksTableViewController, animated: true)
+    }
+}
+
+// Handle FBSDKSharingDelegate protocol
+extension DetailViewController: FBSDKSharingDelegate {
+    
+    func sharer(_ sharer: FBSDKSharing!, didCompleteWithResults results: [AnyHashable : Any]!) {
+        print("RESULTS: \(results)")
+    }
+    
+    func sharer(_ sharer: FBSDKSharing!, didFailWithError error: Error!) {
+        print("ERROR: \(error)")
+    }
+    
+    func sharerDidCancel(_ sharer: FBSDKSharing!) {
+        print("sharerDidCancel")
     }
 }

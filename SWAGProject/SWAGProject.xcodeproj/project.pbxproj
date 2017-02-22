@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		829CB3D51C2C773557F5A3FC /* Pods_SWAGProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 647354B03FF2EB73FAE41EDF /* Pods_SWAGProject.framework */; };
 		B50C843B1E5BA78D0093E5F1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50C843A1E5BA78D0093E5F1 /* AppDelegate.swift */; };
 		B50C84421E5BA78D0093E5F1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B50C84411E5BA78D0093E5F1 /* Assets.xcassets */; };
 		B50C844D1E5BB38D0093E5F1 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50C844C1E5BB38D0093E5F1 /* Extensions.swift */; };
@@ -19,9 +20,13 @@
 		B512B2651E5C87FD00A7A0CE /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = B512B2641E5C87FD00A7A0CE /* Book.swift */; };
 		B512B2681E5C89E300A7A0CE /* BookAPICalls.swift in Sources */ = {isa = PBXBuildFile; fileRef = B512B2671E5C89E300A7A0CE /* BookAPICalls.swift */; };
 		B5A2F1381E5D1E88009CCEE5 /* ShareDropDownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A2F1371E5D1E88009CCEE5 /* ShareDropDownView.swift */; };
+		B5CF92FE1E5E08E80022A559 /* FacebookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CF92FD1E5E08E80022A559 /* FacebookView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4FE607675426003FAE205D15 /* Pods-SWAGProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SWAGProject.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SWAGProject/Pods-SWAGProject.debug.xcconfig"; sourceTree = "<group>"; };
+		647354B03FF2EB73FAE41EDF /* Pods_SWAGProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SWAGProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7CA77E12EA04116BA42A25DF /* Pods-SWAGProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SWAGProject.release.xcconfig"; path = "Pods/Target Support Files/Pods-SWAGProject/Pods-SWAGProject.release.xcconfig"; sourceTree = "<group>"; };
 		B50C84371E5BA78D0093E5F1 /* SWAGProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SWAGProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B50C843A1E5BA78D0093E5F1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B50C84411E5BA78D0093E5F1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -36,6 +41,7 @@
 		B512B2641E5C87FD00A7A0CE /* Book.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		B512B2671E5C89E300A7A0CE /* BookAPICalls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookAPICalls.swift; sourceTree = "<group>"; };
 		B5A2F1371E5D1E88009CCEE5 /* ShareDropDownView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareDropDownView.swift; sourceTree = "<group>"; };
+		B5CF92FD1E5E08E80022A559 /* FacebookView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,17 +49,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				829CB3D51C2C773557F5A3FC /* Pods_SWAGProject.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		67DE77A7A174D3954A2E0C2C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				4FE607675426003FAE205D15 /* Pods-SWAGProject.debug.xcconfig */,
+				7CA77E12EA04116BA42A25DF /* Pods-SWAGProject.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		B50C842E1E5BA78C0093E5F1 = {
 			isa = PBXGroup;
 			children = (
 				B50C84391E5BA78D0093E5F1 /* SWAGProject */,
 				B50C84381E5BA78D0093E5F1 /* Products */,
+				67DE77A7A174D3954A2E0C2C /* Pods */,
+				CA5FB7F855FE3F5A895D9678 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -95,6 +113,7 @@
 			children = (
 				B50C845A1E5BE1030093E5F1 /* BookTableViewCell.swift */,
 				B5A2F1371E5D1E88009CCEE5 /* ShareDropDownView.swift */,
+				B5CF92FD1E5E08E80022A559 /* FacebookView.swift */,
 				B50C84531E5BBA300093E5F1 /* DetailView.swift */,
 				B50C84581E5BD47C0093E5F1 /* AddBookView.swift */,
 			);
@@ -109,6 +128,14 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
+		CA5FB7F855FE3F5A895D9678 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				647354B03FF2EB73FAE41EDF /* Pods_SWAGProject.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -116,9 +143,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B50C84491E5BA78D0093E5F1 /* Build configuration list for PBXNativeTarget "SWAGProject" */;
 			buildPhases = (
+				CA1F35965DB96EF0E28D9A60 /* [CP] Check Pods Manifest.lock */,
 				B50C84331E5BA78C0093E5F1 /* Sources */,
 				B50C84341E5BA78C0093E5F1 /* Frameworks */,
 				B50C84351E5BA78C0093E5F1 /* Resources */,
+				E3AF4E3D72DE259BEE24DDCC /* [CP] Embed Pods Frameworks */,
+				83D16472CA59644F446CBC95 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -175,6 +205,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		83D16472CA59644F446CBC95 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SWAGProject/Pods-SWAGProject-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CA1F35965DB96EF0E28D9A60 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		E3AF4E3D72DE259BEE24DDCC /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SWAGProject/Pods-SWAGProject-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		B50C84331E5BA78C0093E5F1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -182,6 +260,7 @@
 			files = (
 				B50C845B1E5BE1030093E5F1 /* BookTableViewCell.swift in Sources */,
 				B50C84591E5BD47C0093E5F1 /* AddBookView.swift in Sources */,
+				B5CF92FE1E5E08E80022A559 /* FacebookView.swift in Sources */,
 				B50C844D1E5BB38D0093E5F1 /* Extensions.swift in Sources */,
 				B50C844F1E5BB3CA0093E5F1 /* BooksTableViewController.swift in Sources */,
 				B50C84571E5BD46B0093E5F1 /* AddBookViewController.swift in Sources */,
@@ -290,6 +369,7 @@
 		};
 		B50C844A1E5BA78D0093E5F1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4FE607675426003FAE205D15 /* Pods-SWAGProject.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = D647VK95AB;
@@ -304,6 +384,7 @@
 		};
 		B50C844B1E5BA78D0093E5F1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7CA77E12EA04116BA42A25DF /* Pods-SWAGProject.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = D647VK95AB;
