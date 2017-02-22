@@ -120,5 +120,6 @@ class BooksTableViewController: UITableViewController {
         detailViewController.detailView.publisherLabel.text = bookArray[indexPath.row].publisher
         detailViewController.detailView.tagsLabel.text = bookArray[indexPath.row].categories
         detailViewController.detailView.lastCheckedOutLabel.text = bookArray[indexPath.row].lastCheckedOut
+        detailViewController.passedBookID = bookArray[indexPath.row].id
     }
 }

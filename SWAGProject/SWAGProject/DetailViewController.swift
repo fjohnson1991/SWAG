@@ -12,6 +12,7 @@ class DetailViewController: UIViewController {
     
     let detailView = DetailView()
     let shareDropDownView = ShareDropDownView()
+    var passedBookID = Int()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,7 +73,21 @@ class DetailViewController: UIViewController {
 
     // MARK: - Navigation
     func checkoutPressed() {
-        let addBookViewController: AddBookViewController = AddBookViewController()
-        self.navigationController?.pushViewController(addBookViewController, animated: true)
+        let alert = UIAlertController(title: "Checking out?", message: "Please enter your name below", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addTextField { (nameTextField) in
+            nameTextField.text = "" }
+        alert.addAction(UIAlertAction(title: "Submit", style: UIAlertActionStyle.default, handler: { (_) in
+            
+            let nameTextField = alert.textFields![0]
+            guard let unwrappedName = nameTextField.text else { print("Error unwrapping name"); return }
+            BookAPICalls.server(update: self.passedBookID, lastCheckedOutBy: unwrappedName, lastCheckedOut: "\(Date())")
+            print("Date: \(Date())")
+            print("passedID: \(self.passedBookID)")
+            print("name: \(unwrappedName)")
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+//        let booksTableViewController: BooksTableViewController = BooksTableViewController()
+//        self.navigationController?.pushViewController(booksTableViewController, animated: true)
     }
 }

@@ -61,7 +61,7 @@ class AddBookViewController: UIViewController {
     func areYouSure() {
         let alertController = UIAlertController(title: "Are you sure?", message: "You have not filled in all the information", preferredStyle: .alert)
         let YesAction = UIAlertAction(title: "Yes", style: .default) {(action: UIAlertAction) in
-            self.successfulSubmitBook()
+            self.addBookView.submitButtonPressed()
         }
         let CancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         alertController.addAction(YesAction)
