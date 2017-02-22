@@ -78,20 +78,32 @@ class DetailViewController: UIViewController {
     }
     
     func facebookShare() {
-        guard
-            let title = detailView.titleLabel.text,
-            let author = detailView.authorLabel.text
-            else { print("Error unwrapping title and author for fbShare in DVC"); return }
+        //        guard
+        //            let title = detailView.titleLabel.text,
+        //            let author = detailView.authorLabel.text
+        //            else { print("Error unwrapping title and author for fbShare in DVC"); return }
+        //
+        //        let content : FBSDKShareLinkContent = FBSDKShareLinkContent()
+        //        content.contentURL = URL(string: "http://www.SWAG4PI.com")
+        //        content.contentTitle = "\(title)"
+        //        content.contentDescription = "By: \(author)"
+        //        FBSDKShareDialog.show(from: self, with: content, delegate: self)
         
-        let content : FBSDKShareLinkContent = FBSDKShareLinkContent()
-        content.contentURL = URL(string: "http://www.SWAG4PI.com")
-        content.contentTitle = "\(title)"
-        content.contentDescription = "By: \(author)"
-        FBSDKShareDialog.show(from: self, with: content, delegate: self)
+        let vc = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
+        guard let unwrappedVC = vc else { return }
+        unwrappedVC.setInitialText("Share your thoughts on \(title) here.")
+        unwrappedVC.add(URL(string: "http://www.SWAG4PI.com"))
+        present(unwrappedVC, animated: true, completion: nil)
     }
     
     func twitterShare() {
-        
+        guard
+            let title = detailView.titleLabel.text else { print("Error unwrapping title for twitterShare in DVC"); return }
+        let vc = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
+        guard let unwrappedVC = vc else { print("Error unwrapping VC in twitterShare in DVC"); return }
+        unwrappedVC.setInitialText("Share your thoughts on \(title) here.")
+        unwrappedVC.add(URL(string: "http://www.SWAG4PI.com"))
+        present(unwrappedVC, animated: true, completion: nil)
     }
     
     // MARK: - Navigation
