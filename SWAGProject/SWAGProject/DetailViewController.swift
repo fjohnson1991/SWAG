@@ -13,14 +13,17 @@ class DetailViewController: UIViewController {
     let detailView = DetailView()
     let shareDropDownView = ShareDropDownView()
     var passedBookID = Int()
-
+    var clickToShare = false
+    weak var shareClickedConstraint: NSLayoutConstraint?
+    weak var shareRemovedConstraint: NSLayoutConstraint?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         configure()
         constrain()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -32,7 +35,7 @@ class DetailViewController: UIViewController {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "ShareButton"), style: .done, target: self, action: #selector(shareDropdown))
         self.navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSFontAttributeName: UIFont.systemFont(ofSize: 12, weight: UIFontWeightSemibold), NSForegroundColorAttributeName: UIColor.white],for: UIControlState.normal)
         
-//        shareDropDownView.shareDropDownStackView.isHidden = true
+        shareDropDownView.isHidden = true
         shareDropDownView.facebookButton.addTarget(self, action: #selector(facebookShare), for: .touchUpInside)
         shareDropDownView.twitterButton.addTarget(self, action: #selector(twitterShare), for: .touchUpInside)
         
@@ -41,25 +44,34 @@ class DetailViewController: UIViewController {
     }
     
     func constrain() {
+        shareDropDownView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(shareDropDownView)
+        shareClickedConstraint = shareDropDownView.bottomAnchor.constraint(equalTo: self.view.topAnchor, constant: 0)
+        shareClickedConstraint?.isActive = true
+        shareDropDownView.heightAnchor.constraint(equalToConstant: 65).isActive = true
+        shareDropDownView.widthAnchor.constraint(equalTo: self.view.widthAnchor, constant: 0).isActive = true
+        
         detailView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(detailView)
-        detailView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 10).isActive = true
+        detailView.topAnchor.constraint(equalTo: self.shareDropDownView.bottomAnchor, constant: 0).isActive = true
         detailView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0).isActive = true
         detailView.widthAnchor.constraint(equalTo: self.view.widthAnchor, constant: 0).isActive = true
-        
-        shareDropDownView.translatesAutoresizingMaskIntoConstraints = false
-        self.detailView.addSubview(shareDropDownView)
-        shareDropDownView.topAnchor.constraint(equalTo: self.detailView.topAnchor, constant: 10).isActive = true
-        shareDropDownView.trailingAnchor.constraint(equalTo: self.detailView.trailingAnchor, constant: 0).isActive = true 
-        shareDropDownView.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        shareDropDownView.widthAnchor.constraint(equalToConstant: 200).isActive = true
-        
+        detailView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: 0).isActive = true
     }
     
     func shareDropdown() {
-        print("share button touched")
-        UIView.animate(withDuration: 0.3) {
-            self.shareDropDownView.shareDropDownStackView.isHidden = false
+        if clickToShare == false {
+            shareDropDownView.isHidden = false
+            clickToShare = true
+            self.shareClickedConstraint?.isActive = false
+            self.shareRemovedConstraint = self.shareDropDownView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0)
+            self.shareRemovedConstraint?.isActive = true
+        } else {
+            shareDropDownView.isHidden = true
+            clickToShare = false
+            self.shareClickedConstraint?.isActive = false
+            self.shareRemovedConstraint?.isActive = false
+            self.constrain()
         }
     }
     
@@ -70,7 +82,7 @@ class DetailViewController: UIViewController {
     func twitterShare() {
         
     }
-
+    
     // MARK: - Navigation
     func checkoutPressed() {
         let alert = UIAlertController(title: "Checking out?", message: "Please enter your name below", preferredStyle: UIAlertControllerStyle.alert)
@@ -87,7 +99,7 @@ class DetailViewController: UIViewController {
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
-//        let booksTableViewController: BooksTableViewController = BooksTableViewController()
-//        self.navigationController?.pushViewController(booksTableViewController, animated: true)
+        //        let booksTableViewController: BooksTableViewController = BooksTableViewController()
+        //        self.navigationController?.pushViewController(booksTableViewController, animated: true)
     }
 }

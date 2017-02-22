@@ -10,14 +10,14 @@ import UIKit
 
 class ShareDropDownView: UIView {
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         configure()
         constrain()
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
     }
     
     lazy var facebookButton: UIButton = {
@@ -25,6 +25,9 @@ class ShareDropDownView: UIView {
         button.setTitle("Facebook", for: .normal)
         button.titleLabel?.font = UIFont.themeTinyBold
         button.setTitleColor(UIColor.themeDarkBlue, for: .normal)
+        button.backgroundColor = UIColor.white
+        button.contentEdgeInsets = UIEdgeInsetsMake(5, 8, 5, 8)
+        button.layer.cornerRadius = 12.0
         return button
     }()
     
@@ -33,6 +36,9 @@ class ShareDropDownView: UIView {
         button.setTitle("Twitter", for: .normal)
         button.titleLabel?.font = UIFont.themeTinyBold
         button.setTitleColor(UIColor.themeDarkBlue, for: .normal)
+        button.backgroundColor = UIColor.white
+        button.contentEdgeInsets = UIEdgeInsetsMake(5, 8, 5, 8)
+        button.layer.cornerRadius = 12.0
         return button
     }()
     
@@ -40,13 +46,15 @@ class ShareDropDownView: UIView {
     
     // MARK: View Configuration
     private func configure() {
-        self.backgroundColor = UIColor.black
+        self.backgroundColor = UIColor.themeDarkBlue
         
         shareDropDownStackView.addArrangedSubview(facebookButton)
         shareDropDownStackView.addArrangedSubview(twitterButton)
-        shareDropDownStackView.axis = .vertical
-        shareDropDownStackView.alignment = .leading
+        shareDropDownStackView.axis = .horizontal
+        shareDropDownStackView.alignment = .center
         shareDropDownStackView.distribution = .fillEqually
+        shareDropDownStackView.spacing = 2.0
+        shareDropDownStackView.layoutMargins = UIEdgeInsetsMake(12, 12, 12, 12)
     }
     
     // MARK: View Constraints
