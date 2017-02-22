@@ -15,7 +15,7 @@ class BooksTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        BookAPICalls.deleteLastBookFromServer(with: 6)
+//        BookAPICalls.deleteLastBookFromServer(with: 8)
 
         configLayout()
         populateBookData()

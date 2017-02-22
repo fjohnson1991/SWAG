@@ -19,15 +19,15 @@ class DetailView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configViewItems()
-        configViewLayout()
+        configure()
+        constrain()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configViewItems() {
+    func configure() {
         // labels
         titleLabel = UILabel()
         titleLabel.font = UIFont.themeMediumBold
@@ -74,7 +74,7 @@ class DetailView: UIView {
         checkoutButton.layer.borderColor = UIColor.themeDarkBlue.cgColor
     }
     
-    func configViewLayout() {
+    func constrain() {
         // stackView
         let stackViewItemsToAdd = [titleLabel, authorLabel, publisherLabel, tagsLabel, lastCheckedOutLabel]
         let stackView = UIStackView()

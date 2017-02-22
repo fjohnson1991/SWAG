@@ -35,59 +35,51 @@ struct BookAPICalls {
     
     // POST
     static func server(post author: String, categories: String?, title: String, publisher: String?, completion: @escaping () -> Void) {
-        
-        let requestDictionary = ["author": author, "categories": categories, "title": title, "publisher": publisher]
-        print("author: \(author)")
-        print("categories: \(categories)")
-        print("title: \(title)")
-        let jsonData = try? JSONSerialization.data(withJSONObject: requestDictionary)
-        guard let url = URL(string: "https://prolific-interview.herokuapp.com/58ab049e53fba2000ab50b6e/books") else { print("Error unwrapping url in post"); return }
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.httpBody = jsonData
-        print("jsonData: \(request.httpBody?.description)")
-        
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let unwrappedData = data else { print("Error unwrapping data in post func"); return }
-            print(unwrappedData.description)
-            let httpResponse = response as! HTTPURLResponse
-            print(httpResponse.statusCode)
-            if error == nil {
-                let responseJSON = try? JSONSerialization.jsonObject(with: unwrappedData, options: [])
-                if let responseJSON = responseJSON as? [String: Any] {
-                    print(responseJSON)
-                    completion()
-                }
-            } else {
-                print(error?.localizedDescription ?? "error")
-            }
+        guard let url = URL(string: "http://prolific-interview.herokuapp.com/58ab049e53fba2000ab50b6e/books") else { return }
+        var urlRequest = URLRequest(url: url)
+        var dictionary = [String: Any]()
+        dictionary["title"] = title
+        dictionary["categories"] = categories
+        dictionary["author"] = author
+        dictionary["publisher"] = publisher
+        let jsonData = try? JSONSerialization.data(withJSONObject: dictionary, options: [])
+        guard let unwrappedData = jsonData else { return }
+        urlRequest.httpBody = unwrappedData
+        urlRequest.httpMethod = "POST"
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        let session = URLSession.shared
+        let task = session.dataTask(with: urlRequest) { (data, response, error) in
+            guard let data = data else { return }
+            do {
+                let response = try JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
+                print(response)
+                completion()
+            } catch {}
         }
         task.resume()
     }
     
     // PUT
     static func server(update lastCheckedOutBy: String, id: Int, completion: @escaping () -> Void) {
+        guard let url = URL(string: "http://prolific-interview.herokuapp.com/58ab049e53fba2000ab50b6e/books/\(id)") else { return }
+        var urlRequest = URLRequest(url: url)
+        var dictionary = [String: Any]()
+        dictionary["lastCheckedOutBy"] = lastCheckedOutBy
+        let jsonData = try? JSONSerialization.data(withJSONObject: dictionary, options: [])
+        guard let unwrappedData = jsonData else { return }
+        urlRequest.httpBody = unwrappedData
+        urlRequest.httpMethod = "PUT"
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
         let session = URLSession.shared
-        let url = URL(string: "https://prolific-interview.herokuapp.com/58ab049e53fba2000ab50b6e/books/\(id)")
-        if let unwrappedURL = url {
-            var request = URLRequest(url: unwrappedURL)
-            request.httpMethod = "PUT"
-            let requestDictionary = ["lastCheckedOutBy" : lastCheckedOutBy]
-            let task = session.dataTask(with: request, completionHandler: { (data, response, error) in
-                let httpResponse = response as! HTTPURLResponse
-                if httpResponse.statusCode == 200 {
-                    if let unwrappedData = data {
-                        do {
-                            let jsonData = try JSONSerialization.data(withJSONObject: requestDictionary, options: [])
-                            request.httpBody = jsonData
-                            print("RESPONSE: \(jsonData)")
-                            completion()
-                        } catch {}
-                    } else { print(httpResponse.statusCode)}
-                }
-            })
-            task.resume()
+        let task = session.dataTask(with: urlRequest) { (data, response, error) in
+            guard let data = data else { return }
+            do {
+                let response = try JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
+                print(response)
+                completion()
+            } catch {}
         }
+        task.resume()
     }
     
     // Delete a book

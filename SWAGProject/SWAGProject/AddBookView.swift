@@ -17,15 +17,15 @@ class AddBookView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configViewItems()
-        configViewLayout()
+        configure()
+        constrain()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configViewItems() {
+    func configure() {
         // textFields
         titleTextField = UITextField()
         titleTextField.attributedPlaceholder = NSAttributedString(string: "Book Title")
@@ -65,7 +65,7 @@ class AddBookView: UIView {
         textField.setLeftPaddingPoints(10)
     }
     
-    func configViewLayout() {
+    func constrain() {
         // stackView
         let stackViewItemsToAdd = [titleTextField, authorTextField, publisherTextField, categoriesTextField]
         let stackView = UIStackView()
