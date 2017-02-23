@@ -19,7 +19,7 @@ class BookTableViewCell: UITableViewCell {
         let label = UILabel()
         label.font = UIFont.themeSmallBold
         label.textAlignment = .left
-        label.textColor = UIColor.black
+        label.textColor = UIColor.themeTan
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
         return label
@@ -27,9 +27,9 @@ class BookTableViewCell: UITableViewCell {
     
     lazy var authorLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.themeTinyBold
+        label.font = UIFont.themeTinyBoldItalic
         label.textAlignment = .left
-        label.textColor = UIColor.black
+        label.textColor = UIColor.themeBlue
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
         return label

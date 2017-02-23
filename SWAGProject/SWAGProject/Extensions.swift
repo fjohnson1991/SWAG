@@ -19,6 +19,7 @@ extension UIColor {
 
 extension UIFont {
     static let themeTinyBold = UIFont(name: "HelveticaNeue-Bold", size: 11)
+    static let themeTinyBoldItalic = UIFont(name: "HelveticaNeue-BoldItalic", size: 11)
     static let themeSmallBold = UIFont(name: "HelveticaNeue-Bold", size: 15)
     static let themeMediumBold = UIFont(name: "HelveticaNeue-Bold", size: 24)
     static let themeLargeBold = UIFont(name: "HelveticaNeue-Bold", size: 32)

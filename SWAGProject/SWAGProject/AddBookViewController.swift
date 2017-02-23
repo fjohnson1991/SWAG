@@ -105,10 +105,13 @@ extension AddBookViewController {
     
     func successfulSubmitBook() {
         let alertController = UIAlertController(title: "Great News!", message: "You have successfully submitted a book.", preferredStyle: .alert)
-        let OKAction = UIAlertAction(title: "OK", style: .default)
+        let OKAction = UIAlertAction(title: "OK", style: .default) {(action: UIAlertAction) in
+            self.clearTextFields()
+            self.doneButton()
+        }
         alertController.addAction(OKAction)
         self.present(alertController, animated: true, completion: nil)
-        self.clearTextFields()
+        
     }
     
     func areYouSure() {
@@ -123,11 +126,10 @@ extension AddBookViewController {
     }
     
     func keyboardWillShow(notification: NSNotification) {
+        guard let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue else { print("Error calc keyboard size"); return }
         if self.addBookView.categoriesTextField.isEditing {
-            if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-                if self.view.frame.origin.y != 0 {
-                    self.view.frame.origin.y -= (keyboardSize.size.height * 0.2)
-                }
+            if self.view.frame.origin.y != 0 {
+                self.view.frame.origin.y -= (keyboardSize.size.height * 0.33)
             }
         }
     }
@@ -136,7 +138,7 @@ extension AddBookViewController {
         if self.addBookView.categoriesTextField.isEditing {
             if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
                 if self.view.frame.origin.y != 0 {
-                    self.view.frame.origin.y += (keyboardSize.size.height * 0.2)
+                    self.view.frame.origin.y += (keyboardSize.size.height * 0.33)
                 }
             }
         }

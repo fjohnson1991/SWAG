@@ -29,16 +29,16 @@ class AddBookView: UIView, UITextFieldDelegate {
     func configure() {
         // textFields
         titleTextField = UITextField()
-        titleTextField.attributedPlaceholder = NSAttributedString(string: "Book Title", attributes: [NSForegroundColorAttributeName: UIColor.themeTan])
+        titleTextField.attributedPlaceholder = NSAttributedString(string: "Book Title")
         
         authorTextField = UITextField()
-        authorTextField.attributedPlaceholder = NSAttributedString(string: "Author", attributes: [NSForegroundColorAttributeName: UIColor.themeTan])
+        authorTextField.attributedPlaceholder = NSAttributedString(string: "Author")
         
         publisherTextField = UITextField()
-        publisherTextField.attributedPlaceholder = NSAttributedString(string: "Publisher", attributes: [NSForegroundColorAttributeName: UIColor.themeTan])
+        publisherTextField.attributedPlaceholder = NSAttributedString(string: "Publisher")
         
         categoriesTextField = UITextField()
-        categoriesTextField.attributedPlaceholder = NSAttributedString(string: "Categories", attributes: [NSForegroundColorAttributeName: UIColor.themeTan])
+        categoriesTextField.attributedPlaceholder = NSAttributedString(string: "Categories")
         
         let textFields = [titleTextField, authorTextField, publisherTextField, categoriesTextField]
         for textField in textFields {
@@ -59,7 +59,6 @@ class AddBookView: UIView, UITextFieldDelegate {
     func config(_ textField: UITextField) {
         textField.delegate = self
         textField.font = UIFont.themeSmallBold
-        textField.textColor = UIColor.black
         textField.textAlignment = .left
         textField.layer.borderWidth = 2.0
         textField.layer.cornerRadius = 5.0

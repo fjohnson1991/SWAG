@@ -32,6 +32,7 @@ class DetailView: UIView {
     
     lazy var titleLabel: UILabel = {
         let label = UILabel()
+        label.textColor = UIColor.themeBlue
         label.font = UIFont.themeMediumBold
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
@@ -42,6 +43,7 @@ class DetailView: UIView {
     
     lazy var authorLabel: UILabel = {
         let label = UILabel()
+        label.textColor = UIColor.themeBlue
         label.font = UIFont.themeMediumBold
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
@@ -52,6 +54,7 @@ class DetailView: UIView {
     
     lazy var publisherLabel: UILabel = {
         let label = UILabel()
+        label.textColor = UIColor.themeBlue
         label.font = UIFont.themeMediumBold
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
@@ -62,6 +65,7 @@ class DetailView: UIView {
     
     lazy var tagsLabel: UILabel = {
         let label = UILabel()
+        label.textColor = UIColor.themeBlue
         label.font = UIFont.themeMediumBold
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
@@ -72,6 +76,7 @@ class DetailView: UIView {
     
     lazy var lastCheckedOutLabel: UILabel = {
         let label = UILabel()
+        label.textColor = UIColor.themeBlue
         label.font = UIFont.themeMediumBold
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping

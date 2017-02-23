@@ -24,6 +24,7 @@ class DetailViewController: UIViewController, BookDetailProtocol {
     let detailView = DetailView()
     var segmentedControl = UISegmentedControl(items: ["Title", "Author(s)", "Publisher", "Tags", "Other"])
     var checkoutButton: UIButton!
+    var deleteButton: UIButton!
     let shareDropDownView = ShareDropDownView()
     var backgroundView: UIView!
     var shareClickedConstraint: NSLayoutConstraint?
@@ -76,6 +77,15 @@ class DetailViewController: UIViewController, BookDetailProtocol {
         checkoutButton.layer.backgroundColor = UIColor.themeGreen.cgColor
         checkoutButton.addTarget(self, action: #selector(checkoutPressed), for: .touchUpInside)
         
+        // Delete button
+        deleteButton = UIButton()
+        deleteButton.setTitle("Delete", for: .normal)
+        deleteButton.titleLabel?.font = UIFont.themeSmallBold
+        deleteButton.setTitleColor(UIColor.themeOffWhite, for: .normal)
+        deleteButton.layer.cornerRadius = 5.0
+        deleteButton.layer.backgroundColor = UIColor.themeBlue.cgColor
+        deleteButton.addTarget(self, action: #selector(deletePressed), for: .touchUpInside)
+        
         // Share drop down
         shareDropDownView.isHidden = true
         shareDropDownView.facebookButton.addTarget(self, action: #selector(facebookShare), for: .touchUpInside)
@@ -109,6 +119,14 @@ class DetailViewController: UIViewController, BookDetailProtocol {
         checkoutButton.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 10).isActive = true
         checkoutButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
         checkoutButton.widthAnchor.constraint(equalToConstant: 150).isActive = true
+        
+        // Delete button
+        deleteButton.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(deleteButton)
+        deleteButton.centerXAnchor.constraint(equalTo: checkoutButton.centerXAnchor, constant: 0).isActive = true
+        deleteButton.topAnchor.constraint(equalTo: checkoutButton.bottomAnchor, constant: 10).isActive = true
+        deleteButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        deleteButton.widthAnchor.constraint(equalToConstant: 150).isActive = true
     }
     
     // MARK: - Config segmented control selector
@@ -178,7 +196,21 @@ class DetailViewController: UIViewController, BookDetailProtocol {
         self.present(alert, animated: true, completion: nil)
     }
     
-    //MARK: - Drop down funcs when clicked
+    // MARK: - Delete button selector 
+    func deletePressed() {
+        let alertController = UIAlertController(title: "Are you sure?", message: "Please comfirm you would like to delete this book.", preferredStyle: UIAlertControllerStyle.alert)
+        let YesAction = UIAlertAction(title: "Yes", style: .default) {(action: UIAlertAction) in
+            BookAPICalls.deleteLastBookFromServer(with: self.passedBookID)
+            let booksTableViewController: BooksTableViewController = BooksTableViewController()
+            self.navigationController?.pushViewController(booksTableViewController, animated: true)
+        }
+        let CancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        alertController.addAction(YesAction)
+        alertController.addAction(CancelAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    // MARK: - Drop down funcs when clicked
     func configDropDownView() {
         backgroundView = UIView()
         backgroundView.backgroundColor = UIColor.black.withAlphaComponent(0.8)
@@ -238,7 +270,7 @@ class DetailViewController: UIViewController, BookDetailProtocol {
     }
 }
 
-// Handle FBSDKSharingDelegate protocol
+// MARK: - Handle FBSDKSharingDelegate protocol
 extension DetailViewController: FBSDKSharingDelegate {
     
     func sharer(_ sharer: FBSDKSharing!, didCompleteWithResults results: [AnyHashable : Any]!) {
