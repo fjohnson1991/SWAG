@@ -174,12 +174,12 @@ class DetailViewController: UIViewController {
             hideAllLabels()
             animateTransition()
             detailView.tagsLabel.isHidden = false
-            detailView.tagsLabel.text = book.categories
+            detailView.tagsLabel.text = detailView.formatCategories(of: book.categories)
         case .other:
             hideAllLabels()
             animateTransition()
             detailView.lastCheckedOutLabel.isHidden = false
-            detailView.lastCheckedOutLabel.text = book.lastCheckedOut
+            detailView.lastCheckedOutLabel.text = "Last checked out by \(book.lastCheckedOutBy!) on \(detailView.formatLastCheckedOut(book.lastCheckedOut))"
         }
     }
     
