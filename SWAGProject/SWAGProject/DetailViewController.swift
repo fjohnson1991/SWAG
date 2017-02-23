@@ -22,7 +22,7 @@ enum SegmentItems {
         case .title:
             return "Title"
         case .author:
-            return "Author"
+            return "Author(s)"
         case .publisher:
             return "Publisher"
         case .tags:
@@ -205,16 +205,14 @@ class DetailViewController: UIViewController {
     // MARK: - Checkout button selector
     func checkoutPressed() {
         let alert = UIAlertController(title: "Checking out?", message: "Please enter your name below", preferredStyle: UIAlertControllerStyle.alert)
-        alert.addTextField { (nameTextField) in
-            nameTextField.text = "" }
+        alert.addTextField { (textField) in
+            textField.autocapitalizationType = .words }
         alert.addAction(UIAlertAction(title: "Submit", style: UIAlertActionStyle.default, handler: { (_) in
-            
             let nameTextField = alert.textFields![0]
             guard let unwrappedName = nameTextField.text else { print("Error unwrapping name"); return }
             BookAPICalls.server(update: self.book.id, lastCheckedOutBy: unwrappedName, lastCheckedOut: "\(Date())")
-            print("Date: \(Date())")
-            print("passedID: \(self.book.id)")
-            print("name: \(unwrappedName)")
+            let booksTableViewController: BooksTableViewController = BooksTableViewController()
+            self.navigationController?.pushViewController(booksTableViewController, animated: true)
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)

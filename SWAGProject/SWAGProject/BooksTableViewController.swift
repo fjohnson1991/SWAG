@@ -45,14 +45,11 @@ class BooksTableViewController: UITableViewController {
     }
     
     func populateBookData() {
+        bookArray.removeAll()
         BookAPICalls.serverRequest { (responseJSON) in
             for response in responseJSON {
                 guard let newBook = Book(dict: response) else { print("Error populating book data in BTVC"); return }
-                if !self.bookArray.contains(where: { (book) -> Bool in
-                    book.title == newBook.title && book.author == newBook.author
-                }) {
-                    self.bookArray.append(newBook)
-                }
+                self.bookArray.append(newBook)
             }
             OperationQueue.main.addOperation {
                 self.tableView.reloadData()
