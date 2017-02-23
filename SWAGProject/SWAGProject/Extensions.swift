@@ -30,4 +30,14 @@ extension UITextField {
         self.leftView = paddingView
         self.leftViewMode = .always
     }
+    
+    func textField(change didOccur: Bool) {
+        if didOccur {
+            textColor = UIColor.themeOffWhite
+            backgroundColor = UIColor.themeTan
+        } else {
+            textColor = UIColor.themeTan
+            backgroundColor = UIColor.white
+        }
+    }
 }

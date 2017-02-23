@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddBookView: UIView {
+class AddBookView: UIView, UITextFieldDelegate {
     var titleTextField: UITextField!
     var authorTextField: UITextField!
     var publisherTextField: UITextField!
@@ -50,18 +50,19 @@ class AddBookView: UIView {
         submitButton.setTitle("Submit", for: .normal)
         submitButton.titleLabel?.font = UIFont.themeSmallBold
         submitButton.setTitleColor(UIColor.themeOffWhite, for: .normal)
-        submitButton.layer.borderWidth = 2.0
         submitButton.layer.cornerRadius = 5.0
         submitButton.layer.backgroundColor = UIColor.themeGreen.cgColor
         submitButton.addTarget(self, action: #selector(submitButtonPressedChecks), for: .touchUpInside)
     }
     
     func config(_ textField: UITextField) {
+        textField.delegate = self
         textField.font = UIFont.themeSmallBold
+        textField.textColor = UIColor.black
         textField.textAlignment = .left
         textField.layer.borderWidth = 2.0
         textField.layer.cornerRadius = 5.0
-        textField.layer.borderColor = UIColor.themeGreen.cgColor
+        textField.layer.borderColor = UIColor.themeOrange.cgColor
         textField.setLeftPaddingPoints(10)
     }
     
@@ -130,5 +131,15 @@ class AddBookView: UIView {
                 NotificationCenter.default.post(name: Notification.Name("successful-submit-book"), object: nil)
             }
         }
+    }
+}
+
+extension AddBookView {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        textField.textField(change: true)
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        textField.textField(change: false)
     }
 }
