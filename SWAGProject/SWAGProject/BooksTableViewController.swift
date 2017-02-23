@@ -115,11 +115,18 @@ class BooksTableViewController: UITableViewController {
     func segueToDetailVC(with indexPath: IndexPath) {
         let detailViewController: DetailViewController = DetailViewController()
         self.navigationController?.pushViewController(detailViewController, animated: true)
-        detailViewController.detailView.titleLabel.text = bookArray[indexPath.row].title
-        detailViewController.detailView.authorLabel.text = bookArray[indexPath.row].author
-        detailViewController.detailView.publisherLabel.text = bookArray[indexPath.row].publisher
-        detailViewController.detailView.tagsLabel.text = bookArray[indexPath.row].categories
-        detailViewController.detailView.lastCheckedOutLabel.text = bookArray[indexPath.row].lastCheckedOut
+        guard
+            let publisher = bookArray[indexPath.row].publisher,
+            let lastCheckOut = bookArray[indexPath.row].lastCheckedOut,
+            let lastCheckOutBy = bookArray[indexPath.row].lastCheckedOutBy
+        else { print("Error unwrapping bookDetails in BTVC"); return }
+        
+        detailViewController.bookTitle = bookArray[indexPath.row].title
+        detailViewController.author = bookArray[indexPath.row].author
+        detailViewController.publisher = publisher
+        detailViewController.tags = bookArray[indexPath.row].categories
+        detailViewController.lastCheckedOut = lastCheckOut
+        detailViewController.lastCheckedOutBy = lastCheckOutBy
         detailViewController.passedBookID = bookArray[indexPath.row].id
     }
 }

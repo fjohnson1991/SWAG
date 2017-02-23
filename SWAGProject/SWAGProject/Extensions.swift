@@ -11,8 +11,8 @@ import UIKit
 
 extension UIColor {
     static let themeBlue = UIColor(red: 0 / 255, green: 23 / 255, blue: 35 / 255, alpha: 1)
-    static let themeOrange = UIColor(red: 0 / 255, green: 139 / 255, blue: 102 / 255, alpha: 1)
-    static let themeGreen = UIColor(red: 238 / 255, green: 158 / 255, blue: 6 / 255, alpha: 1)
+    static let themeGreen = UIColor(red: 0 / 255, green: 139 / 255, blue: 102 / 255, alpha: 1)
+    static let themeOrange = UIColor(red: 238 / 255, green: 158 / 255, blue: 6 / 255, alpha: 1)
     static let themeTan = UIColor(red: 217 / 255, green: 143 / 255, blue: 51 / 255, alpha: 1)
     static let themeOffWhite = UIColor(red: 241 / 255, green: 241 / 255, blue: 241 / 255, alpha: 1)
 }

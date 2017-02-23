@@ -49,10 +49,10 @@ class AddBookView: UIView {
         submitButton = UIButton()
         submitButton.setTitle("Submit", for: .normal)
         submitButton.titleLabel?.font = UIFont.themeSmallBold
-        submitButton.setTitleColor(UIColor.themeDarkBlue, for: .normal)
+        submitButton.setTitleColor(UIColor.themeOffWhite, for: .normal)
         submitButton.layer.borderWidth = 2.0
         submitButton.layer.cornerRadius = 5.0
-        submitButton.layer.borderColor = UIColor.themeDarkBlue.cgColor
+        submitButton.layer.backgroundColor = UIColor.themeGreen.cgColor
         submitButton.addTarget(self, action: #selector(submitButtonPressedChecks), for: .touchUpInside)
     }
     
@@ -61,7 +61,7 @@ class AddBookView: UIView {
         textField.textAlignment = .left
         textField.layer.borderWidth = 2.0
         textField.layer.cornerRadius = 5.0
-        textField.layer.borderColor = UIColor.themeDarkBlue.cgColor
+        textField.layer.borderColor = UIColor.themeGreen.cgColor
         textField.setLeftPaddingPoints(10)
     }
     
