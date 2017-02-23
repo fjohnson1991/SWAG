@@ -14,6 +14,7 @@ class DetailViewController: UIViewController {
     
     let detailView = DetailView()
     let shareDropDownView = ShareDropDownView()
+    var blurEffectView: UIVisualEffectView!
     weak var shareClickedConstraint: NSLayoutConstraint?
     weak var shareRemovedConstraint: NSLayoutConstraint?
     var passedBookID = Int()
@@ -40,35 +41,47 @@ class DetailViewController: UIViewController {
         shareDropDownView.isHidden = true
         shareDropDownView.facebookButton.addTarget(self, action: #selector(facebookShare), for: .touchUpInside)
         shareDropDownView.twitterButton.addTarget(self, action: #selector(twitterShare), for: .touchUpInside)
+        shareDropDownView.cancelButton.addTarget(self, action: #selector(cancelShare), for: .touchUpInside)
         
         // add delegate to call this instead of via target
         detailView.checkoutButton.addTarget(self, action: #selector(checkoutPressed), for: .touchUpInside)
     }
     
     func constrain() {
-        shareDropDownView.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(shareDropDownView)
-        shareClickedConstraint = shareDropDownView.bottomAnchor.constraint(equalTo: self.view.topAnchor, constant: 0)
-        shareClickedConstraint?.isActive = true
-        shareDropDownView.heightAnchor.constraint(equalToConstant: 65).isActive = true
-        shareDropDownView.widthAnchor.constraint(equalTo: self.view.widthAnchor, constant: 0).isActive = true
-        
         detailView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(detailView)
-        detailView.topAnchor.constraint(equalTo: self.shareDropDownView.bottomAnchor, constant: 0).isActive = true
+        detailView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0).isActive = true
         detailView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0).isActive = true
         detailView.widthAnchor.constraint(equalTo: self.view.widthAnchor, constant: 0).isActive = true
         detailView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: 0).isActive = true
     }
     
+    func configDropDownView() {
+        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.light)
+        blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = self.view.bounds
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        self.view.addSubview(blurEffectView)
+        
+        shareDropDownView.translatesAutoresizingMaskIntoConstraints = false
+        self.blurEffectView.addSubview(shareDropDownView)
+        shareClickedConstraint = shareDropDownView.topAnchor.constraint(equalTo: self.blurEffectView.topAnchor, constant: 0)
+        shareClickedConstraint?.isActive = true
+        shareDropDownView.trailingAnchor.constraint(equalTo: self.blurEffectView.trailingAnchor, constant: 0).isActive = true
+        shareDropDownView.heightAnchor.constraint(equalToConstant: 300).isActive = true
+        shareDropDownView.widthAnchor.constraint(equalToConstant: 100).isActive = true
+    }
+    
     func shareDropdown() {
         if clickToShare == false {
+            configDropDownView()
             shareDropDownView.isHidden = false
             clickToShare = true
             self.shareClickedConstraint?.isActive = false
             self.shareRemovedConstraint = self.shareDropDownView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0)
             self.shareRemovedConstraint?.isActive = true
         } else {
+            blurEffectView.removeFromSuperview()
             shareDropDownView.isHidden = true
             clickToShare = false
             self.shareClickedConstraint?.isActive = false
@@ -78,22 +91,16 @@ class DetailViewController: UIViewController {
     }
     
     func facebookShare() {
-        //        guard
-        //            let title = detailView.titleLabel.text,
-        //            let author = detailView.authorLabel.text
-        //            else { print("Error unwrapping title and author for fbShare in DVC"); return }
-        //
-        //        let content : FBSDKShareLinkContent = FBSDKShareLinkContent()
-        //        content.contentURL = URL(string: "http://www.SWAG4PI.com")
-        //        content.contentTitle = "\(title)"
-        //        content.contentDescription = "By: \(author)"
-        //        FBSDKShareDialog.show(from: self, with: content, delegate: self)
+        guard
+            let title = detailView.titleLabel.text,
+            let author = detailView.authorLabel.text
+            else { print("Error unwrapping title and author for fbShare in DVC"); return }
         
-        let vc = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
-        guard let unwrappedVC = vc else { return }
-        unwrappedVC.setInitialText("Share your thoughts on \(title) here.")
-        unwrappedVC.add(URL(string: "http://www.SWAG4PI.com"))
-        present(unwrappedVC, animated: true, completion: nil)
+        let content : FBSDKShareLinkContent = FBSDKShareLinkContent()
+        content.contentURL = URL(string: "http://www.SWAG4PI.com")
+        content.contentTitle = "\(title)"
+        content.contentDescription = "By: \(author)"
+        FBSDKShareDialog.show(from: self, with: content, delegate: self)
     }
     
     func twitterShare() {
@@ -104,6 +111,15 @@ class DetailViewController: UIViewController {
         unwrappedVC.setInitialText("Share your thoughts on \(title) here.")
         unwrappedVC.add(URL(string: "http://www.SWAG4PI.com"))
         present(unwrappedVC, animated: true, completion: nil)
+    }
+    
+    func cancelShare() {
+        blurEffectView.removeFromSuperview()
+        shareDropDownView.isHidden = true
+        clickToShare = false
+        self.shareClickedConstraint?.isActive = false
+        self.shareRemovedConstraint?.isActive = false
+        self.constrain()
     }
     
     // MARK: - Navigation

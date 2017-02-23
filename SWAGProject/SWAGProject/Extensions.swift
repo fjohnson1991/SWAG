@@ -10,10 +10,11 @@ import Foundation
 import UIKit
 
 extension UIColor {
-    static let themeBlue = UIColor(red: 45 / 255, green: 105 / 255, blue: 163 / 255, alpha: 1)
-    static let themeDarkBlue = UIColor(red: 2 / 255, green: 0 / 255, blue: 129 / 255, alpha: 1)
-    static let themeGreen = UIColor(red: 1 / 255, green: 167 / 255, blue: 99 / 255, alpha: 1)
-    static let themeYellow = UIColor(red: 255 / 255, green: 214 / 255, blue: 1 / 255, alpha: 1)
+    static let themeBlue = UIColor(red: 0 / 255, green: 23 / 255, blue: 35 / 255, alpha: 1)
+    static let themeOrange = UIColor(red: 0 / 255, green: 139 / 255, blue: 102 / 255, alpha: 1)
+    static let themeGreen = UIColor(red: 238 / 255, green: 158 / 255, blue: 6 / 255, alpha: 1)
+    static let themeTan = UIColor(red: 217 / 255, green: 143 / 255, blue: 51 / 255, alpha: 1)
+    static let themeOffWhite = UIColor(red: 241 / 255, green: 241 / 255, blue: 241 / 255, alpha: 1)
 }
 
 extension UIFont {

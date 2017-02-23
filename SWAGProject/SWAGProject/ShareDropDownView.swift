@@ -12,8 +12,8 @@ class ShareDropDownView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configure()
         constrain()
+        formatButtons()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -24,10 +24,14 @@ class ShareDropDownView: UIView {
         let button = UIButton()
         button.setTitle("Facebook", for: .normal)
         button.titleLabel?.font = UIFont.themeTinyBold
-        button.setTitleColor(UIColor.themeDarkBlue, for: .normal)
-        button.backgroundColor = UIColor.white
-        button.contentEdgeInsets = UIEdgeInsetsMake(5, 8, 5, 8)
-        button.layer.cornerRadius = 12.0
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.backgroundColor = UIColor.themeDarkBlue
+        button.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
+        button.layer.shadowOffset = CGSize(width: 0, height: 2)
+        button.layer.shadowOpacity = 1.0
+        button.layer.shadowRadius = 0.0
+        button.layer.masksToBounds = false
+        button.setTitleColor(UIColor.red, for: .highlighted)
         return button
     }()
     
@@ -35,35 +39,59 @@ class ShareDropDownView: UIView {
         let button = UIButton()
         button.setTitle("Twitter", for: .normal)
         button.titleLabel?.font = UIFont.themeTinyBold
-        button.setTitleColor(UIColor.themeDarkBlue, for: .normal)
-        button.backgroundColor = UIColor.white
-        button.contentEdgeInsets = UIEdgeInsetsMake(5, 8, 5, 8)
-        button.layer.cornerRadius = 12.0
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.backgroundColor = UIColor.themeDarkBlue
+        button.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
+        button.layer.shadowOffset = CGSize(width: 0, height: 2)
+        button.layer.shadowOpacity = 1.0
+        button.layer.shadowRadius = 0.0
+        button.layer.masksToBounds = false
+        button.setTitleColor(UIColor.red, for: .highlighted)
         return button
     }()
     
-    lazy var shareDropDownStackView = UIStackView()
+    lazy var cancelButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Cancel", for: .normal)
+        button.titleLabel?.font = UIFont.themeTinyBold
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.backgroundColor = UIColor.themeDarkBlue
+        button.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
+        button.layer.shadowOffset = CGSize(width: 0, height: 2)
+        button.layer.shadowOpacity = 1.0
+        button.layer.shadowRadius = 0.0
+        button.layer.masksToBounds = false
+        button.setTitleColor(UIColor.red, for: .highlighted)
+        return button
+    }()
     
-    // MARK: View Configuration
-    private func configure() {
-        self.backgroundColor = UIColor.themeDarkBlue
+    private func constrain() {
+        facebookButton.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(facebookButton)
+        facebookButton.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0).isActive = true
+        facebookButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 20).isActive = true
+        facebookButton.widthAnchor.constraint(equalToConstant: 80).isActive = true
+        facebookButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
         
-        shareDropDownStackView.addArrangedSubview(facebookButton)
-        shareDropDownStackView.addArrangedSubview(twitterButton)
-        shareDropDownStackView.axis = .horizontal
-        shareDropDownStackView.alignment = .center
-        shareDropDownStackView.distribution = .fillEqually
-        shareDropDownStackView.spacing = 2.0
-        shareDropDownStackView.layoutMargins = UIEdgeInsetsMake(12, 12, 12, 12)
+        twitterButton.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(twitterButton)
+        twitterButton.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0).isActive = true
+        twitterButton.topAnchor.constraint(equalTo: facebookButton.bottomAnchor, constant: 20).isActive = true
+        twitterButton.widthAnchor.constraint(equalToConstant: 80).isActive = true
+        twitterButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        
+        cancelButton.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(cancelButton)
+        cancelButton.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0).isActive = true
+        cancelButton.topAnchor.constraint(equalTo: twitterButton.bottomAnchor, constant: 20).isActive = true
+        cancelButton.widthAnchor.constraint(equalToConstant: 80).isActive = true
+        cancelButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
     }
     
-    // MARK: View Constraints
-    private func constrain() {
-        shareDropDownStackView.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(shareDropDownStackView)
-        shareDropDownStackView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 1).isActive = true
-        shareDropDownStackView.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 1).isActive = true
-        shareDropDownStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0).isActive = true
-        shareDropDownStackView.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 0).isActive = true
+    private func formatButtons() {
+        self.layoutIfNeeded()
+        facebookButton.layer.cornerRadius = facebookButton.frame.width/2
+        twitterButton.layer.cornerRadius = twitterButton.frame.width/2
+        cancelButton.layer.cornerRadius = cancelButton.frame.width/2
     }
 }
