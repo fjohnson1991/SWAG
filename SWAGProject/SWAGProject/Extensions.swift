@@ -41,3 +41,18 @@ extension UITextField {
         }
     }
 }
+
+extension UIViewController {
+    func hideKeyboardWhenTappedAround(isActive: Bool) {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
+        if isActive == true {
+            view.addGestureRecognizer(tap)
+        } else {
+            view.removeGestureRecognizer(tap)
+        }
+    }
+    
+    func dismissKeyboard() {
+        view.endEditing(true)
+    }
+}

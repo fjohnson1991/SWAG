@@ -9,6 +9,7 @@
 import UIKit
 
 class AddBookView: UIView, UITextFieldDelegate {
+    
     var titleTextField: UITextField!
     var authorTextField: UITextField!
     var publisherTextField: UITextField!
@@ -28,16 +29,16 @@ class AddBookView: UIView, UITextFieldDelegate {
     func configure() {
         // textFields
         titleTextField = UITextField()
-        titleTextField.attributedPlaceholder = NSAttributedString(string: "Book Title")
+        titleTextField.attributedPlaceholder = NSAttributedString(string: "Book Title", attributes: [NSForegroundColorAttributeName: UIColor.themeTan])
         
         authorTextField = UITextField()
-        authorTextField.attributedPlaceholder = NSAttributedString(string: "Author")
+        authorTextField.attributedPlaceholder = NSAttributedString(string: "Author", attributes: [NSForegroundColorAttributeName: UIColor.themeTan])
         
         publisherTextField = UITextField()
-        publisherTextField.attributedPlaceholder = NSAttributedString(string: "Publisher")
+        publisherTextField.attributedPlaceholder = NSAttributedString(string: "Publisher", attributes: [NSForegroundColorAttributeName: UIColor.themeTan])
         
         categoriesTextField = UITextField()
-        categoriesTextField.attributedPlaceholder = NSAttributedString(string: "Categories")
+        categoriesTextField.attributedPlaceholder = NSAttributedString(string: "Categories", attributes: [NSForegroundColorAttributeName: UIColor.themeTan])
         
         let textFields = [titleTextField, authorTextField, publisherTextField, categoriesTextField]
         for textField in textFields {
@@ -72,7 +73,7 @@ class AddBookView: UIView, UITextFieldDelegate {
         let stackView = UIStackView()
         stackView.axis = UILayoutConstraintAxis.vertical
         stackView.distribution = UIStackViewDistribution.fillEqually
-        stackView.spacing = 2.0
+        stackView.spacing = 10.0
         stackView.alignment = UIStackViewAlignment.leading
         stackView.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(stackView)
@@ -117,16 +118,7 @@ class AddBookView: UIView, UITextFieldDelegate {
         let categories = categoriesTextField.text ?? ""
         let publisher = publisherTextField.text ?? ""
         
-        print("author: \(author)")
-        print("title: \(title)")
-        print("categories: \(categories)")
-        print("publisher: \(publisher)")
-        
         BookAPICalls.server(post: author, categories: categories, title: title, publisher: publisher) {
-            print("author: \(author)")
-            print("title: \(title)")
-            print("categories: \(categories)")
-            print("publisher: \(publisher)")
             OperationQueue.main.addOperation {
                 NotificationCenter.default.post(name: Notification.Name("successful-submit-book"), object: nil)
             }
