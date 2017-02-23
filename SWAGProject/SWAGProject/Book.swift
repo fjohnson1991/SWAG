@@ -27,9 +27,9 @@ class Book {
             let url = dict["url"] as? String
             else { print("Error parsing JSON to Book"); return nil }
         
-        let lastCheckedOut = dict["lastCheckedOut"] as? String ?? "N/A"
-        let lastCheckedOutBy = dict["lastCheckedOutBy"] as? String ?? "N/A"
-        let publisher = dict["publisher"] as? String ?? "N/A"
+        let lastCheckedOut = dict["lastCheckedOut"] as? String ?? ""
+        let lastCheckedOutBy = dict["lastCheckedOutBy"] as? String ?? ""
+        let publisher = dict["publisher"] as? String ?? ""
         
         self.author = author
         self.categories = categories

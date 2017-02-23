@@ -10,16 +10,6 @@ import UIKit
 
 class ShareDropDownView: UIView {
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        constrain()
-        formatButtons()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
     lazy var facebookButton: UIButton = {
         let button = UIButton()
         button.setTitle("Facebook", for: .normal)
@@ -64,6 +54,16 @@ class ShareDropDownView: UIView {
         button.setTitleColor(UIColor.themeTan, for: .highlighted)
         return button
     }()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        constrain()
+        formatButtons()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
     
     private func constrain() {
         facebookButton.translatesAutoresizingMaskIntoConstraints = false

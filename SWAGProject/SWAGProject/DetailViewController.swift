@@ -10,63 +10,63 @@ import UIKit
 import Social
 import FBSDKShareKit
 
-protocol BookDetailProtocol: class {
-    var bookTitle: String { get set }
-    var author: String { get set }
-    var publisher: String { get set }
-    var tags: String { get set }
-    var lastCheckedOut: String { get set }
-    var lastCheckedOutBy: String { get set }
+enum SegmentItems {
+    case title
+    case author
+    case publisher
+    case tags
+    case other
+    
+    func convertToString() -> String {
+        switch self {
+        case .title:
+            return "Title"
+        case .author:
+            return "Author"
+        case .publisher:
+            return "Publisher"
+        case .tags:
+            return "Tags"
+        case .other:
+            return "Other"
+        }
+    }
 }
 
-class DetailViewController: UIViewController, BookDetailProtocol {
-    
-    let detailView = DetailView()
-    var segmentedControl = UISegmentedControl(items: ["Title", "Author(s)", "Publisher", "Tags", "Other"])
+class DetailViewController: UIViewController {
+ 
+    var book: Book!
+    var detailView: DetailView!
+    var segmentedControl: UISegmentedControl!
     var checkoutButton: UIButton!
     var deleteButton: UIButton!
-    let shareDropDownView = ShareDropDownView()
+    var shareDropDownView: ShareDropDownView!
     var backgroundView: UIView!
     var shareClickedConstraint: NSLayoutConstraint?
     var shareRemovedConstraint: NSLayoutConstraint?
-    
-    var bookTitle = String()
-    var author = String()
-    var publisher = String()
-    var tags = String()
-    var lastCheckedOut = String()
-    var lastCheckedOutBy = String()
-    var passedBookID = Int()
     var clickToShare = false
+    var segmentItems: [SegmentItems]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configure()
-        constrain()
+        configureViews()
+        segmentedControlConfig()
+        constrainViews()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         segmentedControl.selectedSegmentIndex = 0
-        detailView.delegate = self
+        detailView.titleLabel.text = book.title
         detailView.titleLabel.isHidden = false
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    func configure() {
+    func configureViews() {
         // VC
         self.view.backgroundColor = UIColor.white
         self.title = "Detail"
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "ShareButton"), style: .done, target: self, action: #selector(shareDropdown))
         self.navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSFontAttributeName: UIFont.systemFont(ofSize: 12, weight: UIFontWeightSemibold), NSForegroundColorAttributeName: UIColor.white],for: UIControlState.normal)
-        
-        // Segmented controller 
-        segmentedControl.setTitleTextAttributes([NSForegroundColorAttributeName : UIColor.themeTan, NSFontAttributeName: UIFont(name: "HelveticaNeue-Bold", size: 11.0)!], for: .normal)
-        segmentedControl.tintColor = UIColor.themeOrange
         
         // Checkout button 
         checkoutButton = UIButton()
@@ -87,14 +87,16 @@ class DetailViewController: UIViewController, BookDetailProtocol {
         deleteButton.addTarget(self, action: #selector(deletePressed), for: .touchUpInside)
         
         // Share drop down
+        shareDropDownView = ShareDropDownView()
         shareDropDownView.isHidden = true
         shareDropDownView.facebookButton.addTarget(self, action: #selector(facebookShare), for: .touchUpInside)
         shareDropDownView.twitterButton.addTarget(self, action: #selector(twitterShare), for: .touchUpInside)
         shareDropDownView.cancelButton.addTarget(self, action: #selector(cancelShare), for: .touchUpInside)
     }
     
-    func constrain() {
+    func constrainViews() {
         // Detail view
+        detailView = DetailView()
         detailView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(detailView)
         detailView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 20).isActive = true
@@ -129,33 +131,55 @@ class DetailViewController: UIViewController, BookDetailProtocol {
         deleteButton.widthAnchor.constraint(equalToConstant: 150).isActive = true
     }
     
-    // MARK: - Config segmented control selector
+    // MARK: - Config segmented control & selector
+    func segmentedControlConfig() {
+        var segmentToShow = [String]()
+        segmentItems = [.title, .author]
+        if book.publisher != "" || book.publisher == nil {
+            segmentItems.append(.publisher)
+        }
+        if book.categories != "" {
+            segmentItems.append(.tags)
+        }
+        if book.lastCheckedOut != "" || book.lastCheckedOut == nil {
+            segmentItems.append(.other)
+        }
+        for item in segmentItems {
+            segmentToShow.append(item.convertToString())
+        }
+        segmentedControl = UISegmentedControl(items: segmentToShow)
+        segmentedControl.setTitleTextAttributes([NSForegroundColorAttributeName : UIColor.themeTan, NSFontAttributeName: UIFont(name: "HelveticaNeue-Bold", size: 11.0)!], for: .normal)
+        segmentedControl.tintColor = UIColor.themeOrange
+    }
+    
     func segmentedControlSegues(sender: UISegmentedControl!) {
-        if sender.selectedSegmentIndex == 0 {
+        let selectedItem = segmentItems[sender.selectedSegmentIndex]
+        switch selectedItem {
+        case .title:
             hideAllLabels()
             animateTransition()
-            detailView.delegate = self
+            detailView.titleLabel.text = book.title
             detailView.titleLabel.isHidden = false
-        } else if sender.selectedSegmentIndex == 1 {
+        case .author:
             hideAllLabels()
             animateTransition()
-            detailView.delegate = self
             detailView.authorLabel.isHidden = false
-        } else if sender.selectedSegmentIndex == 2 {
+            detailView.authorLabel.text = book.author
+        case .publisher:
             hideAllLabels()
             animateTransition()
-            detailView.delegate = self
             detailView.publisherLabel.isHidden = false
-        } else if sender.selectedSegmentIndex == 3 {
+            detailView.publisherLabel.text = book.publisher
+        case .tags:
             hideAllLabels()
             animateTransition()
-            detailView.delegate = self
             detailView.tagsLabel.isHidden = false
-        } else if sender.selectedSegmentIndex == 4 {
+            detailView.tagsLabel.text = book.categories
+        case .other:
             hideAllLabels()
             animateTransition()
-            detailView.delegate = self
             detailView.lastCheckedOutLabel.isHidden = false
+            detailView.lastCheckedOutLabel.text = book.lastCheckedOut
         }
     }
     
@@ -187,9 +211,9 @@ class DetailViewController: UIViewController, BookDetailProtocol {
             
             let nameTextField = alert.textFields![0]
             guard let unwrappedName = nameTextField.text else { print("Error unwrapping name"); return }
-            BookAPICalls.server(update: self.passedBookID, lastCheckedOutBy: unwrappedName, lastCheckedOut: "\(Date())")
+            BookAPICalls.server(update: self.book.id, lastCheckedOutBy: unwrappedName, lastCheckedOut: "\(Date())")
             print("Date: \(Date())")
-            print("passedID: \(self.passedBookID)")
+            print("passedID: \(self.book.id)")
             print("name: \(unwrappedName)")
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
@@ -200,7 +224,7 @@ class DetailViewController: UIViewController, BookDetailProtocol {
     func deletePressed() {
         let alertController = UIAlertController(title: "Are you sure?", message: "Please comfirm you would like to delete this book.", preferredStyle: UIAlertControllerStyle.alert)
         let YesAction = UIAlertAction(title: "Yes", style: .default) {(action: UIAlertAction) in
-            BookAPICalls.deleteLastBookFromServer(with: self.passedBookID)
+            BookAPICalls.deleteLastBookFromServer(with: self.book.id)
             let booksTableViewController: BooksTableViewController = BooksTableViewController()
             self.navigationController?.pushViewController(booksTableViewController, animated: true)
         }
@@ -240,22 +264,22 @@ class DetailViewController: UIViewController, BookDetailProtocol {
             clickToShare = false
             self.shareClickedConstraint?.isActive = false
             self.shareRemovedConstraint?.isActive = false
-            self.constrain()
+            self.constrainViews()
         }
     }
     
     func facebookShare() {
         let content : FBSDKShareLinkContent = FBSDKShareLinkContent()
         content.contentURL = URL(string: "http://www.SWAG4PI.com")
-        content.contentTitle = "\(bookTitle)"
-        content.contentDescription = "By: \(author)"
+        content.contentTitle = "\(book.title)"
+        content.contentDescription = "By: \(book.author)"
         FBSDKShareDialog.show(from: self, with: content, delegate: self)
     }
     
     func twitterShare() {
         let vc = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
         guard let unwrappedVC = vc else { print("Error unwrapping twitterShare details in DVC"); return }
-        unwrappedVC.setInitialText("Share your thoughts on \(bookTitle) here.")
+        unwrappedVC.setInitialText("Share your thoughts on \(book.title) here.")
         unwrappedVC.add(URL(string: "http://www.SWAG4PI.com"))
         present(unwrappedVC, animated: true, completion: nil)
     }
@@ -266,7 +290,7 @@ class DetailViewController: UIViewController, BookDetailProtocol {
         clickToShare = false
         self.shareClickedConstraint?.isActive = false
         self.shareRemovedConstraint?.isActive = false
-        self.constrain()
+        self.constrainViews()
     }
 }
 

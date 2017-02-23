@@ -10,26 +10,6 @@ import UIKit
 
 class DetailView: UIView {
     
-    weak var delegate: BookDetailProtocol! {
-        didSet {
-            titleLabel.text = "Title: \n\(delegate.bookTitle)"
-            authorLabel.text = "Author(s): \(delegate.author)"
-            publisherLabel.text = "Publisher: \(delegate.publisher)"
-            tagsLabel.text = "Tags: \(delegate.tags)"
-            lastCheckedOutLabel.text = "Last checked out by: \(delegate.lastCheckedOutBy) \n\nDate last checked out: \(delegate.lastCheckedOut)"
-        }
-    }
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        configure()
-        constrain()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.themeBlue
@@ -84,6 +64,16 @@ class DetailView: UIView {
         label.isHidden = true
         return label
     }()
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        configure()
+        constrain()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     func configure() {
         self.layer.borderWidth = 2.0

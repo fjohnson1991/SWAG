@@ -19,6 +19,7 @@
 		B50C845B1E5BE1030093E5F1 /* BookTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50C845A1E5BE1030093E5F1 /* BookTableViewCell.swift */; };
 		B512B2651E5C87FD00A7A0CE /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = B512B2641E5C87FD00A7A0CE /* Book.swift */; };
 		B512B2681E5C89E300A7A0CE /* BookAPICalls.swift in Sources */ = {isa = PBXBuildFile; fileRef = B512B2671E5C89E300A7A0CE /* BookAPICalls.swift */; };
+		B525F6601E5F57CA007BBAD3 /* ClearBooksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B525F65F1E5F57CA007BBAD3 /* ClearBooksView.swift */; };
 		B5A2F1381E5D1E88009CCEE5 /* ShareDropDownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A2F1371E5D1E88009CCEE5 /* ShareDropDownView.swift */; };
 /* End PBXBuildFile section */
 
@@ -39,6 +40,7 @@
 		B50C845A1E5BE1030093E5F1 /* BookTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookTableViewCell.swift; sourceTree = "<group>"; };
 		B512B2641E5C87FD00A7A0CE /* Book.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		B512B2671E5C89E300A7A0CE /* BookAPICalls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookAPICalls.swift; sourceTree = "<group>"; };
+		B525F65F1E5F57CA007BBAD3 /* ClearBooksView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClearBooksView.swift; sourceTree = "<group>"; };
 		B5A2F1371E5D1E88009CCEE5 /* ShareDropDownView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareDropDownView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -111,6 +113,7 @@
 			children = (
 				B50C845A1E5BE1030093E5F1 /* BookTableViewCell.swift */,
 				B5A2F1371E5D1E88009CCEE5 /* ShareDropDownView.swift */,
+				B525F65F1E5F57CA007BBAD3 /* ClearBooksView.swift */,
 				B50C84531E5BBA300093E5F1 /* DetailView.swift */,
 				B50C84581E5BD47C0093E5F1 /* AddBookView.swift */,
 			);
@@ -258,6 +261,7 @@
 				B50C845B1E5BE1030093E5F1 /* BookTableViewCell.swift in Sources */,
 				B50C84591E5BD47C0093E5F1 /* AddBookView.swift in Sources */,
 				B50C844D1E5BB38D0093E5F1 /* Extensions.swift in Sources */,
+				B525F6601E5F57CA007BBAD3 /* ClearBooksView.swift in Sources */,
 				B50C844F1E5BB3CA0093E5F1 /* BooksTableViewController.swift in Sources */,
 				B50C84571E5BD46B0093E5F1 /* AddBookViewController.swift in Sources */,
 				B512B2681E5C89E300A7A0CE /* BookAPICalls.swift in Sources */,
