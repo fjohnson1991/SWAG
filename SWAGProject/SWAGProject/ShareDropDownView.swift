@@ -25,13 +25,13 @@ class ShareDropDownView: UIView {
         button.setTitle("Facebook", for: .normal)
         button.titleLabel?.font = UIFont.themeTinyBold
         button.setTitleColor(UIColor.white, for: .normal)
-        button.backgroundColor = UIColor.themeDarkBlue
+        button.backgroundColor = UIColor.themeOrange
         button.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
         button.layer.shadowOffset = CGSize(width: 0, height: 2)
         button.layer.shadowOpacity = 1.0
         button.layer.shadowRadius = 0.0
         button.layer.masksToBounds = false
-        button.setTitleColor(UIColor.red, for: .highlighted)
+        button.setTitleColor(UIColor.themeTan, for: .highlighted)
         return button
     }()
     
@@ -40,13 +40,13 @@ class ShareDropDownView: UIView {
         button.setTitle("Twitter", for: .normal)
         button.titleLabel?.font = UIFont.themeTinyBold
         button.setTitleColor(UIColor.white, for: .normal)
-        button.backgroundColor = UIColor.themeDarkBlue
+        button.backgroundColor = UIColor.themeOrange
         button.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
         button.layer.shadowOffset = CGSize(width: 0, height: 2)
         button.layer.shadowOpacity = 1.0
         button.layer.shadowRadius = 0.0
         button.layer.masksToBounds = false
-        button.setTitleColor(UIColor.red, for: .highlighted)
+        button.setTitleColor(UIColor.themeTan, for: .highlighted)
         return button
     }()
     
@@ -55,13 +55,13 @@ class ShareDropDownView: UIView {
         button.setTitle("Cancel", for: .normal)
         button.titleLabel?.font = UIFont.themeTinyBold
         button.setTitleColor(UIColor.white, for: .normal)
-        button.backgroundColor = UIColor.themeDarkBlue
+        button.backgroundColor = UIColor.themeOrange
         button.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
         button.layer.shadowOffset = CGSize(width: 0, height: 2)
         button.layer.shadowOpacity = 1.0
         button.layer.shadowRadius = 0.0
         button.layer.masksToBounds = false
-        button.setTitleColor(UIColor.red, for: .highlighted)
+        button.setTitleColor(UIColor.themeTan, for: .highlighted)
         return button
     }()
     
