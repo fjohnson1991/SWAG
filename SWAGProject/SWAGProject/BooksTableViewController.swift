@@ -46,13 +46,15 @@ class BooksTableViewController: UITableViewController {
     
     func populateBookData() {
         bookArray.removeAll()
-        BookAPICalls.serverRequest { (responseJSON) in
-            for response in responseJSON {
-                guard let newBook = Book(dict: response) else { print("Error populating book data in BTVC"); return }
-                self.bookArray.append(newBook)
-            }
-            OperationQueue.main.addOperation {
-                self.tableView.reloadData()
+        BookAPICalls.serverRequest { (responseJSON, success) in
+            if success {
+                for response in responseJSON {
+                    guard let newBook = Book(dict: response) else { print("Error populating book data in BTVC"); return }
+                    self.bookArray.append(newBook)
+                }
+                OperationQueue.main.addOperation {
+                    self.tableView.reloadData()
+                }
             }
         }
     }
@@ -90,7 +92,13 @@ class BooksTableViewController: UITableViewController {
     }
     
     func executeClearBooks() {
-        BookAPICalls.clearBooksFromServer()
+        BookAPICalls.clearBooksFromServer { (success) in
+            if success {
+                OperationQueue.main.addOperation {
+                    self.populateBookData()
+                }
+            }
+        }
     }
     
     func cancelClearBooks() {

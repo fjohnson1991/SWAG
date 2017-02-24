@@ -16,7 +16,7 @@ enum SegmentItems {
     case publisher
     case tags
     case other
-    
+
     func convertToString() -> String {
         switch self {
         case .title:
@@ -210,9 +210,14 @@ class DetailViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "Submit", style: UIAlertActionStyle.default, handler: { (_) in
             let nameTextField = alert.textFields![0]
             guard let unwrappedName = nameTextField.text else { print("Error unwrapping name"); return }
-            BookAPICalls.server(update: self.book.id, lastCheckedOutBy: unwrappedName, lastCheckedOut: "\(Date())")
-            let booksTableViewController: BooksTableViewController = BooksTableViewController()
-            self.navigationController?.pushViewController(booksTableViewController, animated: true)
+            BookAPICalls.server(update: self.book.id, lastCheckedOutBy: unwrappedName, lastCheckedOut: "\(Date())", completion: { (success) in
+                if success {
+                    OperationQueue.main.addOperation {
+                        let booksTableViewController: BooksTableViewController = BooksTableViewController()
+                        self.navigationController?.pushViewController(booksTableViewController, animated: true)
+                    }
+                }
+            })
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
@@ -222,9 +227,14 @@ class DetailViewController: UIViewController {
     func deletePressed() {
         let alertController = UIAlertController(title: "Are you sure?", message: "Please comfirm you would like to delete this book.", preferredStyle: UIAlertControllerStyle.alert)
         let YesAction = UIAlertAction(title: "Yes", style: .default) {(action: UIAlertAction) in
-            BookAPICalls.deleteLastBookFromServer(with: self.book.id)
-            let booksTableViewController: BooksTableViewController = BooksTableViewController()
-            self.navigationController?.pushViewController(booksTableViewController, animated: true)
+            BookAPICalls.deleteBookFromServer(with: self.book.id, completion: { (success) in
+                if success {
+                    OperationQueue.main.addOperation {
+                        let booksTableViewController: BooksTableViewController = BooksTableViewController()
+                        self.navigationController?.pushViewController(booksTableViewController, animated: true)
+                    }
+                }
+            })
         }
         let CancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         alertController.addAction(YesAction)

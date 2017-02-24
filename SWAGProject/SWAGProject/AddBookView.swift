@@ -117,9 +117,11 @@ class AddBookView: UIView, UITextFieldDelegate {
         let categories = categoriesTextField.text ?? ""
         let publisher = publisherTextField.text ?? ""
         
-        BookAPICalls.server(post: author, categories: categories, title: title, publisher: publisher) {
-            OperationQueue.main.addOperation {
-                NotificationCenter.default.post(name: Notification.Name("successful-submit-book"), object: nil)
+        BookAPICalls.server(post: author, categories: categories, title: title, publisher: publisher) { (success) in
+            if success {
+                OperationQueue.main.addOperation {
+                    NotificationCenter.default.post(name: Notification.Name("successful-submit-book"), object: nil)
+                }
             }
         }
     }
