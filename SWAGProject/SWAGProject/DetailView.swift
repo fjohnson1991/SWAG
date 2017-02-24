@@ -104,14 +104,11 @@ class DetailView: UIView {
     func formatLastCheckedOut(_ date: String?) -> String {
         guard let unwrappedDate = date else { print("Error unwrapping date in DV"); return "" }
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        let dateComponents = Array(unwrappedDate.characters)
-        var dateToFormat = String()
-        for i in 0...9 {
-            dateToFormat.append(dateComponents[i])
-        }
-        guard let format = dateFormatter.date(from: dateToFormat) else { print("Error unwrapping formatted date in DV"); return "" }
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        guard let convertedDate = dateFormatter.date(from: unwrappedDate) else { print("Error unwrapping convertedDate in DV"); return "" }
+        dateFormatter.timeZone = TimeZone(abbreviation: "EST")
         dateFormatter.dateStyle = .medium
-        return dateFormatter.string(from: format)
+        return dateFormatter.string(from: convertedDate)
     }
 }

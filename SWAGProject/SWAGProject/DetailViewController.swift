@@ -210,7 +210,12 @@ class DetailViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "Submit", style: UIAlertActionStyle.default, handler: { (_) in
             let nameTextField = alert.textFields![0]
             guard let unwrappedName = nameTextField.text else { print("Error unwrapping name"); return }
-            BookAPICalls.server(update: self.book.id, lastCheckedOutBy: unwrappedName, lastCheckedOut: "\(Date())", completion: { (success) in
+            let currentDate = Date()
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss zzz"
+            let dateString = dateFormatter.string(from: currentDate)
+            print(dateString)
+            BookAPICalls.server(update: self.book.id, lastCheckedOutBy: unwrappedName, lastCheckedOut: dateString, completion: { (success) in
                 if success {
                     OperationQueue.main.addOperation {
                         let booksTableViewController: BooksTableViewController = BooksTableViewController()
