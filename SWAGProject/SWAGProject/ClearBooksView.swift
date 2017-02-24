@@ -13,6 +13,7 @@ class ClearBooksView: UIView {
     lazy var deleteLabel: UILabel = {
         let label = UILabel()
         label.text = "Clear Books?"
+        label.adjustsFontSizeToFitWidth = true 
         label.font = UIFont.themeSmallBold
         label.textColor = UIColor.themeOffWhite
         return label

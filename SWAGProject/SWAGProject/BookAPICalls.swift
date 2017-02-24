@@ -8,12 +8,17 @@
 
 import Foundation
 
+enum Server: String {
+    case put = "PUT"
+    case post = "POST"
+}
+
 struct BookAPICalls {
     
     // GET
     static func serverRequest(with completion: @escaping (([[String: Any]]) -> Void)) {
         let session = URLSession.shared
-        let url = URL(string: "https://prolific-interview.herokuapp.com/58ab049e53fba2000ab50b6e/books")
+        let url = URL(string: Constants.serverBaseURL)
         guard let unwrappedURL = url else {return}
         let task = session.dataTask(with: unwrappedURL) { (data, response, error) in
             if error != nil {
@@ -59,52 +64,25 @@ struct BookAPICalls {
         task.resume()
     }
     
-    
-//    static func serverTest(update id: Int, lastCheckedOutBy: String, lastCheckedOut: String) {
-//       
-//        var dictionary = [String: Any]()
-//        dictionary["lastCheckedOutBy"] = lastCheckedOutBy
-//        dictionary["lastCheckedOut"] = lastCheckedOut
-//        
-//       goToInternet(dictionary: dictionary, server: .post) { 
-//        
-//        }
-//    }
-//    
-//    static func goToInternet(dictionary:[String: Any], server: Server, completion: () -> ()) {
-//        guard let url = URL(string: "http://prolific-interview.herokuapp.com/58ab049e53fba2000ab50b6e/books/\(id)") else { return }
-//        var urlRequest = URLRequest(url: url)
-//        let jsonData = try? JSONSerialization.data(withJSONObject: dictionary, options: [])
-//        guard let unwrappedData = jsonData else { return }
-//        let session = URLSession.shared
-//        let task = session.dataTask(with: urlRequest) { (data, response, error) in
-//            guard let data = data else { return }
-//            do {
-//                let response = try JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
-//                print(response)
-//            } catch {}
-//        }
-//        task.resume()
-//
-//        
-//        // do all the internet stuff
-//    }
-    
     // PUT
-    static func server(update id: Int, lastCheckedOutBy: String, lastCheckedOut: String) {
-        guard let url = URL(string: "http://prolific-interview.herokuapp.com/58ab049e53fba2000ab50b6e/books/\(id)") else { return }
-        var urlRequest = URLRequest(url: url)
+    static func serverTest(update id: Int, lastCheckedOutBy: String, lastCheckedOut: String) {
+       
         var dictionary = [String: Any]()
         dictionary["lastCheckedOutBy"] = lastCheckedOutBy
         dictionary["lastCheckedOut"] = lastCheckedOut
+        
+       goToInternet(dictionary: dictionary, server: .post) { 
+        
+        }
+    }
+    
+    static func goToInternet(dictionary:[String: Any], server: Server, completion: () -> ()) {
+        guard let url = URL(string: "http://prolific-interview.herokuapp.com/58ab049e53fba2000ab50b6e/books/\(id)") else { return }
+        var urlRequest = URLRequest(url: url)
         let jsonData = try? JSONSerialization.data(withJSONObject: dictionary, options: [])
         guard let unwrappedData = jsonData else { return }
-        urlRequest.httpBody = unwrappedData
-        urlRequest.httpMethod = "PUT"
-        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
         let session = URLSession.shared
         let task = session.dataTask(with: urlRequest) { (data, response, error) in
-            
             guard let data = data else { return }
             do {
                 let response = try JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
@@ -113,6 +91,30 @@ struct BookAPICalls {
         }
         task.resume()
     }
+    
+    // PUT
+//    static func server(update id: Int, lastCheckedOutBy: String, lastCheckedOut: String) {
+//        guard let url = URL(string: "http://prolific-interview.herokuapp.com/58ab049e53fba2000ab50b6e/books/\(id)") else { return }
+//        var urlRequest = URLRequest(url: url)
+//        var dictionary = [String: Any]()
+//        dictionary["lastCheckedOutBy"] = lastCheckedOutBy
+//        dictionary["lastCheckedOut"] = lastCheckedOut
+//        let jsonData = try? JSONSerialization.data(withJSONObject: dictionary, options: [])
+//        guard let unwrappedData = jsonData else { return }
+//        urlRequest.httpBody = unwrappedData
+//        urlRequest.httpMethod = "PUT"
+//        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+//        let session = URLSession.shared
+//        let task = session.dataTask(with: urlRequest) { (data, response, error) in
+//            
+//            guard let data = data else { return }
+//            do {
+//                let response = try JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
+//                print(response)
+//            } catch {}
+//        }
+//        task.resume()
+//    }
     
     // DELETE (one book)
     static func deleteLastBookFromServer(with id: Int) {
@@ -145,9 +147,3 @@ struct BookAPICalls {
     }
 
 }
-
-//
-//enum Server: String {
-//    case put = "PUT"
-//    case post = "POST"
-//}

@@ -20,6 +20,7 @@
 		B512B2651E5C87FD00A7A0CE /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = B512B2641E5C87FD00A7A0CE /* Book.swift */; };
 		B512B2681E5C89E300A7A0CE /* BookAPICalls.swift in Sources */ = {isa = PBXBuildFile; fileRef = B512B2671E5C89E300A7A0CE /* BookAPICalls.swift */; };
 		B525F6601E5F57CA007BBAD3 /* ClearBooksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B525F65F1E5F57CA007BBAD3 /* ClearBooksView.swift */; };
+		B525F6621E5FC19D007BBAD3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B525F6611E5FC19D007BBAD3 /* Constants.swift */; };
 		B5A2F1381E5D1E88009CCEE5 /* ShareDropDownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A2F1371E5D1E88009CCEE5 /* ShareDropDownView.swift */; };
 /* End PBXBuildFile section */
 
@@ -41,6 +42,7 @@
 		B512B2641E5C87FD00A7A0CE /* Book.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		B512B2671E5C89E300A7A0CE /* BookAPICalls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookAPICalls.swift; sourceTree = "<group>"; };
 		B525F65F1E5F57CA007BBAD3 /* ClearBooksView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClearBooksView.swift; sourceTree = "<group>"; };
+		B525F6611E5FC19D007BBAD3 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		B5A2F1371E5D1E88009CCEE5 /* ShareDropDownView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareDropDownView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -89,6 +91,7 @@
 				B50C843A1E5BA78D0093E5F1 /* AppDelegate.swift */,
 				B50C844C1E5BB38D0093E5F1 /* Extensions.swift */,
 				B512B2671E5C89E300A7A0CE /* BookAPICalls.swift */,
+				B525F6611E5FC19D007BBAD3 /* Constants.swift */,
 				B512B2661E5C880200A7A0CE /* Models */,
 				B50C84551E5BBA330093E5F1 /* Views */,
 				B50C84521E5BB9FE0093E5F1 /* ViewControllers */,
@@ -265,6 +268,7 @@
 				B50C844F1E5BB3CA0093E5F1 /* BooksTableViewController.swift in Sources */,
 				B50C84571E5BD46B0093E5F1 /* AddBookViewController.swift in Sources */,
 				B512B2681E5C89E300A7A0CE /* BookAPICalls.swift in Sources */,
+				B525F6621E5FC19D007BBAD3 /* Constants.swift in Sources */,
 				B512B2651E5C87FD00A7A0CE /* Book.swift in Sources */,
 				B5A2F1381E5D1E88009CCEE5 /* ShareDropDownView.swift in Sources */,
 				B50C843B1E5BA78D0093E5F1 /* AppDelegate.swift in Sources */,
