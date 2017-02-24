@@ -96,7 +96,7 @@ class AddBookView: UIView, UITextFieldDelegate {
         submitButton.widthAnchor.constraint(equalToConstant: 150).isActive = true
     }
     
-    // Submit button selector func
+    // MARK: - Submit button selector funcs
     func submitButtonPressedChecks() {
         if titleTextField.text == "" || authorTextField.text == "" {
             NotificationCenter.default.post(name: Notification.Name("empty-entries-error"), object: nil)

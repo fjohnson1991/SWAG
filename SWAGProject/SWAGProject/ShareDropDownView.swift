@@ -8,7 +8,15 @@
 
 import UIKit
 
+protocol ShareDropDownViewProtocol {
+    func facebookWasClicked()
+    func twitterWasClicked()
+    func cancelWasClicked()
+}
+
 class ShareDropDownView: UIView {
+    
+    var delegate: ShareDropDownViewProtocol
     
     lazy var facebookButton: UIButton = {
         let button = UIButton()
@@ -22,6 +30,7 @@ class ShareDropDownView: UIView {
         button.layer.shadowRadius = 0.0
         button.layer.masksToBounds = false
         button.setTitleColor(UIColor.themeTan, for: .highlighted)
+        button.addTarget(self, action: #selector(facebookWasTapped), for: .touchUpInside)
         return button
     }()
     
@@ -37,6 +46,7 @@ class ShareDropDownView: UIView {
         button.layer.shadowRadius = 0.0
         button.layer.masksToBounds = false
         button.setTitleColor(UIColor.themeTan, for: .highlighted)
+        button.addTarget(self, action: #selector(twitterWasTapped), for: .touchUpInside)
         return button
     }()
     
@@ -52,6 +62,7 @@ class ShareDropDownView: UIView {
         button.layer.shadowRadius = 0.0
         button.layer.masksToBounds = false
         button.setTitleColor(UIColor.themeTan, for: .highlighted)
+        button.addTarget(self, action: #selector(cancelWasTapped), for: .touchUpInside)
         return button
     }()
     
@@ -93,5 +104,18 @@ class ShareDropDownView: UIView {
         facebookButton.layer.cornerRadius = facebookButton.frame.width/2
         twitterButton.layer.cornerRadius = twitterButton.frame.width/2
         cancelButton.layer.cornerRadius = cancelButton.frame.width/2
+    }
+    
+    // MARK: - Protocol funcs 
+    func facebookWasTapped() {
+        delegate.facebookWasClicked()
+    }
+    
+    func twitterWasTapped() {
+        delegate.facebookWasClicked()
+    }
+    
+    func cancelWasTapped() {
+        delegate.facebookWasClicked()
     }
 }

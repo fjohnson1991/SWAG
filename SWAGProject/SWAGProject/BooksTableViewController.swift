@@ -13,8 +13,9 @@ class BooksTableViewController: UITableViewController {
     var bookArray = [Book]()
     var clearBooksView: ClearBooksView!
     var backgroundView: UIView!
-    var clearClickedConstraint: NSLayoutConstraint?
-    var clearRemovedConstraint: NSLayoutConstraint?
+    var noDataView: NoDataView!
+    var clearClickedConstraint: NSLayoutConstraint!
+    var clearRemovedConstraint: NSLayoutConstraint!
     var clickToDelete = false
     
     override func viewDidLoad() {
@@ -22,8 +23,19 @@ class BooksTableViewController: UITableViewController {
         configureLayout()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         populateBookData()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if bookArray.count == 0 {
+            noDataViewConfigure()
+        } else {
+            
+        }
+        if self.view.subviews.contains(noDataView) {
+            noDataView.removeFromSuperview()
+        }
     }
     
     func configureLayout() {
@@ -60,21 +72,28 @@ class BooksTableViewController: UITableViewController {
         }
     }
     
+    // MARK: - Config no data view 
+    func noDataViewConfigure() {
+        noDataView = NoDataView()
+        noDataView.frame = self.view.bounds
+        self.view.addSubview(noDataView)
+    }
+    
     // MARK: - Clear drop down config & funcs
     func clearBooks() {
         if clickToDelete == false {
             configClearBooks()
             clearBooksView.isHidden = false
             clickToDelete = true
-            self.clearClickedConstraint?.isActive = false
+            self.clearClickedConstraint.isActive = false
             self.clearRemovedConstraint = self.clearBooksView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0)
             self.clearRemovedConstraint?.isActive = true
         } else {
             backgroundView.removeFromSuperview()
             clearBooksView.isHidden = true
             clickToDelete = false
-            self.clearClickedConstraint?.isActive = false
-            self.clearRemovedConstraint?.isActive = false
+            self.clearClickedConstraint.isActive = false
+            self.clearRemovedConstraint.isActive = false
         }
     }
     
@@ -87,7 +106,7 @@ class BooksTableViewController: UITableViewController {
         clearBooksView.translatesAutoresizingMaskIntoConstraints = false
         self.backgroundView.addSubview(clearBooksView)
         clearClickedConstraint = clearBooksView.bottomAnchor.constraint(equalTo: self.view.topAnchor, constant: 0)
-        clearClickedConstraint?.isActive = true
+        clearClickedConstraint.isActive = true
         clearBooksView.trailingAnchor.constraint(equalTo: self.backgroundView.trailingAnchor, constant: 0).isActive = true
         clearBooksView.heightAnchor.constraint(equalToConstant: 65).isActive = true
         clearBooksView.widthAnchor.constraint(equalTo: self.view.widthAnchor, constant: 0).isActive = true
@@ -96,9 +115,9 @@ class BooksTableViewController: UITableViewController {
     func executeClearBooks() {
         BookAPICalls.clearBooksFromServer { (success) in
             if success {
-                OperationQueue.main.addOperation {
+                //OperationQueue.main.addOperation {
                     self.populateBookData()
-                }
+                //}
             }
         }
     }
@@ -107,8 +126,8 @@ class BooksTableViewController: UITableViewController {
         backgroundView.removeFromSuperview()
         clearBooksView.isHidden = true
         clickToDelete = false
-        self.clearClickedConstraint?.isActive = false
-        self.clearRemovedConstraint?.isActive = false
+        self.clearClickedConstraint.isActive = false
+        self.clearRemovedConstraint.isActive = false
     }
     
     // MARK: - Navigation
@@ -120,9 +139,11 @@ class BooksTableViewController: UITableViewController {
     
     func segueToDetailVC(with indexPath: IndexPath) {
         let detailViewController: DetailViewController = DetailViewController()
-        self.navigationController?.pushViewController(detailViewController, animated: true)
         let book = bookArray[indexPath.row]
         detailViewController.book = book
+        
+        self.navigationController?.pushViewController(detailViewController, animated: true)
+        
     }
 }
 
@@ -145,6 +166,6 @@ extension BooksTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        segueToDetailVC(with: indexPath)
+        self.segueToDetailVC(with: indexPath)
     }
 }

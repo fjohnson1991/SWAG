@@ -51,6 +51,8 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        shareDropDownView.delegate = self
+        
         configureLayout()
         setupViewConstraints()
     }
@@ -62,6 +64,8 @@ class DetailViewController: UIViewController {
     }
     
     func configureLayout() {
+        
+        
         // VC
         self.view.backgroundColor = UIColor.white
         self.title = "Detail"
@@ -269,7 +273,7 @@ class DetailViewController: UIViewController {
     
     // MARK: - Update button selector 
     func updatePressed() {
-        let alert = UIAlertController(title: "Update book?", message: "Please enter your name below", preferredStyle: UIAlertControllerStyle.alert)
+        let alert = UIAlertController(title: "Update book?", message: "Please enter the book's updated information below.", preferredStyle: UIAlertControllerStyle.alert)
         alert.addTextField { (titleTextField) in
             titleTextField.autocapitalizationType = .words
             titleTextField.placeholder = "Update title here"
@@ -392,5 +396,12 @@ extension DetailViewController: FBSDKSharingDelegate {
     
     func sharerDidCancel(_ sharer: FBSDKSharing!) {
         print("sharerDidCancel")
+    }
+}
+
+
+extension DetailViewController: ShareDropDownViewProtocol {
+    func wasClicked() {
+        print("was clicked")
     }
 }
