@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol ClearBooksViewProtocol: class {
+    func executeDeleteWasClicked()
+    func cancelWasClicked()
+}
+
 class ClearBooksView: UIView {
     
     lazy var deleteLabel: UILabel = {
@@ -27,6 +32,7 @@ class ClearBooksView: UIView {
         button.backgroundColor = UIColor.themeOffWhite
         button.contentEdgeInsets = UIEdgeInsetsMake(5, 8, 5, 8)
         button.layer.cornerRadius = 12.0
+        button.addTarget(self, action: #selector(executeDeleteWasTapped), for: .touchUpInside)
         return button
     }()
     
@@ -38,10 +44,12 @@ class ClearBooksView: UIView {
         button.backgroundColor = UIColor.themeOffWhite
         button.contentEdgeInsets = UIEdgeInsetsMake(5, 8, 5, 8)
         button.layer.cornerRadius = 12.0
+        button.addTarget(self, action: #selector(cancelWasTapped), for: .touchUpInside)
         return button
     }()
     
     lazy var deleteDropDownStackView = UIStackView()
+    weak var delegate: ClearBooksViewProtocol!
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -75,5 +83,14 @@ class ClearBooksView: UIView {
         deleteDropDownStackView.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.9).isActive = true
         deleteDropDownStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0).isActive = true
         deleteDropDownStackView.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 0).isActive = true
+    }
+    
+    // MARK: - Protocol funcs
+    func executeDeleteWasTapped() {
+        delegate.executeDeleteWasClicked()
+    }
+    
+    func cancelWasTapped() {
+        delegate.cancelWasClicked()
     }
 }

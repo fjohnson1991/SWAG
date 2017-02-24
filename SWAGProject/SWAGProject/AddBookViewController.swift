@@ -165,8 +165,8 @@ extension AddBookViewController: AddBookViewProtocol {
             let title = addBookView.titleTextField.text,
             let author = addBookView.authorTextField.text
             else { print("titleTextField and authorTextField error unwrapping in ABV"); return }
-        let categories = addBookView.categoriesTextField.text ?? ""
-        let publisher = addBookView.publisherTextField.text ?? ""
+            let categories = addBookView.categoriesTextField.text ?? ""
+            let publisher = addBookView.publisherTextField.text ?? ""
         BookAPICalls.server(post: author, categories: categories, title: title, publisher: publisher) { (success) in
             if success {
                 OperationQueue.main.addOperation {

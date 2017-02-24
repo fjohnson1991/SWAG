@@ -28,11 +28,11 @@ class BooksTableViewController: UITableViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        if bookArray.count == 0 {
-            noDataViewConfigure()
-        } else {
-            
-        }
+//        if bookArray.count == 0 {
+//            noDataViewConfigure()
+//        } else {
+//            
+//        }
 //        if self.view.subviews.contains(noDataView) {
 //            noDataView.removeFromSuperview()
 //        }
@@ -52,8 +52,7 @@ class BooksTableViewController: UITableViewController {
         // Clear books drop down
         clearBooksView = ClearBooksView()
         clearBooksView.isHidden = true
-        clearBooksView.executeDeleteButton.addTarget(self, action: #selector(executeClearBooks), for: .touchUpInside)
-        clearBooksView.cancelButton.addTarget(self, action: #selector(cancelClearBooks), for: .touchUpInside)
+        clearBooksView.delegate = self 
     }
     
     // MARK: - Populate bookArray
@@ -112,24 +111,6 @@ class BooksTableViewController: UITableViewController {
         clearBooksView.widthAnchor.constraint(equalTo: self.view.widthAnchor, constant: 0).isActive = true
     }
     
-    func executeClearBooks() {
-        BookAPICalls.clearBooksFromServer { (success) in
-            if success {
-                //OperationQueue.main.addOperation {
-                    self.populateBookData()
-                //}
-            }
-        }
-    }
-    
-    func cancelClearBooks() {
-        backgroundView.removeFromSuperview()
-        clearBooksView.isHidden = true
-        clickToDelete = false
-        self.clearClickedConstraint.isActive = false
-        self.clearRemovedConstraint.isActive = false
-    }
-    
     // MARK: - Navigation
     func segueToAddBookVC() {
         let addBookViewController: AddBookViewController = AddBookViewController()
@@ -169,3 +150,23 @@ extension BooksTableViewController {
         self.segueToDetailVC(with: indexPath)
     }
 }
+
+// MARK: - Handle ClearBooksViewProtocol protocol
+extension BooksTableViewController: ClearBooksViewProtocol {
+    func executeDeleteWasClicked() {
+        BookAPICalls.clearBooksFromServer { (success) in
+            if success {
+                self.populateBookData()
+            }
+        }
+    }
+    
+    func cancelWasClicked() {
+        backgroundView.removeFromSuperview()
+        clearBooksView.isHidden = true
+        clickToDelete = false
+        self.clearClickedConstraint.isActive = false
+        self.clearRemovedConstraint.isActive = false
+    }
+}
+
