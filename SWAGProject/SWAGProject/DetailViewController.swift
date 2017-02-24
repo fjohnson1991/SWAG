@@ -35,7 +35,6 @@ enum SegmentItems {
 
 class DetailViewController: UIViewController {
  
-    var book: Book!
     var detailView: DetailView!
     var segmentedControl: UISegmentedControl!
     var checkoutButton: UIButton!
@@ -46,13 +45,13 @@ class DetailViewController: UIViewController {
     var shareRemovedConstraint: NSLayoutConstraint?
     var clickToShare = false
     var segmentItems: [SegmentItems]!
+    var book: Book!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configureView()
-        segmentedControlConfig()
-        constrainView()
+        configureLayout()
+        setupViewConstraints()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -61,12 +60,15 @@ class DetailViewController: UIViewController {
         detailView.titleLabel.isHidden = false
     }
     
-    func configureView() {
+    func configureLayout() {
         // VC
         self.view.backgroundColor = UIColor.white
         self.title = "Detail"
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "ShareButton"), style: .done, target: self, action: #selector(shareDropdown))
         self.navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSFontAttributeName: UIFont.systemFont(ofSize: 12, weight: UIFontWeightSemibold), NSForegroundColorAttributeName: UIColor.white],for: UIControlState.normal)
+        
+        // Segmented control
+        segmentedControlConfig()
         
         // Checkout button 
         checkoutButton = UIButton()
@@ -94,7 +96,7 @@ class DetailViewController: UIViewController {
         shareDropDownView.cancelButton.addTarget(self, action: #selector(cancelShare), for: .touchUpInside)
     }
     
-    func constrainView() {
+    func setupViewConstraints() {
         // Detail view
         detailView = DetailView()
         detailView.translatesAutoresizingMaskIntoConstraints = false
@@ -214,7 +216,6 @@ class DetailViewController: UIViewController {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss zzz"
             let dateString = dateFormatter.string(from: currentDate)
-            print(dateString)
             BookAPICalls.server(update: self.book.id, lastCheckedOutBy: unwrappedName, lastCheckedOut: dateString, completion: { (success) in
                 if success {
                     OperationQueue.main.addOperation {
@@ -230,7 +231,6 @@ class DetailViewController: UIViewController {
     
     // MARK: - Delete button selector 
     func deletePressed() {
-        let alertController = UIAlertController(title: "Are you sure?", message: "Please comfirm you would like to delete this book.", preferredStyle: UIAlertControllerStyle.alert)
         let YesAction = UIAlertAction(title: "Yes", style: .default) {(action: UIAlertAction) in
             BookAPICalls.deleteBookFromServer(with: self.book.id, completion: { (success) in
                 if success {
@@ -241,13 +241,11 @@ class DetailViewController: UIViewController {
                 }
             })
         }
-        let CancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        alertController.addAction(YesAction)
-        alertController.addAction(CancelAction)
-        self.present(alertController, animated: true, completion: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        presentAlertWith(title: "Are you sure?", message: "Please comfirm you would like to delete this book.", okAction: YesAction, cancelAction: cancelAction)
     }
     
-    // MARK: - Drop down funcs when clicked
+    // MARK: - Share drop down config & funcs
     func configDropDownView() {
         backgroundView = UIView()
         backgroundView.backgroundColor = UIColor.black.withAlphaComponent(0.8)

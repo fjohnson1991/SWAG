@@ -19,14 +19,14 @@ class BooksTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configLayout()
+        configureLayout()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         populateBookData()
     }
     
-    func configLayout() {
+    func configureLayout() {
         self.view.backgroundColor = UIColor.white
         self.title = "Books"
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "AddButton"), style: .done, target: self, action: #selector(segueToAddBookVC))
@@ -44,6 +44,7 @@ class BooksTableViewController: UITableViewController {
         clearBooksView.cancelButton.addTarget(self, action: #selector(cancelClearBooks), for: .touchUpInside)
     }
     
+    // MARK: - Populate bookArray
     func populateBookData() {
         bookArray.removeAll()
         BookAPICalls.serverRequest { (responseJSON, success) in
@@ -59,6 +60,7 @@ class BooksTableViewController: UITableViewController {
         }
     }
     
+    // MARK: - Clear drop down config & funcs
     func clearBooks() {
         if clickToDelete == false {
             configClearBooks()
@@ -126,6 +128,7 @@ class BooksTableViewController: UITableViewController {
 
 // MARK: - TableViewDelegate & TableViewDataSource funcs
 extension BooksTableViewController {
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }

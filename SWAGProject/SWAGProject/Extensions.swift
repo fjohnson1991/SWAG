@@ -57,3 +57,22 @@ extension UIViewController {
         view.endEditing(true)
     }
 }
+
+extension UIViewController {
+    func presentAlertWithTitle(title: String, message : String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let OKAction = UIAlertAction(title: "OK", style: .default) {
+            (action: UIAlertAction) in print("Youve pressed OK Button")
+        }
+        alertController.addAction(OKAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+
+    
+    func presentAlertWith(title: String, message : String, okAction: UIAlertAction, cancelAction:UIAlertAction) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertController.addAction(okAction)
+        alertController.addAction(cancelAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+}

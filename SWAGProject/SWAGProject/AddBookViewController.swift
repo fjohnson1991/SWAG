@@ -16,11 +16,12 @@ class AddBookViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configureView()
+        configureLayout()
         setUpNotifications()
     }
     
-    func configureView() {
+    func configureLayout() {
+        // General
         self.view.backgroundColor = UIColor.white
         self.title = "Add Book"
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneButtonCheck))
@@ -28,6 +29,7 @@ class AddBookViewController: UIViewController {
         self.navigationItem.setHidesBackButton(true, animated:true)
         self.hideKeyboardWhenTappedAround(isActive: true)
         
+        // Add book view
         addBookView = AddBookView()
         addBookView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(addBookView)
@@ -62,6 +64,7 @@ class AddBookViewController: UIViewController {
         self.addBookView.publisherTextField.text = ""
     }
     
+    // MARK: - Navigation bar selector 
     func doneButtonCheck() {
         if (addBookView.authorTextField.text != "") || (addBookView.titleTextField.text != "") || (addBookView.categoriesTextField.text != "") || (addBookView.publisherTextField.text != "") {
             self.doneButtonAlert()
@@ -72,15 +75,12 @@ class AddBookViewController: UIViewController {
     }
     
     func doneButtonAlert() {
-        let alertController = UIAlertController(title: "Are you sure?", message: "Your changes will not be saved if you leave the page prior to submitting the book.", preferredStyle: .alert)
-        let YesAction = UIAlertAction(title: "Yes", style: .default) {(action: UIAlertAction) in
+        let yesAction = UIAlertAction(title: "Yes", style: .default) {(action: UIAlertAction) in
             self.clearTextFields()
             self.doneButton()
         }
-        let CancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        alertController.addAction(YesAction)
-        alertController.addAction(CancelAction)
-        self.present(alertController, animated: true, completion: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        presentAlertWith(title: "Are you sure?", message: "Your changes will not be saved if you leave the page prior to submitting the book.", okAction: yesAction, cancelAction: cancelAction)
     }
     
     // MARK: - Navigation
@@ -95,10 +95,7 @@ class AddBookViewController: UIViewController {
 extension AddBookViewController {
     
     func invalidEntriesError() {
-        let alertController = UIAlertController(title: "Oops", message: "You must enter the book's title and author before submitting.", preferredStyle: .alert)
-        let OKAction = UIAlertAction(title: "OK", style: .default)
-        alertController.addAction(OKAction)
-        self.present(alertController, animated: true, completion: nil)
+        presentAlertWithTitle(title: "Oops", message: "You must enter the book's title and author before submitting.")
     }
     
     func successfulSubmitBook() {
@@ -112,14 +109,11 @@ extension AddBookViewController {
     }
     
     func areYouSure() {
-        let alertController = UIAlertController(title: "Are you sure?", message: "You have not filled in all the information.", preferredStyle: .alert)
-        let YesAction = UIAlertAction(title: "Yes", style: .default) {(action: UIAlertAction) in
+        let yesAction = UIAlertAction(title: "Yes", style: .default) {(action: UIAlertAction) in
             self.addBookView.submitButtonPressed()
         }
-        let CancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        alertController.addAction(YesAction)
-        alertController.addAction(CancelAction)
-        self.present(alertController, animated: true, completion: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        presentAlertWith(title: "Are you sure?", message: "You have not filled in all the information.", okAction: yesAction, cancelAction: cancelAction)
     }
     
     func keyboardWillShow(notification: NSNotification) {
