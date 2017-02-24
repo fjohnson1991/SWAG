@@ -98,7 +98,7 @@ class DetailView: UIView {
     
     func formatCategories(of bookTags: String) -> String {
         let tagArray = bookTags.components(separatedBy: ",")
-        return tagArray.joined(separator: "\n")
+        return tagArray.joined(separator: "\n").capitalized
     }
     
     func formatLastCheckedOut(_ date: String?) -> String {
