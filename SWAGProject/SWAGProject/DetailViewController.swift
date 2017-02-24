@@ -41,6 +41,7 @@ class DetailViewController: UIViewController {
     var book: Book!
     var checkoutButton: UIButton!
     var deleteButton: UIButton!
+    var updateButton: UIButton!
     var shareDropDownView: ShareDropDownView!
     var backgroundView: UIView!
     var shareClickedConstraint: NSLayoutConstraint!
@@ -88,6 +89,15 @@ class DetailViewController: UIViewController {
         deleteButton.layer.backgroundColor = UIColor.themeBlue.cgColor
         deleteButton.addTarget(self, action: #selector(deletePressed), for: .touchUpInside)
         
+        // Update button
+        updateButton = UIButton()
+        updateButton.setTitle("Update", for: .normal)
+        updateButton.titleLabel?.font = UIFont.themeSmallBold
+        updateButton.setTitleColor(UIColor.themeOffWhite, for: .normal)
+        updateButton.layer.cornerRadius = 5.0
+        updateButton.layer.backgroundColor = UIColor.themeOrange.cgColor
+        updateButton.addTarget(self, action: #selector(updatePressed), for: .touchUpInside)
+        
         // Share drop down
         shareDropDownView = ShareDropDownView()
         shareDropDownView.isHidden = true
@@ -102,7 +112,7 @@ class DetailViewController: UIViewController {
         detailView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(detailView)
         detailView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 20).isActive = true
-        detailView.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.6).isActive = true
+        detailView.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.5).isActive = true
         detailView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 10).isActive = true
         detailView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10).isActive = true
         detailView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: 0).isActive = true
@@ -131,6 +141,15 @@ class DetailViewController: UIViewController {
         deleteButton.topAnchor.constraint(equalTo: checkoutButton.bottomAnchor, constant: 10).isActive = true
         deleteButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
         deleteButton.widthAnchor.constraint(equalToConstant: 150).isActive = true
+        
+        // Update button
+        updateButton.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(updateButton)
+        updateButton.centerXAnchor.constraint(equalTo: deleteButton.centerXAnchor, constant: 0).isActive = true
+        updateButton.topAnchor.constraint(equalTo: deleteButton.bottomAnchor, constant: 10).isActive = true
+        updateButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        updateButton.widthAnchor.constraint(equalToConstant: 150).isActive = true
+
     }
     
     // MARK: - Config segmented control & selector
@@ -216,7 +235,10 @@ class DetailViewController: UIViewController {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss zzz"
             let dateString = dateFormatter.string(from: currentDate)
-            BookAPICalls.server(update: self.book.id, lastCheckedOutBy: unwrappedName, lastCheckedOut: dateString, completion: { (success) in
+            var dictionary = [String: Any]()
+            dictionary["lastCheckedOutBy"] = unwrappedName
+            dictionary["lastCheckedOut"] = dateString
+            BookAPICalls.server(update: self.book.id, dictionary: dictionary, completion: { (success) in
                 if success {
                     OperationQueue.main.addOperation {
                         let booksTableViewController: BooksTableViewController = BooksTableViewController()
@@ -243,6 +265,60 @@ class DetailViewController: UIViewController {
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         presentAlertWith(title: "Are you sure?", message: "Please comfirm you would like to delete this book.", okAction: YesAction, cancelAction: cancelAction)
+    }
+    
+    // MARK: - Update button selector 
+    func updatePressed() {
+        let alert = UIAlertController(title: "Update book?", message: "Please enter your name below", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addTextField { (titleTextField) in
+            titleTextField.autocapitalizationType = .words
+            titleTextField.placeholder = "Update title here"
+        }
+        alert.addTextField { (authorTextField) in
+            authorTextField.autocapitalizationType = .words
+            authorTextField.placeholder = "Update author here"
+        }
+        alert.addTextField { (publisherTextField) in
+            publisherTextField.autocapitalizationType = .words
+            publisherTextField.placeholder = "Update publisher here"
+        }
+        alert.addTextField { (tagsTextField) in
+            tagsTextField.autocapitalizationType = .words
+            tagsTextField.placeholder = "Update tags here"
+        }
+        alert.addAction(UIAlertAction(title: "Submit", style: UIAlertActionStyle.default, handler: { (_) in
+            let titleTextField = alert.textFields![0]
+            let authorTextField = alert.textFields![1]
+            let publisherTextField = alert.textFields![2]
+            let tagsTextField = alert.textFields![3]
+            var dictionary = [String: Any]()
+            if titleTextField.text != "" {
+                guard let unwrappedTitle = titleTextField.text else { return }
+                dictionary["title"] = unwrappedTitle
+            }
+            if authorTextField.text != "" {
+                guard let unwrappedAuthor = authorTextField.text else { return }
+                dictionary["author"] = unwrappedAuthor
+            }
+            if publisherTextField.text != "" {
+                guard let unwrappedPublisher = publisherTextField.text else { return }
+                dictionary["publisher"] = unwrappedPublisher
+            }
+            if tagsTextField.text != "" {
+                guard let unwrappedTags = tagsTextField.text else { return }
+                dictionary["categories"] = unwrappedTags
+            }
+            BookAPICalls.server(update: self.book.id, dictionary: dictionary, completion: { (success) in
+                if success {
+                    OperationQueue.main.addOperation {
+                        let booksTableViewController: BooksTableViewController = BooksTableViewController()
+                        self.navigationController?.pushViewController(booksTableViewController, animated: true)
+                    }
+                }
+            })
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
     // MARK: - Share drop down config & funcs

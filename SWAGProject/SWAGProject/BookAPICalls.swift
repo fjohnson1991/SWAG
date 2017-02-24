@@ -98,12 +98,9 @@ struct BookAPICalls {
     //    }
     
     // PUT
-    static func server(update id: Int, lastCheckedOutBy: String, lastCheckedOut: String, completion: @escaping (Bool) -> Void) {
+    static func server(update id: Int, dictionary:[String: Any], completion: @escaping (Bool) -> Void) {
         guard let url = URL(string: "http://prolific-interview.herokuapp.com/58ab049e53fba2000ab50b6e/books/\(id)") else { return }
         var urlRequest = URLRequest(url: url)
-        var dictionary = [String: Any]()
-        dictionary["lastCheckedOutBy"] = lastCheckedOutBy
-        dictionary["lastCheckedOut"] = lastCheckedOut
         let jsonData = try? JSONSerialization.data(withJSONObject: dictionary, options: [])
         guard let unwrappedData = jsonData else { return }
         urlRequest.httpBody = unwrappedData
