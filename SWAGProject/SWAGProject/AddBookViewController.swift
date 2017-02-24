@@ -10,23 +10,17 @@ import UIKit
 
 class AddBookViewController: UIViewController {
     
-    let addBookView = AddBookView()
-    var addBookViewBottomConstraintNoKeyboard: NSLayoutConstraint?
-    var addBookViewBottomConstraintWithKeyboard: NSLayoutConstraint?
+    var addBookView: AddBookView!
+    var addBookViewBottomConstraintConstant: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configView()
+        configureView()
         setUpNotifications()
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    func configView() {
+    func configureView() {
         self.view.backgroundColor = UIColor.white
         self.title = "Add Book"
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneButtonCheck))
@@ -34,11 +28,14 @@ class AddBookViewController: UIViewController {
         self.navigationItem.setHidesBackButton(true, animated:true)
         self.hideKeyboardWhenTappedAround(isActive: true)
         
+        addBookView = AddBookView()
         addBookView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(addBookView)
         addBookView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 10).isActive = true
-        addBookViewBottomConstraintNoKeyboard = addBookView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0)
-        addBookViewBottomConstraintNoKeyboard?.isActive = true
+        addBookViewBottomConstraintConstant = NSLayoutConstraint()
+        addBookViewBottomConstraintConstant.constant = 0.0
+        addBookViewBottomConstraintConstant = addBookView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: addBookViewBottomConstraintConstant.constant)
+        addBookViewBottomConstraintConstant?.isActive = true
         addBookView.widthAnchor.constraint(equalTo: self.view.widthAnchor, constant: 0).isActive = true
     }
     
@@ -46,7 +43,6 @@ class AddBookViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(invalidEntriesError), name: Notification.Name("empty-entries-error"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(successfulSubmitBook), name: Notification.Name("successful-submit-book"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(areYouSure), name: Notification.Name("are-you-sure"), object: nil)
-        
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: Notification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: Notification.Name.UIKeyboardWillHide, object: nil)
     }
@@ -55,6 +51,8 @@ class AddBookViewController: UIViewController {
         NotificationCenter.default.removeObserver(self, name: Notification.Name("empty-entries-error"), object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name("successful-submit-book"), object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name("are-you-sure"), object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.UIKeyboardWillHide, object: nil)
     }
     
     func clearTextFields() {
@@ -90,7 +88,6 @@ class AddBookViewController: UIViewController {
         let booksTableViewController: BooksTableViewController = BooksTableViewController()
         self.navigationController?.pushViewController(booksTableViewController, animated: true)
         removeNotifications()
-        // MAKE SURE OBSERVERS STILL WORK IF DECIDE TO ADD A SECOND BOOK AFTER THE FIRST HAS BEEN COMPLETED
     }
 }
 
@@ -128,10 +125,10 @@ extension AddBookViewController {
     func keyboardWillShow(notification: NSNotification) {
         guard let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue else { print("Error calc keyboard size"); return }
         if addBookView.categoriesTextField.isEditing {
+            self.view.layoutIfNeeded()
             UIView.animate(withDuration: 1, animations: {
-                self.addBookViewBottomConstraintNoKeyboard?.isActive = false
-                self.addBookViewBottomConstraintWithKeyboard = self.addBookView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: ((keyboardSize.size.height * 0.5) + 20))
-                self.addBookViewBottomConstraintWithKeyboard?.isActive = true
+                self.addBookViewBottomConstraintConstant.constant = keyboardSize.size.height * 0.5 + 20.0
+                print(self.addBookViewBottomConstraintConstant.constant)
                 self.view.layoutIfNeeded()
             })
         }
@@ -139,9 +136,9 @@ extension AddBookViewController {
     
     func keyboardWillHide(notification: NSNotification) {
         if self.addBookView.categoriesTextField.isEditing {
+            self.view.layoutIfNeeded()
             UIView.animate(withDuration: 1, animations: {
-                self.addBookViewBottomConstraintWithKeyboard?.isActive = false
-                self.addBookViewBottomConstraintNoKeyboard?.isActive = true
+                self.addBookViewBottomConstraintConstant.constant = 0.0
                 self.view.layoutIfNeeded()
             })
         }

@@ -50,9 +50,9 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configureViews()
+        configureView()
         segmentedControlConfig()
-        constrainViews()
+        constrainView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -61,7 +61,7 @@ class DetailViewController: UIViewController {
         detailView.titleLabel.isHidden = false
     }
     
-    func configureViews() {
+    func configureView() {
         // VC
         self.view.backgroundColor = UIColor.white
         self.title = "Detail"
@@ -94,7 +94,7 @@ class DetailViewController: UIViewController {
         shareDropDownView.cancelButton.addTarget(self, action: #selector(cancelShare), for: .touchUpInside)
     }
     
-    func constrainViews() {
+    func constrainView() {
         // Detail view
         detailView = DetailView()
         detailView.translatesAutoresizingMaskIntoConstraints = false
@@ -272,7 +272,6 @@ class DetailViewController: UIViewController {
             clickToShare = false
             self.shareClickedConstraint?.isActive = false
             self.shareRemovedConstraint?.isActive = false
-            self.constrainViews()
         }
     }
     
@@ -298,7 +297,6 @@ class DetailViewController: UIViewController {
         clickToShare = false
         self.shareClickedConstraint?.isActive = false
         self.shareRemovedConstraint?.isActive = false
-        self.constrainViews()
     }
 }
 
