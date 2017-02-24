@@ -43,6 +43,7 @@ class AddBookViewController: UIViewController {
         addBookViewBottomConstraintConstant = addBookView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: addBookViewBottomConstraintConstant.constant)
         addBookViewBottomConstraintConstant?.isActive = true
         addBookView.widthAnchor.constraint(equalTo: self.view.widthAnchor, constant: 0).isActive = true
+        addBookView.delegate = self 
     }
     
     func setUpNotifications() {
@@ -114,7 +115,7 @@ extension AddBookViewController {
     
     func areYouSure() {
         let yesAction = UIAlertAction(title: "Yes", style: .default) {(action: UIAlertAction) in
-            self.addBookView.submitButtonPressed()
+            self.addBookView.delegate.submitButtonPressed()
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         presentAlertWith(title: "Are you sure?", message: "You have not filled in all the information.", okAction: yesAction, cancelAction: cancelAction)
@@ -153,5 +154,25 @@ extension AddBookViewController {
             completion(true, keyboardSize.height)
         }
         completion(false, nil)
+    }
+}
+
+// MARK: - Handle AddBookViewProtocol protocol 
+extension AddBookViewController: AddBookViewProtocol {
+    
+    func submitButtonPressed() {
+        guard
+            let title = addBookView.titleTextField.text,
+            let author = addBookView.authorTextField.text
+            else { print("titleTextField and authorTextField error unwrapping in ABV"); return }
+        let categories = addBookView.categoriesTextField.text ?? ""
+        let publisher = addBookView.publisherTextField.text ?? ""
+        BookAPICalls.server(post: author, categories: categories, title: title, publisher: publisher) { (success) in
+            if success {
+                OperationQueue.main.addOperation {
+                    NotificationCenter.default.post(name: Notification.Name("successful-submit-book"), object: nil)
+                }
+            }
+        }
     }
 }

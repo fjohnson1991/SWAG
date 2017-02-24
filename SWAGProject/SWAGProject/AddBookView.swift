@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol AddBookViewProtocol: class {
+    func submitButtonPressed()
+}
+
 class AddBookView: UIView, UITextFieldDelegate {
     
     var titleTextField: UITextField!
@@ -15,6 +19,7 @@ class AddBookView: UIView, UITextFieldDelegate {
     var publisherTextField: UITextField!
     var categoriesTextField: UITextField!
     var submitButton: UIButton!
+    weak var delegate: AddBookViewProtocol!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -105,23 +110,7 @@ class AddBookView: UIView, UITextFieldDelegate {
             NotificationCenter.default.post(name: Notification.Name("are-you-sure"), object: nil)
         }
         if titleTextField.text != "" && authorTextField.text != "" && categoriesTextField.text != "" && publisherTextField.text != "" {
-            submitButtonPressed()
-        }
-    }
-    
-    func submitButtonPressed() {
-        guard
-            let title = titleTextField.text,
-            let author = authorTextField.text
-            else { print("titleTextField and authorTextField error unwrapping in ABV"); return }
-        let categories = categoriesTextField.text ?? ""
-        let publisher = publisherTextField.text ?? ""
-        BookAPICalls.server(post: author, categories: categories, title: title, publisher: publisher) { (success) in
-            if success {
-                OperationQueue.main.addOperation {
-                    NotificationCenter.default.post(name: Notification.Name("successful-submit-book"), object: nil)
-                }
-            }
+            delegate.submitButtonPressed()
         }
     }
 }

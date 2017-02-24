@@ -33,9 +33,9 @@ class BooksTableViewController: UITableViewController {
         } else {
             
         }
-        if self.view.subviews.contains(noDataView) {
-            noDataView.removeFromSuperview()
-        }
+//        if self.view.subviews.contains(noDataView) {
+//            noDataView.removeFromSuperview()
+//        }
     }
     
     func configureLayout() {
