@@ -8,15 +8,13 @@
 
 import UIKit
 
-protocol ShareDropDownViewProtocol {
+protocol ShareDropDownViewProtocol: class {
     func facebookWasClicked()
     func twitterWasClicked()
     func cancelWasClicked()
 }
 
 class ShareDropDownView: UIView {
-    
-    var delegate: ShareDropDownViewProtocol
     
     lazy var facebookButton: UIButton = {
         let button = UIButton()
@@ -66,6 +64,8 @@ class ShareDropDownView: UIView {
         return button
     }()
     
+    weak var delegate: ShareDropDownViewProtocol!
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViewConstraints()
@@ -112,10 +112,10 @@ class ShareDropDownView: UIView {
     }
     
     func twitterWasTapped() {
-        delegate.facebookWasClicked()
+        delegate.twitterWasClicked()
     }
     
     func cancelWasTapped() {
-        delegate.facebookWasClicked()
+        delegate.cancelWasClicked()
     }
 }

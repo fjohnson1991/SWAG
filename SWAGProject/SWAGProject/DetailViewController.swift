@@ -51,8 +51,6 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        shareDropDownView.delegate = self
-        
         configureLayout()
         setupViewConstraints()
     }
@@ -64,8 +62,6 @@ class DetailViewController: UIViewController {
     }
     
     func configureLayout() {
-        
-        
         // VC
         self.view.backgroundColor = UIColor.white
         self.title = "Detail"
@@ -105,9 +101,7 @@ class DetailViewController: UIViewController {
         // Share drop down
         shareDropDownView = ShareDropDownView()
         shareDropDownView.isHidden = true
-        shareDropDownView.facebookButton.addTarget(self, action: #selector(facebookShare), for: .touchUpInside)
-        shareDropDownView.twitterButton.addTarget(self, action: #selector(twitterShare), for: .touchUpInside)
-        shareDropDownView.cancelButton.addTarget(self, action: #selector(cancelShare), for: .touchUpInside)
+        shareDropDownView.delegate = self
     }
     
     func setupViewConstraints() {
@@ -357,30 +351,6 @@ class DetailViewController: UIViewController {
             self.shareRemovedConstraint.isActive = false
         }
     }
-    
-    func facebookShare() {
-        let content : FBSDKShareLinkContent = FBSDKShareLinkContent()
-        content.contentURL = URL(string: "http://www.SWAG4PI.com")
-        content.contentTitle = "\(book.title)"
-        content.contentDescription = "By: \(book.author)"
-        FBSDKShareDialog.show(from: self, with: content, delegate: self)
-    }
-    
-    func twitterShare() {
-        let vc = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
-        guard let unwrappedVC = vc else { print("Error unwrapping twitterShare details in DVC"); return }
-        unwrappedVC.setInitialText("Share your thoughts on \(book.title) here.")
-        unwrappedVC.add(URL(string: "http://www.SWAG4PI.com"))
-        present(unwrappedVC, animated: true, completion: nil)
-    }
-    
-    func cancelShare() {
-        backgroundView.removeFromSuperview()
-        shareDropDownView.isHidden = true
-        clickToShare = false
-        self.shareClickedConstraint.isActive = false
-        self.shareRemovedConstraint.isActive = false
-    }
 }
 
 // MARK: - Handle FBSDKSharingDelegate protocol
@@ -399,9 +369,29 @@ extension DetailViewController: FBSDKSharingDelegate {
     }
 }
 
-
+// MARK: - Handle ShareDropDownViewProtocol protocol
 extension DetailViewController: ShareDropDownViewProtocol {
-    func wasClicked() {
-        print("was clicked")
+    func facebookWasClicked() {
+        let content : FBSDKShareLinkContent = FBSDKShareLinkContent()
+        content.contentURL = URL(string: "http://www.SWAG4PI.com")
+        content.contentTitle = "\(book.title)"
+        content.contentDescription = "By: \(book.author)"
+        FBSDKShareDialog.show(from: self, with: content, delegate: self)
+    }
+    
+    func twitterWasClicked() {
+        let vc = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
+        guard let unwrappedVC = vc else { print("Error unwrapping twitterShare details in DVC"); return }
+        unwrappedVC.setInitialText("Share your thoughts on \(book.title) here.")
+        unwrappedVC.add(URL(string: "http://www.SWAG4PI.com"))
+        present(unwrappedVC, animated: true, completion: nil)
+    }
+    
+    func cancelWasClicked() {
+        backgroundView.removeFromSuperview()
+        shareDropDownView.isHidden = true
+        clickToShare = false
+        self.shareClickedConstraint.isActive = false
+        self.shareRemovedConstraint.isActive = false
     }
 }
