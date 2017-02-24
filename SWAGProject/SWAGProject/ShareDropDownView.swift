@@ -57,7 +57,7 @@ class ShareDropDownView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        constrain()
+        setupViewConstraints()
         formatButtons()
     }
     
@@ -65,7 +65,7 @@ class ShareDropDownView: UIView {
         super.init(coder: aDecoder)
     }
     
-    private func constrain() {
+    private func setupViewConstraints() {
         facebookButton.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(facebookButton)
         facebookButton.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0).isActive = true

@@ -37,15 +37,15 @@ class DetailViewController: UIViewController {
  
     var detailView: DetailView!
     var segmentedControl: UISegmentedControl!
+    var segmentItems: [SegmentItems]!
+    var book: Book!
     var checkoutButton: UIButton!
     var deleteButton: UIButton!
     var shareDropDownView: ShareDropDownView!
     var backgroundView: UIView!
-    var shareClickedConstraint: NSLayoutConstraint?
-    var shareRemovedConstraint: NSLayoutConstraint?
+    var shareClickedConstraint: NSLayoutConstraint!
+    var shareRemovedConstraint: NSLayoutConstraint!
     var clickToShare = false
-    var segmentItems: [SegmentItems]!
-    var book: Book!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -255,7 +255,7 @@ class DetailViewController: UIViewController {
         shareDropDownView.translatesAutoresizingMaskIntoConstraints = false
         self.backgroundView.addSubview(shareDropDownView)
         shareClickedConstraint = shareDropDownView.topAnchor.constraint(equalTo: self.backgroundView.topAnchor, constant: 0)
-        shareClickedConstraint?.isActive = true
+        shareClickedConstraint.isActive = true
         shareDropDownView.trailingAnchor.constraint(equalTo: self.backgroundView.trailingAnchor, constant: 0).isActive = true
         shareDropDownView.heightAnchor.constraint(equalToConstant: 300).isActive = true
         shareDropDownView.widthAnchor.constraint(equalToConstant: 100).isActive = true
@@ -266,15 +266,15 @@ class DetailViewController: UIViewController {
             configDropDownView()
             shareDropDownView.isHidden = false
             clickToShare = true
-            self.shareClickedConstraint?.isActive = false
+            self.shareClickedConstraint.isActive = false
             self.shareRemovedConstraint = self.shareDropDownView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0)
             self.shareRemovedConstraint?.isActive = true
         } else {
             backgroundView.removeFromSuperview()
             shareDropDownView.isHidden = true
             clickToShare = false
-            self.shareClickedConstraint?.isActive = false
-            self.shareRemovedConstraint?.isActive = false
+            self.shareClickedConstraint.isActive = false
+            self.shareRemovedConstraint.isActive = false
         }
     }
     
@@ -298,8 +298,8 @@ class DetailViewController: UIViewController {
         backgroundView.removeFromSuperview()
         shareDropDownView.isHidden = true
         clickToShare = false
-        self.shareClickedConstraint?.isActive = false
-        self.shareRemovedConstraint?.isActive = false
+        self.shareClickedConstraint.isActive = false
+        self.shareRemovedConstraint.isActive = false
     }
 }
 

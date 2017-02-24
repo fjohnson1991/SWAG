@@ -45,8 +45,8 @@ class ClearBooksView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configure()
-        constrain()
+        configViewLayout()
+        setupViewConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -54,9 +54,9 @@ class ClearBooksView: UIView {
     }
     
     // MARK: View Configuration
-    private func configure() {
+    private func configViewLayout() {
         self.backgroundColor = UIColor.themeBlue
-        
+
         deleteDropDownStackView.addArrangedSubview(deleteLabel)
         deleteDropDownStackView.addArrangedSubview(executeDeleteButton)
         deleteDropDownStackView.addArrangedSubview(cancelButton)
@@ -68,7 +68,7 @@ class ClearBooksView: UIView {
     }
     
     // MARK: View Constraints
-    private func constrain() {
+    private func setupViewConstraints() {
         deleteDropDownStackView.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(deleteDropDownStackView)
         deleteDropDownStackView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 1).isActive = true

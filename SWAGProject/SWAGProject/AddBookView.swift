@@ -18,15 +18,15 @@ class AddBookView: UIView, UITextFieldDelegate {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configure()
-        constrain()
+        configViewLayout()
+        setupViewConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure() {
+    func configViewLayout() {
         // textFields
         titleTextField = UITextField()
         titleTextField.attributedPlaceholder = NSAttributedString(string: "Book Title")
@@ -56,7 +56,8 @@ class AddBookView: UIView, UITextFieldDelegate {
         submitButton.addTarget(self, action: #selector(submitButtonPressedChecks), for: .touchUpInside)
     }
     
-    func config(_ textField: UITextField) {
+    // MARK: - Helper func to configure textFields 
+    private func config(_ textField: UITextField) {
         textField.delegate = self
         textField.font = UIFont.themeSmallBold
         textField.textAlignment = .left
@@ -66,7 +67,7 @@ class AddBookView: UIView, UITextFieldDelegate {
         textField.setLeftPaddingPoints(10)
     }
     
-    func constrain() {
+    private func setupViewConstraints() {
         // stackView
         let stackViewItemsToAdd = [titleTextField, authorTextField, publisherTextField, categoriesTextField]
         let stackView = UIStackView()
@@ -95,15 +96,14 @@ class AddBookView: UIView, UITextFieldDelegate {
         submitButton.widthAnchor.constraint(equalToConstant: 150).isActive = true
     }
     
+    // Submit button selector func
     func submitButtonPressedChecks() {
         if titleTextField.text == "" || authorTextField.text == "" {
             NotificationCenter.default.post(name: Notification.Name("empty-entries-error"), object: nil)
         }
-        
         if titleTextField.text != "" && authorTextField.text != "" && categoriesTextField.text == "" || publisherTextField.text == "" {
             NotificationCenter.default.post(name: Notification.Name("are-you-sure"), object: nil)
         }
-        
         if titleTextField.text != "" && authorTextField.text != "" && categoriesTextField.text != "" && publisherTextField.text != "" {
             submitButtonPressed()
         }
@@ -116,7 +116,6 @@ class AddBookView: UIView, UITextFieldDelegate {
             else { print("titleTextField and authorTextField error unwrapping in ABV"); return }
         let categories = categoriesTextField.text ?? ""
         let publisher = publisherTextField.text ?? ""
-        
         BookAPICalls.server(post: author, categories: categories, title: title, publisher: publisher) { (success) in
             if success {
                 OperationQueue.main.addOperation {
@@ -127,6 +126,7 @@ class AddBookView: UIView, UITextFieldDelegate {
     }
 }
 
+// MARK: - UITextFieldDelegate funcs
 extension AddBookView {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         textField.textField(change: true)

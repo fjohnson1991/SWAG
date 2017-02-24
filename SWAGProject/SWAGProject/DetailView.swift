@@ -67,26 +67,27 @@ class DetailView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configureViews()
-        constrainViews()
+        configViewLayout()
+        setupViewConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configureViews() {
+    private func configViewLayout() {
         self.layer.borderWidth = 2.0
         self.layer.borderColor = UIColor.themeOrange.cgColor
     }
     
-    private func constrainViews() {
+    private func setupViewConstraints() {
         let labels = [titleLabel, authorLabel, publisherLabel, tagsLabel, lastCheckedOutLabel]
         for label in labels {
             constrain(label)
         }
     }
     
+    // MARK: - Helper func to constrain labels 
     private func constrain(_ label: UILabel) {
         label.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(label)
@@ -96,6 +97,7 @@ class DetailView: UIView {
         label.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 0).isActive = true
     }
     
+    // MARK: - Helper funcs called in DetailVC segmentedControlSegues()
     func formatCategories(of bookTags: String) -> String {
         let tagArray = bookTags.components(separatedBy: ",")
         return tagArray.joined(separator: "\n").capitalized

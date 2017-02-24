@@ -121,15 +121,17 @@ extension AddBookViewController {
     }
     
     func keyboardWillShow(notification: NSNotification) {
-        guard let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue else { print("Error calc keyboard size"); return }
-        if addBookView.publisherTextField.isEditing {
-            self.view.layoutIfNeeded()
-            UIView.animate(withDuration: 1, animations: {
-                self.addBookViewBottomConstraintConstant.constant = keyboardSize.size.height * 0.3
-                print(self.addBookViewBottomConstraintConstant.constant)
-                self.addBookViewTopConstraintConstant.constant = -keyboardSize.size.height * 0.3
-                self.view.layoutIfNeeded()
-            })
+        keyboardWillCoverCheck(notification: notification) { (willCover, keyboardHeight) in
+            if willCover {
+                if (addBookView.publisherTextField.isEditing && addBookView.categoriesTextField.text == "") || (addBookView.publisherTextField.text == "" && addBookView.categoriesTextField.isEditing) {
+                    self.view.layoutIfNeeded()
+                    UIView.animate(withDuration: 1, animations: {
+                        self.addBookViewBottomConstraintConstant.constant = keyboardHeight! * 0.3
+                        self.addBookViewTopConstraintConstant.constant = -(keyboardHeight! * 0.3)
+                        self.view.layoutIfNeeded()
+                    })
+                }
+            }
         }
     }
     
@@ -143,5 +145,13 @@ extension AddBookViewController {
                 self.view.layoutIfNeeded()
             })
         }
+    }
+    
+    private func keyboardWillCoverCheck(notification: NSNotification, completion: (Bool, CGFloat?) -> Void) {
+        guard let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue else { print("Error calc keyboard size"); return }
+        if self.view.frame.height/2 < (keyboardSize.height - 37) {
+            completion(true, keyboardSize.height)
+        }
+        completion(false, nil)
     }
 }

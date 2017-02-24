@@ -9,11 +9,6 @@
 import UIKit
 
 class BookTableViewCell: UITableViewCell {
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        configViewLayout()
-    }
     
     lazy var titleLabel: UILabel! = {
         let label = UILabel()
@@ -34,8 +29,13 @@ class BookTableViewCell: UITableViewCell {
         label.lineBreakMode = .byWordWrapping
         return label
     }()
+
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        configViewLayout()
+    }
     
-    func configViewLayout() {
+    private func configViewLayout() {
         let stackView = UIStackView()
         stackView.axis = UILayoutConstraintAxis.vertical
         stackView.distribution = UIStackViewDistribution.fill
