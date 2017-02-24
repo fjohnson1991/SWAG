@@ -12,6 +12,7 @@ class AddBookViewController: UIViewController {
     
     var addBookView: AddBookView!
     var addBookViewBottomConstraintConstant: NSLayoutConstraint!
+    var addBookViewTopConstraintConstant: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +34,10 @@ class AddBookViewController: UIViewController {
         addBookView = AddBookView()
         addBookView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(addBookView)
-        addBookView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 10).isActive = true
+        addBookViewTopConstraintConstant = NSLayoutConstraint()
+        addBookViewTopConstraintConstant.constant = 10
+        addBookViewTopConstraintConstant = addBookView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: addBookViewTopConstraintConstant.constant)
+        addBookViewTopConstraintConstant.isActive = true
         addBookViewBottomConstraintConstant = NSLayoutConstraint()
         addBookViewBottomConstraintConstant.constant = 0.0
         addBookViewBottomConstraintConstant = addBookView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: addBookViewBottomConstraintConstant.constant)
@@ -118,21 +122,24 @@ extension AddBookViewController {
     
     func keyboardWillShow(notification: NSNotification) {
         guard let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue else { print("Error calc keyboard size"); return }
-        if addBookView.categoriesTextField.isEditing {
+        if addBookView.publisherTextField.isEditing {
             self.view.layoutIfNeeded()
             UIView.animate(withDuration: 1, animations: {
-                self.addBookViewBottomConstraintConstant.constant = keyboardSize.size.height * 0.5 + 20.0
+                self.addBookViewBottomConstraintConstant.constant = keyboardSize.size.height * 0.3
                 print(self.addBookViewBottomConstraintConstant.constant)
+                self.addBookViewTopConstraintConstant.constant = -keyboardSize.size.height * 0.3
                 self.view.layoutIfNeeded()
             })
         }
     }
     
     func keyboardWillHide(notification: NSNotification) {
-        if self.addBookView.categoriesTextField.isEditing {
+        guard let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue else { print("Error calc keyboard size"); return }
+        if self.addBookViewBottomConstraintConstant.constant == keyboardSize.size.height * 0.3 {
             self.view.layoutIfNeeded()
             UIView.animate(withDuration: 1, animations: {
                 self.addBookViewBottomConstraintConstant.constant = 0.0
+                self.addBookViewTopConstraintConstant.constant = 10.0
                 self.view.layoutIfNeeded()
             })
         }
