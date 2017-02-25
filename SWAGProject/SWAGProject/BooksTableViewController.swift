@@ -132,8 +132,9 @@ extension BooksTableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "bookCell", for: indexPath) as! BookTableViewCell
-        cell.titleLabel.text = cell.capitalizeWords(in: dataStore.bookArray[indexPath.row].title)
-        cell.authorLabel.text = cell.capitalizeWords(in: dataStore.bookArray[indexPath.row].author)
+        let currentBook = dataStore.bookArray[indexPath.row]
+        cell.titleLabel.text = currentBook.capitalizeWords(in: currentBook.title)
+        cell.authorLabel.text = currentBook.capitalizeWords(in: currentBook.author)
         return cell
     }
     

@@ -51,4 +51,20 @@ class Book {
         self.lastCheckedOutBy = lastCheckedOutBy
         self.publisher = publisher
     }
+    
+    func capitalizeWords(in bookItem: String) -> String {
+        let labelCharArray = Array(bookItem.characters)
+        var arrayWithApostrophe = [String]()
+        var finalString = String()
+        if labelCharArray.contains("'") {
+            let components = bookItem.components(separatedBy: "'")
+            for item in components {
+                arrayWithApostrophe.append(item.capitalized)
+            }
+            finalString = arrayWithApostrophe.joined(separator: "'")
+        } else {
+            finalString = bookItem.capitalized
+        }
+        return finalString
+    }
 }

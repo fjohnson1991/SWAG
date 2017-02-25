@@ -98,22 +98,6 @@ class DetailView: UIView {
     }
     
     // MARK: - Helper funcs called in DetailVC segmentedControlSegues()
-    func capitalizeWords(in label: String) -> String {
-        let labelCharArray = Array(label.characters)
-        var arrayWithApostrophe = [String]()
-        var finalString = String()
-        if labelCharArray.contains("'") {
-            let components = label.components(separatedBy: "'")
-            for item in components {
-                arrayWithApostrophe.append(item.capitalized)
-            }
-            finalString = arrayWithApostrophe.joined(separator: "'")
-        } else {
-            finalString = label.capitalized
-        }
-        return finalString
-    }
-    
     func formatCategories(of bookTags: String) -> String {
         let tagArray = bookTags.components(separatedBy: ",")
         return tagArray.joined(separator: "\n").capitalized

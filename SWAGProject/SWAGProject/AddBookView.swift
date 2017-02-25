@@ -71,6 +71,7 @@ class AddBookView: UIView, UITextFieldDelegate {
         textField.layer.borderColor = UIColor.themeOrange.cgColor
         textField.setLeftPaddingPoints(10)
         textField.autocapitalizationType = .words
+        textField.autocorrectionType = .yes
     }
     
     private func setupViewConstraints() {

@@ -57,7 +57,7 @@ class DetailViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         segmentedControl.selectedSegmentIndex = 0
-        detailView.titleLabel.text = book.title
+        detailView.titleLabel.text = book.capitalizeWords(in: book.title)
         detailView.titleLabel.isHidden = false
     }
     
@@ -176,18 +176,18 @@ class DetailViewController: UIViewController {
         case .title:
             hideAllLabels()
             animateTransition()
-            detailView.titleLabel.text = detailView.capitalizeWords(in: book.title)
+            detailView.titleLabel.text = book.capitalizeWords(in: book.title)
             detailView.titleLabel.isHidden = false
         case .author:
             hideAllLabels()
             animateTransition()
             detailView.authorLabel.isHidden = false
-            detailView.authorLabel.text = detailView.capitalizeWords(in: book.author)
+            detailView.authorLabel.text = book.capitalizeWords(in: book.author)
         case .publisher:
             hideAllLabels()
             animateTransition()
             detailView.publisherLabel.isHidden = false
-            detailView.publisherLabel.text = detailView.capitalizeWords(in: book.publisher!)
+            detailView.publisherLabel.text = book.capitalizeWords(in: book.publisher!)
         case .tags:
             hideAllLabels()
             animateTransition()
@@ -273,18 +273,22 @@ class DetailViewController: UIViewController {
         let alert = UIAlertController(title: "Update book?", message: "Please enter the book's updated information below.", preferredStyle: UIAlertControllerStyle.alert)
         alert.addTextField { (titleTextField) in
             titleTextField.autocapitalizationType = .words
+            titleTextField.autocorrectionType = .yes
             titleTextField.placeholder = "Update title here"
         }
         alert.addTextField { (authorTextField) in
             authorTextField.autocapitalizationType = .words
+            authorTextField.autocorrectionType = .yes
             authorTextField.placeholder = "Update author here"
         }
         alert.addTextField { (publisherTextField) in
             publisherTextField.autocapitalizationType = .words
+            publisherTextField.autocorrectionType = .yes
             publisherTextField.placeholder = "Update publisher here"
         }
         alert.addTextField { (tagsTextField) in
             tagsTextField.autocapitalizationType = .words
+            tagsTextField.autocorrectionType = .yes
             tagsTextField.placeholder = "Update tags here"
         }
         alert.addAction(UIAlertAction(title: "Submit", style: UIAlertActionStyle.default, handler: { [unowned alert] (_) in
