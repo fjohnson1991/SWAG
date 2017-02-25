@@ -65,10 +65,13 @@ class BookDataStore {
     }
     
     // MARK: - Delete all books
-    func deleteAllBooks() {
+    func deleteAllBooks(with completion: @escaping (Bool) -> Void) {
         BookAPICalls.clearBooksFromServer { (success) in
             if success {
                 self.populateBookData(with: {_ in })
+                completion(true)
+            } else {
+                completion(false)
             }
         }
     }

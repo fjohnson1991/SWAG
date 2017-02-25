@@ -13,7 +13,7 @@ class NoDataView: UIView {
     lazy var welcomeLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.themeOrange
-        label.font = UIFont.themeMediumBold
+        label.font = UIFont.themeSmallBold
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
         label.textAlignment = .center
@@ -31,11 +31,13 @@ class NoDataView: UIView {
     }
     
     private func configViewLayoutAndConstraints() {
+        backgroundColor = UIColor.themeOffWhite
+        
         welcomeLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(welcomeLabel)
-        welcomeLabel.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        welcomeLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-        welcomeLabel.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.8).isActive = true
-        welcomeLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true 
+        addSubview(welcomeLabel)
+        welcomeLabel.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        welcomeLabel.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        welcomeLabel.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.8).isActive = true
+        welcomeLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
     }
 }

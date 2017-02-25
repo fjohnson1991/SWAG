@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         navigationBarAppearace.tintColor = UIColor.themeOffWhite
         navigationBarAppearace.layer.borderWidth = 0
         navigationBarAppearace.isTranslucent = false
-        navigationBarAppearace.titleTextAttributes = [NSFontAttributeName: UIFont(name: "HelveticaNeue-Bold", size: 32), NSForegroundColorAttributeName: UIColor.white]
+        navigationBarAppearace.titleTextAttributes = [NSFontAttributeName: UIFont(name: "HelveticaNeue-Bold", size: 32)!, NSForegroundColorAttributeName: UIColor.white]
         
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
     }

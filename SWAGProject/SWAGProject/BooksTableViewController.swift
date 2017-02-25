@@ -24,26 +24,7 @@ class BooksTableViewController: UITableViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        dataStore.populateBookData { (success) in
-            if success {
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-            } else {
-                self.presentAlertWithTitle(title: "Sorry!", message: "Failed to fetch book data")
-            }
-        }
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-//        if bookArray.count == 0 {
-//            noDataViewConfigure()
-//        } else {
-//            
-//        }
-//        if self.view.subviews.contains(noDataView) {
-//            noDataView.removeFromSuperview()
-//        }
+        showTableViewOrNoDataView()
     }
     
     func configureLayout() {
@@ -63,7 +44,28 @@ class BooksTableViewController: UITableViewController {
         clearBooksView.delegate = self 
     }
     
-    // MARK: - Config no data view 
+    // MARK: - Determine if books exist & populate tableView or handle when no data view
+    func showTableViewOrNoDataView() {
+        dataStore.populateBookData { (success) in
+            if success {
+                if self.dataStore.bookArray.count == 0 {
+                    DispatchQueue.main.async {
+                        self.noDataViewConfigure()
+                    }
+                } else if self.dataStore.bookArray.count > 0 {
+                    if self.noDataView != nil && self.view.subviews.contains(self.noDataView) {
+                        self.noDataView.removeFromSuperview()
+                    }
+                }
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            } else {
+                self.presentAlertWithTitle(title: "Sorry!", message: "Failed to fetch book data")
+            }
+        }
+    }
+    
     func noDataViewConfigure() {
         noDataView = NoDataView()
         noDataView.frame = self.view.bounds
@@ -144,15 +146,24 @@ extension BooksTableViewController {
 // MARK: - Handle ClearBooksViewProtocol protocol
 extension BooksTableViewController: ClearBooksViewProtocol {
     func executeDeleteWasClicked() {
-        dataStore.deleteAllBooks()
+        dataStore.deleteAllBooks { (success) in
+            if success {
+                self.cancelWasClicked()
+                self.showTableViewOrNoDataView()
+            } else {
+                self.presentAlertWithTitle(title: "Sorry!", message: "Failed to delete all books.")
+            }
+        }
     }
     
     func cancelWasClicked() {
-        backgroundView.removeFromSuperview()
-        clearBooksView.isHidden = true
         clickToDelete = false
-        self.clearClickedConstraint.isActive = false
-        self.clearRemovedConstraint.isActive = false
+        DispatchQueue.main.async {
+            self.backgroundView.removeFromSuperview()
+            self.clearBooksView.isHidden = true
+            self.clearClickedConstraint.isActive = false
+            self.clearRemovedConstraint.isActive = false
+        }
     }
 }
 
