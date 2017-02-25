@@ -98,18 +98,18 @@ class DetailView: UIView {
     }
     
     // MARK: - Helper funcs called in DetailVC segmentedControlSegues()
-    func formatPublisher(of bookPublisher: String) -> String {
-        let publisherCharArray = Array(bookPublisher.characters)
+    func capitalizeWords(in label: String) -> String {
+        let labelCharArray = Array(label.characters)
         var arrayWithApostrophe = [String]()
         var finalString = String()
-        if publisherCharArray.contains("'") {
-            let components = bookPublisher.components(separatedBy: "'")
+        if labelCharArray.contains("'") {
+            let components = label.components(separatedBy: "'")
             for item in components {
                 arrayWithApostrophe.append(item.capitalized)
             }
             finalString = arrayWithApostrophe.joined(separator: "'")
         } else {
-            finalString = bookPublisher.capitalized
+            finalString = label.capitalized
         }
         return finalString
     }

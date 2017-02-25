@@ -49,4 +49,21 @@ class BookTableViewCell: UITableViewCell {
         stackView.addArrangedSubview(titleLabel)
         stackView.addArrangedSubview(authorLabel)
     }
+    
+    // MARK: - Helper func called in BooksTableVC
+    func capitalizeWords(in label: String) -> String {
+        let labelCharArray = Array(label.characters)
+        var arrayWithApostrophe = [String]()
+        var finalString = String()
+        if labelCharArray.contains("'") {
+            let components = label.components(separatedBy: "'")
+            for item in components {
+                arrayWithApostrophe.append(item.capitalized)
+            }
+            finalString = arrayWithApostrophe.joined(separator: "'")
+        } else {
+            finalString = label.capitalized
+        }
+        return finalString
+    }
 }
