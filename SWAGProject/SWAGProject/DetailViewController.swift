@@ -176,18 +176,18 @@ class DetailViewController: UIViewController {
         case .title:
             hideAllLabels()
             animateTransition()
-            detailView.titleLabel.text = book.title
+            detailView.titleLabel.text = book.title.capitalized
             detailView.titleLabel.isHidden = false
         case .author:
             hideAllLabels()
             animateTransition()
             detailView.authorLabel.isHidden = false
-            detailView.authorLabel.text = book.author
+            detailView.authorLabel.text = book.author.capitalized
         case .publisher:
             hideAllLabels()
             animateTransition()
             detailView.publisherLabel.isHidden = false
-            detailView.publisherLabel.text = book.publisher
+            detailView.publisherLabel.text = detailView.formatPublisher(of: book.publisher!)
         case .tags:
             hideAllLabels()
             animateTransition()
