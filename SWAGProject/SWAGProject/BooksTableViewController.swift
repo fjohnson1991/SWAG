@@ -10,7 +10,7 @@ import UIKit
 
 class BooksTableViewController: UITableViewController {
     
-    var bookArray = [Book]()
+    let dataStore = BookDataStore.sharedInstance
     var clearBooksView: ClearBooksView!
     var backgroundView: UIView!
     var noDataView: NoDataView!
@@ -24,7 +24,15 @@ class BooksTableViewController: UITableViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        populateBookData()
+        dataStore.populateBookData { (success) in
+            if success {
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            } else {
+                self.presentAlertWithTitle(title: "Sorry!", message: "Failed to fetch book data")
+            }
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -53,22 +61,6 @@ class BooksTableViewController: UITableViewController {
         clearBooksView = ClearBooksView()
         clearBooksView.isHidden = true
         clearBooksView.delegate = self 
-    }
-    
-    // MARK: - Populate bookArray
-    func populateBookData() {
-        bookArray.removeAll()
-        BookAPICalls.serverRequest { (responseJSON, success) in
-            if success {
-                for response in responseJSON {
-                    guard let newBook = Book(dict: response) else { print("Error populating book data in BTVC"); return }
-                    self.bookArray.append(newBook)
-                }
-                OperationQueue.main.addOperation {
-                    self.tableView.reloadData()
-                }
-            }
-        }
     }
     
     // MARK: - Config no data view 
@@ -120,11 +112,9 @@ class BooksTableViewController: UITableViewController {
     
     func segueToDetailVC(with indexPath: IndexPath) {
         let detailViewController: DetailViewController = DetailViewController()
-        let book = bookArray[indexPath.row]
+        let book = dataStore.bookArray[indexPath.row]
         detailViewController.book = book
-        
         self.navigationController?.pushViewController(detailViewController, animated: true)
-        
     }
 }
 
@@ -136,13 +126,13 @@ extension BooksTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return bookArray.count
+        return dataStore.bookArray.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "bookCell", for: indexPath) as! BookTableViewCell
-        cell.titleLabel.text = bookArray[indexPath.row].title
-        cell.authorLabel.text = bookArray[indexPath.row].author
+        cell.titleLabel.text = dataStore.bookArray[indexPath.row].title
+        cell.authorLabel.text = dataStore.bookArray[indexPath.row].author
         return cell
     }
     
@@ -154,11 +144,7 @@ extension BooksTableViewController {
 // MARK: - Handle ClearBooksViewProtocol protocol
 extension BooksTableViewController: ClearBooksViewProtocol {
     func executeDeleteWasClicked() {
-        BookAPICalls.clearBooksFromServer { (success) in
-            if success {
-                self.populateBookData()
-            }
-        }
+        dataStore.deleteAllBooks()
     }
     
     func cancelWasClicked() {

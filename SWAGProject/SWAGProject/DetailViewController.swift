@@ -16,7 +16,7 @@ enum SegmentItems {
     case publisher
     case tags
     case other
-
+    
     func convertToString() -> String {
         switch self {
         case .title:
@@ -34,7 +34,8 @@ enum SegmentItems {
 }
 
 class DetailViewController: UIViewController {
- 
+    
+    let dataStore = BookDataStore.sharedInstance
     var detailView: DetailView!
     var segmentedControl: UISegmentedControl!
     var segmentItems: [SegmentItems]!
@@ -63,15 +64,15 @@ class DetailViewController: UIViewController {
     
     func configureLayout() {
         // VC
-        self.view.backgroundColor = UIColor.white
-        self.title = "Detail"
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "ShareButton"), style: .done, target: self, action: #selector(shareDropdown))
-        self.navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSFontAttributeName: UIFont.systemFont(ofSize: 12, weight: UIFontWeightSemibold), NSForegroundColorAttributeName: UIColor.white],for: UIControlState.normal)
+        view.backgroundColor = UIColor.white
+        title = "Detail"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "ShareButton"), style: .done, target: self, action: #selector(shareDropdown))
+        navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSFontAttributeName: UIFont.systemFont(ofSize: 12, weight: UIFontWeightSemibold), NSForegroundColorAttributeName: UIColor.white],for: UIControlState.normal)
         
         // Segmented control
         segmentedControlConfig()
         
-        // Checkout button 
+        // Checkout button
         checkoutButton = UIButton()
         checkoutButton.setTitle("Checkout", for: .normal)
         checkoutButton.titleLabel?.font = UIFont.themeSmallBold
@@ -108,25 +109,25 @@ class DetailViewController: UIViewController {
         // Detail view
         detailView = DetailView()
         detailView.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(detailView)
-        detailView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 20).isActive = true
-        detailView.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.5).isActive = true
-        detailView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 10).isActive = true
-        detailView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10).isActive = true
-        detailView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: 0).isActive = true
+        view.addSubview(detailView)
+        detailView.topAnchor.constraint(equalTo: view.topAnchor, constant: 20).isActive = true
+        detailView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5).isActive = true
+        detailView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
+        detailView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
+        detailView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0).isActive = true
         
         // Segmented controller
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(segmentedControl)
+        view.addSubview(segmentedControl)
         segmentedControl.heightAnchor.constraint(equalToConstant: 17).isActive = true
-        segmentedControl.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 10).isActive = true
-        segmentedControl.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10).isActive = true
+        segmentedControl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
+        segmentedControl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
         segmentedControl.topAnchor.constraint(equalTo: detailView.bottomAnchor, constant: 8).isActive = true
         segmentedControl.addTarget(self, action: #selector(segmentedControlSegues), for: .valueChanged)
         
         // Checkout button
         checkoutButton.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(checkoutButton)
+        view.addSubview(checkoutButton)
         checkoutButton.centerXAnchor.constraint(equalTo: segmentedControl.centerXAnchor, constant: 0).isActive = true
         checkoutButton.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 10).isActive = true
         checkoutButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
@@ -134,7 +135,7 @@ class DetailViewController: UIViewController {
         
         // Delete button
         deleteButton.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(deleteButton)
+        view.addSubview(deleteButton)
         deleteButton.centerXAnchor.constraint(equalTo: checkoutButton.centerXAnchor, constant: 0).isActive = true
         deleteButton.topAnchor.constraint(equalTo: checkoutButton.bottomAnchor, constant: 10).isActive = true
         deleteButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
@@ -142,12 +143,11 @@ class DetailViewController: UIViewController {
         
         // Update button
         updateButton.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(updateButton)
+        view.addSubview(updateButton)
         updateButton.centerXAnchor.constraint(equalTo: deleteButton.centerXAnchor, constant: 0).isActive = true
         updateButton.topAnchor.constraint(equalTo: deleteButton.bottomAnchor, constant: 10).isActive = true
         updateButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
         updateButton.widthAnchor.constraint(equalToConstant: 150).isActive = true
-
     }
     
     // MARK: - Config segmented control & selector
@@ -226,7 +226,7 @@ class DetailViewController: UIViewController {
         let alert = UIAlertController(title: "Checking out?", message: "Please enter your name below", preferredStyle: UIAlertControllerStyle.alert)
         alert.addTextField { (textField) in
             textField.autocapitalizationType = .words }
-        alert.addAction(UIAlertAction(title: "Submit", style: UIAlertActionStyle.default, handler: { (_) in
+        alert.addAction(UIAlertAction(title: "Submit", style: UIAlertActionStyle.default, handler: { [unowned alert] (_) in
             let nameTextField = alert.textFields![0]
             guard let unwrappedName = nameTextField.text else { print("Error unwrapping name"); return }
             let currentDate = Date()
@@ -236,36 +236,40 @@ class DetailViewController: UIViewController {
             var dictionary = [String: Any]()
             dictionary["lastCheckedOutBy"] = unwrappedName
             dictionary["lastCheckedOut"] = dateString
-            BookAPICalls.server(update: self.book.id, dictionary: dictionary, completion: { (success) in
+            self.dataStore.updateBookInfo(with: self.book.id, dictionary: dictionary, completion: { (success) in
                 if success {
-                    OperationQueue.main.addOperation {
+                    DispatchQueue.main.async {
                         let booksTableViewController: BooksTableViewController = BooksTableViewController()
                         self.navigationController?.pushViewController(booksTableViewController, animated: true)
                     }
+                } else {
+                    self.presentAlertWithTitle(title: "Sorry!", message: "Checkout failed.")
                 }
             })
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        self.present(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
     }
     
-    // MARK: - Delete button selector 
+    // MARK: - Delete button selector
     func deletePressed() {
-        let YesAction = UIAlertAction(title: "Yes", style: .default) {(action: UIAlertAction) in
-            BookAPICalls.deleteBookFromServer(with: self.book.id, completion: { (success) in
+        let yesAction = UIAlertAction(title: "Yes", style: .default) {(_) in
+            self.dataStore.deleteOneBook(with: self.book.id, completion: { (success) in
                 if success {
-                    OperationQueue.main.addOperation {
+                    DispatchQueue.main.async {
                         let booksTableViewController: BooksTableViewController = BooksTableViewController()
                         self.navigationController?.pushViewController(booksTableViewController, animated: true)
                     }
+                } else {
+                    self.presentAlertWithTitle(title: "Sorry!", message: "Delete failed.")
                 }
             })
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        presentAlertWith(title: "Are you sure?", message: "Please comfirm you would like to delete this book.", okAction: YesAction, cancelAction: cancelAction)
+        presentAlertWith(title: "Are you sure?", message: "Please comfirm you would like to delete this book.", okAction: yesAction, cancelAction: cancelAction)
     }
     
-    // MARK: - Update button selector 
+    // MARK: - Update button selector
     func updatePressed() {
         let alert = UIAlertController(title: "Update book?", message: "Please enter the book's updated information below.", preferredStyle: UIAlertControllerStyle.alert)
         alert.addTextField { (titleTextField) in
@@ -284,7 +288,7 @@ class DetailViewController: UIViewController {
             tagsTextField.autocapitalizationType = .words
             tagsTextField.placeholder = "Update tags here"
         }
-        alert.addAction(UIAlertAction(title: "Submit", style: UIAlertActionStyle.default, handler: { (_) in
+        alert.addAction(UIAlertAction(title: "Submit", style: UIAlertActionStyle.default, handler: { [unowned alert] (_) in
             let titleTextField = alert.textFields![0]
             let authorTextField = alert.textFields![1]
             let publisherTextField = alert.textFields![2]
@@ -306,17 +310,19 @@ class DetailViewController: UIViewController {
                 guard let unwrappedTags = tagsTextField.text else { return }
                 dictionary["categories"] = unwrappedTags
             }
-            BookAPICalls.server(update: self.book.id, dictionary: dictionary, completion: { (success) in
+            self.dataStore.updateBookInfo(with: self.book.id, dictionary: dictionary, completion: { (success) in
                 if success {
-                    OperationQueue.main.addOperation {
+                    DispatchQueue.main.async {
                         let booksTableViewController: BooksTableViewController = BooksTableViewController()
                         self.navigationController?.pushViewController(booksTableViewController, animated: true)
                     }
+                } else {
+                    self.presentAlertWithTitle(title: "Sorry!", message: "Update failed.")
                 }
             })
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        self.present(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
     }
     
     // MARK: - Share drop down config & funcs
@@ -324,10 +330,10 @@ class DetailViewController: UIViewController {
         backgroundView = UIView()
         backgroundView.backgroundColor = UIColor.black.withAlphaComponent(0.8)
         backgroundView.frame = self.view.bounds
-        self.view.addSubview(backgroundView)
+        view.addSubview(backgroundView)
         
         shareDropDownView.translatesAutoresizingMaskIntoConstraints = false
-        self.backgroundView.addSubview(shareDropDownView)
+        backgroundView.addSubview(shareDropDownView)
         shareClickedConstraint = shareDropDownView.topAnchor.constraint(equalTo: self.backgroundView.topAnchor, constant: 0)
         shareClickedConstraint.isActive = true
         shareDropDownView.trailingAnchor.constraint(equalTo: self.backgroundView.trailingAnchor, constant: 0).isActive = true
@@ -340,15 +346,15 @@ class DetailViewController: UIViewController {
             configDropDownView()
             shareDropDownView.isHidden = false
             clickToShare = true
-            self.shareClickedConstraint.isActive = false
-            self.shareRemovedConstraint = self.shareDropDownView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0)
-            self.shareRemovedConstraint?.isActive = true
+            shareClickedConstraint.isActive = false
+            shareRemovedConstraint = self.shareDropDownView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0)
+            shareRemovedConstraint?.isActive = true
         } else {
             backgroundView.removeFromSuperview()
             shareDropDownView.isHidden = true
             clickToShare = false
-            self.shareClickedConstraint.isActive = false
-            self.shareRemovedConstraint.isActive = false
+            shareClickedConstraint.isActive = false
+            shareRemovedConstraint.isActive = false
         }
     }
 }
@@ -391,7 +397,7 @@ extension DetailViewController: ShareDropDownViewProtocol {
         backgroundView.removeFromSuperview()
         shareDropDownView.isHidden = true
         clickToShare = false
-        self.shareClickedConstraint.isActive = false
-        self.shareRemovedConstraint.isActive = false
+        shareClickedConstraint.isActive = false
+        shareRemovedConstraint.isActive = false
     }
 }

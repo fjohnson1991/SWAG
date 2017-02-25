@@ -10,6 +10,7 @@ import UIKit
 
 class AddBookViewController: UIViewController {
     
+    let dataStore = BookDataStore.sharedInstance
     var addBookView: AddBookView!
     var addBookViewBottomConstraintConstant: NSLayoutConstraint!
     var addBookViewTopConstraintConstant: NSLayoutConstraint!
@@ -167,11 +168,13 @@ extension AddBookViewController: AddBookViewProtocol {
             else { print("titleTextField and authorTextField error unwrapping in ABV"); return }
             let categories = addBookView.categoriesTextField.text ?? ""
             let publisher = addBookView.publisherTextField.text ?? ""
-        BookAPICalls.server(post: author, categories: categories, title: title, publisher: publisher) { (success) in
+        dataStore.addBookToServer(with: author, categories: categories, title: title, publisher: publisher) { (success) in
             if success {
-                OperationQueue.main.addOperation {
+                DispatchQueue.main.async {
                     NotificationCenter.default.post(name: Notification.Name("successful-submit-book"), object: nil)
                 }
+            } else {
+                self.presentAlertWithTitle(title: "Sorry!", message: "Failed to add book.")
             }
         }
     }

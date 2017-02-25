@@ -8,11 +8,6 @@
 
 import Foundation
 
-//enum Server: String {
-//    case put = "PUT"
-//    case post = "POST"
-//}
-
 struct BookAPICalls {
     
     // GET
@@ -38,7 +33,7 @@ struct BookAPICalls {
     
     // POST
     static func server(post author: String, categories: String?, title: String, publisher: String?, completion: @escaping (Bool) -> Void) {
-        guard let url = URL(string: "http://prolific-interview.herokuapp.com/58ab049e53fba2000ab50b6e/books") else { return }
+        guard let url = URL(string: Constants.serverBaseURL) else { return }
         var urlRequest = URLRequest(url: url)
         var dictionary = [String: Any]()
         dictionary["title"] = title
@@ -70,36 +65,9 @@ struct BookAPICalls {
         task.resume()
     }
     
-    //    static func serverTest(update id: Int, lastCheckedOutBy: String, lastCheckedOut: String) {
-    //
-    //        var dictionary = [String: Any]()
-    //        dictionary["lastCheckedOutBy"] = lastCheckedOutBy
-    //        dictionary["lastCheckedOut"] = lastCheckedOut
-    //
-    //       goToInternet(dictionary: dictionary, server: .post) {
-    //
-    //        }
-    //    }
-    
-    //    static func goToInternet(dictionary:[String: Any], server: Server, completion: () -> ()) {
-    //        guard let url = URL(string: "http://prolific-interview.herokuapp.com/58ab049e53fba2000ab50b6e/books/\(id)") else { return }
-    //        var urlRequest = URLRequest(url: url)
-    //        let jsonData = try? JSONSerialization.data(withJSONObject: dictionary, options: [])
-    //        guard let unwrappedData = jsonData else { return }
-    //        let session = URLSession.shared
-    //        let task = session.dataTask(with: urlRequest) { (data, response, error) in
-    //            guard let data = data else { return }
-    //            do {
-    //                let response = try JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
-    //                print(response)
-    //            } catch {}
-    //        }
-    //        task.resume()
-    //    }
-    
     // PUT
     static func server(update id: Int, dictionary:[String: Any], completion: @escaping (Bool) -> Void) {
-        guard let url = URL(string: "http://prolific-interview.herokuapp.com/58ab049e53fba2000ab50b6e/books/\(id)") else { return }
+        guard let url = URL(string: "\(Constants.serverBaseURL)/\(id)") else { return }
         var urlRequest = URLRequest(url: url)
         let jsonData = try? JSONSerialization.data(withJSONObject: dictionary, options: [])
         guard let unwrappedData = jsonData else { return }
@@ -124,7 +92,7 @@ struct BookAPICalls {
     // DELETE (one book)
     static func deleteBookFromServer(with id: Int, completion: @escaping (Bool) -> Void) {
         let session = URLSession.shared
-        let url = URL(string: "https://prolific-interview.herokuapp.com/58ab049e53fba2000ab50b6e/books/\(id)")
+        let url = URL(string: "\(Constants.serverBaseURL)/\(id)")
         if let unwrappedURL = url {
             var request = URLRequest(url: unwrappedURL)
             request.httpMethod = "DELETE"
