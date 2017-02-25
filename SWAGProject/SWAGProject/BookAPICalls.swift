@@ -13,7 +13,7 @@ struct BookAPICalls {
     // GET
     static func serverRequest(with completion: @escaping (([[String: Any]], Bool) -> Void)) {
         let session = URLSession.shared
-        let url = URL(string: Constants.serverBaseURL)
+        let url = URL(string: "\(Constants.serverBaseURL)/books")
         guard let unwrappedURL = url else { print("Error unwrapping URL in GET in BAC"); return }
         let task = session.dataTask(with: unwrappedURL) { (data, response, error) in
             if error != nil {
@@ -33,7 +33,7 @@ struct BookAPICalls {
     
     // POST
     static func server(post author: String, categories: String?, title: String, publisher: String?, completion: @escaping (Bool) -> Void) {
-        guard let url = URL(string: Constants.serverBaseURL) else { print("Error unwrapping URL in POST in BAC"); return }
+        guard let url = URL(string: "\(Constants.serverBaseURL)/books") else { print("Error unwrapping URL in POST in BAC"); return }
         var urlRequest = URLRequest(url: url)
         var dictionary = [String: Any]()
         dictionary["title"] = title
@@ -62,7 +62,7 @@ struct BookAPICalls {
     
     // PUT
     static func server(update id: Int, dictionary:[String: Any], completion: @escaping (Bool) -> Void) {
-        guard let url = URL(string: "\(Constants.serverBaseURL)/\(id)") else { print("Error unwrapping URL in PUT in BAC"); return }
+        guard let url = URL(string: "\(Constants.serverBaseURL)/books/\(id)") else { print("Error unwrapping URL in PUT in BAC"); return }
         var urlRequest = URLRequest(url: url)
         let jsonData = try? JSONSerialization.data(withJSONObject: dictionary, options: [])
         guard let unwrappedData = jsonData else { print("Error unwrapping data in PUT in BAC"); return }
@@ -87,7 +87,7 @@ struct BookAPICalls {
     // DELETE (one book)
     static func deleteBookFromServer(with id: Int, completion: @escaping (Bool) -> Void) {
         let session = URLSession.shared
-        let url = URL(string: "\(Constants.serverBaseURL)/\(id)")
+        let url = URL(string: "\(Constants.serverBaseURL)/books/\(id)")
         if let unwrappedURL = url {
             var request = URLRequest(url: unwrappedURL)
             request.httpMethod = "DELETE"
@@ -109,7 +109,7 @@ struct BookAPICalls {
     // DELETE (all books)
     static func clearBooksFromServer(with completion: @escaping (Bool) -> Void) {
         let session = URLSession.shared
-        let url = URL(string: "https://prolific-interview.herokuapp.com/58ab049e53fba2000ab50b6e/clean")
+        let url = URL(string: "\(Constants.serverBaseURL)/clean")
         if let unwrappedURL = url {
             var request = URLRequest(url: unwrappedURL)
             request.httpMethod = "DELETE"
