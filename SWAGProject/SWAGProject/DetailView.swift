@@ -90,9 +90,9 @@ class DetailView: UIView {
     // MARK: - Helper func to constrain labels 
     private func constrain(_ label: UILabel) {
         label.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(label)
-        label.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 1).isActive = true
-        label.widthAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.9).isActive = true
+        addSubview(label)
+        label.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 1).isActive = true
+        label.widthAnchor.constraint(equalTo: heightAnchor, multiplier: 0.9).isActive = true
         label.centerXAnchor.constraint(equalTo: centerXAnchor, constant: 0).isActive = true
         label.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 0).isActive = true
     }

@@ -329,14 +329,14 @@ class DetailViewController: UIViewController {
     func configDropDownView() {
         backgroundView = UIView()
         backgroundView.backgroundColor = UIColor.black.withAlphaComponent(0.8)
-        backgroundView.frame = self.view.bounds
+        backgroundView.frame = view.bounds
         view.addSubview(backgroundView)
         
         shareDropDownView.translatesAutoresizingMaskIntoConstraints = false
         backgroundView.addSubview(shareDropDownView)
-        shareClickedConstraint = shareDropDownView.topAnchor.constraint(equalTo: self.backgroundView.topAnchor, constant: 0)
+        shareClickedConstraint = shareDropDownView.topAnchor.constraint(equalTo: backgroundView.topAnchor, constant: 0)
         shareClickedConstraint.isActive = true
-        shareDropDownView.trailingAnchor.constraint(equalTo: self.backgroundView.trailingAnchor, constant: 0).isActive = true
+        shareDropDownView.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: 0).isActive = true
         shareDropDownView.heightAnchor.constraint(equalToConstant: 300).isActive = true
         shareDropDownView.widthAnchor.constraint(equalToConstant: 100).isActive = true
     }
@@ -347,7 +347,7 @@ class DetailViewController: UIViewController {
             shareDropDownView.isHidden = false
             clickToShare = true
             shareClickedConstraint.isActive = false
-            shareRemovedConstraint = self.shareDropDownView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0)
+            shareRemovedConstraint = shareDropDownView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0)
             shareRemovedConstraint?.isActive = true
         } else {
             backgroundView.removeFromSuperview()

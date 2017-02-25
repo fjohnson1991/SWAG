@@ -28,15 +28,15 @@ class BooksTableViewController: UITableViewController {
     }
     
     func configureLayout() {
-        self.view.backgroundColor = UIColor.white
-        self.title = "Books"
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "AddButton"), style: .done, target: self, action: #selector(segueToAddBookVC))
-        self.navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSFontAttributeName: UIFont.systemFont(ofSize: 12, weight: UIFontWeightSemibold), NSForegroundColorAttributeName: UIColor.white],for: UIControlState.normal)
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Clear All", style: .done, target: self, action: #selector(clearBooks))
-        self.navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSFontAttributeName: UIFont.systemFont(ofSize: 12, weight: UIFontWeightSemibold), NSForegroundColorAttributeName: UIColor.white],for: UIControlState.normal)
-        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        self.tableView.register(BookTableViewCell.self, forCellReuseIdentifier: "bookCell")
-        self.tableView.rowHeight = 65
+        view.backgroundColor = UIColor.white
+        title = "Books"
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "AddButton"), style: .done, target: self, action: #selector(segueToAddBookVC))
+        navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSFontAttributeName: UIFont.systemFont(ofSize: 12, weight: UIFontWeightSemibold), NSForegroundColorAttributeName: UIColor.white],for: UIControlState.normal)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Clear All", style: .done, target: self, action: #selector(clearBooks))
+        navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSFontAttributeName: UIFont.systemFont(ofSize: 12, weight: UIFontWeightSemibold), NSForegroundColorAttributeName: UIColor.white],for: UIControlState.normal)
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        tableView.register(BookTableViewCell.self, forCellReuseIdentifier: "bookCell")
+        tableView.rowHeight = 65
         
         // Clear books drop down
         clearBooksView = ClearBooksView()
@@ -69,7 +69,7 @@ class BooksTableViewController: UITableViewController {
     func noDataViewConfigure() {
         noDataView = NoDataView()
         noDataView.frame = self.view.bounds
-        self.view.addSubview(noDataView)
+        view.addSubview(noDataView)
     }
     
     // MARK: - Clear drop down config & funcs
@@ -78,31 +78,31 @@ class BooksTableViewController: UITableViewController {
             configClearBooks()
             clearBooksView.isHidden = false
             clickToDelete = true
-            self.clearClickedConstraint.isActive = false
-            self.clearRemovedConstraint = self.clearBooksView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0)
-            self.clearRemovedConstraint?.isActive = true
+            clearClickedConstraint.isActive = false
+            clearRemovedConstraint = clearBooksView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0)
+            clearRemovedConstraint?.isActive = true
         } else {
             backgroundView.removeFromSuperview()
             clearBooksView.isHidden = true
             clickToDelete = false
-            self.clearClickedConstraint.isActive = false
-            self.clearRemovedConstraint.isActive = false
+            clearClickedConstraint.isActive = false
+            clearRemovedConstraint.isActive = false
         }
     }
     
     func configClearBooks() {
         backgroundView = UIView()
         backgroundView.backgroundColor = UIColor.black.withAlphaComponent(0.8)
-        backgroundView.frame = self.view.bounds
-        self.view.addSubview(backgroundView)
+        backgroundView.frame = view.bounds
+        view.addSubview(backgroundView)
         
         clearBooksView.translatesAutoresizingMaskIntoConstraints = false
-        self.backgroundView.addSubview(clearBooksView)
-        clearClickedConstraint = clearBooksView.bottomAnchor.constraint(equalTo: self.view.topAnchor, constant: 0)
+        backgroundView.addSubview(clearBooksView)
+        clearClickedConstraint = clearBooksView.bottomAnchor.constraint(equalTo: view.topAnchor, constant: 0)
         clearClickedConstraint.isActive = true
-        clearBooksView.trailingAnchor.constraint(equalTo: self.backgroundView.trailingAnchor, constant: 0).isActive = true
+        clearBooksView.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: 0).isActive = true
         clearBooksView.heightAnchor.constraint(equalToConstant: 65).isActive = true
-        clearBooksView.widthAnchor.constraint(equalTo: self.view.widthAnchor, constant: 0).isActive = true
+        clearBooksView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: 0).isActive = true
     }
     
     // MARK: - Navigation

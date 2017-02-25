@@ -42,10 +42,10 @@ class BookTableViewCell: UITableViewCell {
         stackView.spacing = 2.0
         stackView.alignment = UIStackViewAlignment.leading
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(stackView)
-        stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10).isActive = true
-        stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10).isActive = true
-        stackView.heightAnchor.constraint(equalTo: self.contentView.heightAnchor, multiplier: 0.9).isActive = true
+        addSubview(stackView)
+        stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10).isActive = true
+        stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10).isActive = true
+        stackView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.9).isActive = true
         stackView.addArrangedSubview(titleLabel)
         stackView.addArrangedSubview(authorLabel)
     }

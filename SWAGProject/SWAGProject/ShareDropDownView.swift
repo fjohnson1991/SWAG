@@ -78,29 +78,29 @@ class ShareDropDownView: UIView {
     
     private func setupViewConstraints() {
         facebookButton.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(facebookButton)
-        facebookButton.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0).isActive = true
-        facebookButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 20).isActive = true
+        addSubview(facebookButton)
+        facebookButton.centerXAnchor.constraint(equalTo: centerXAnchor, constant: 0).isActive = true
+        facebookButton.topAnchor.constraint(equalTo: topAnchor, constant: 20).isActive = true
         facebookButton.widthAnchor.constraint(equalToConstant: 80).isActive = true
         facebookButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
         
         twitterButton.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(twitterButton)
-        twitterButton.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0).isActive = true
+        addSubview(twitterButton)
+        twitterButton.centerXAnchor.constraint(equalTo: centerXAnchor, constant: 0).isActive = true
         twitterButton.topAnchor.constraint(equalTo: facebookButton.bottomAnchor, constant: 20).isActive = true
         twitterButton.widthAnchor.constraint(equalToConstant: 80).isActive = true
         twitterButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
         
         cancelButton.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(cancelButton)
-        cancelButton.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0).isActive = true
+        addSubview(cancelButton)
+        cancelButton.centerXAnchor.constraint(equalTo: centerXAnchor, constant: 0).isActive = true
         cancelButton.topAnchor.constraint(equalTo: twitterButton.bottomAnchor, constant: 20).isActive = true
         cancelButton.widthAnchor.constraint(equalToConstant: 80).isActive = true
         cancelButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
     }
     
     private func formatButtons() {
-        self.layoutIfNeeded()
+        layoutIfNeeded()
         facebookButton.layer.cornerRadius = facebookButton.frame.width/2
         twitterButton.layer.cornerRadius = twitterButton.frame.width/2
         cancelButton.layer.cornerRadius = cancelButton.frame.width/2

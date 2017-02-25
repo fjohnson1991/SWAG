@@ -81,10 +81,10 @@ class AddBookView: UIView, UITextFieldDelegate {
         stackView.spacing = 10.0
         stackView.alignment = UIStackViewAlignment.leading
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(stackView)
-        stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10).isActive = true
-        stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10).isActive = true
-        stackView.topAnchor.constraint(equalTo: self.topAnchor, constant: 0).isActive = true
+        addSubview(stackView)
+        stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10).isActive = true
+        stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10).isActive = true
+        stackView.topAnchor.constraint(equalTo: topAnchor, constant: 0).isActive = true
         stackView.heightAnchor.constraint(equalToConstant: 200).isActive = true
         for item in stackViewItemsToAdd {
             guard let unwrappedItem = item else { print("Error unwrapping stackViewItemsToAdd item"); return }
@@ -94,7 +94,7 @@ class AddBookView: UIView, UITextFieldDelegate {
         
         // submitButton
         submitButton.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(submitButton)
+        addSubview(submitButton)
         submitButton.centerXAnchor.constraint(equalTo: stackView.centerXAnchor, constant: 0).isActive = true
         submitButton.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 10).isActive = true
         submitButton.heightAnchor.constraint(equalToConstant: 30).isActive = true

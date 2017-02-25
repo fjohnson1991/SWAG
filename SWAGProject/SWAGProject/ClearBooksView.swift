@@ -78,11 +78,11 @@ class ClearBooksView: UIView {
     // MARK: View Constraints
     private func setupViewConstraints() {
         deleteDropDownStackView.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(deleteDropDownStackView)
-        deleteDropDownStackView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 1).isActive = true
-        deleteDropDownStackView.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.9).isActive = true
-        deleteDropDownStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0).isActive = true
-        deleteDropDownStackView.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 0).isActive = true
+        addSubview(deleteDropDownStackView)
+        deleteDropDownStackView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 1).isActive = true
+        deleteDropDownStackView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.9).isActive = true
+        deleteDropDownStackView.centerXAnchor.constraint(equalTo: centerXAnchor, constant: 0).isActive = true
+        deleteDropDownStackView.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 0).isActive = true
     }
     
     // MARK: - Protocol funcs

@@ -24,26 +24,26 @@ class AddBookViewController: UIViewController {
     
     func configureLayout() {
         // General
-        self.view.backgroundColor = UIColor.white
-        self.title = "Add Book"
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneButtonCheck))
-        self.navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSFontAttributeName: UIFont.systemFont(ofSize: 12, weight: UIFontWeightSemibold), NSForegroundColorAttributeName: UIColor.white],for: UIControlState.normal)
-        self.navigationItem.setHidesBackButton(true, animated:true)
-        self.hideKeyboardWhenTappedAround(isActive: true)
+        view.backgroundColor = UIColor.white
+        title = "Add Book"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneButtonCheck))
+        navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSFontAttributeName: UIFont.systemFont(ofSize: 12, weight: UIFontWeightSemibold), NSForegroundColorAttributeName: UIColor.white],for: UIControlState.normal)
+        navigationItem.setHidesBackButton(true, animated:true)
+        hideKeyboardWhenTappedAround(isActive: true)
         
         // Add book view
         addBookView = AddBookView()
         addBookView.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(addBookView)
+        view.addSubview(addBookView)
         addBookViewTopConstraintConstant = NSLayoutConstraint()
         addBookViewTopConstraintConstant.constant = 10
-        addBookViewTopConstraintConstant = addBookView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: addBookViewTopConstraintConstant.constant)
+        addBookViewTopConstraintConstant = addBookView.topAnchor.constraint(equalTo: view.topAnchor, constant: addBookViewTopConstraintConstant.constant)
         addBookViewTopConstraintConstant.isActive = true
         addBookViewBottomConstraintConstant = NSLayoutConstraint()
         addBookViewBottomConstraintConstant.constant = 0.0
-        addBookViewBottomConstraintConstant = addBookView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: addBookViewBottomConstraintConstant.constant)
+        addBookViewBottomConstraintConstant = addBookView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: addBookViewBottomConstraintConstant.constant)
         addBookViewBottomConstraintConstant?.isActive = true
-        addBookView.widthAnchor.constraint(equalTo: self.view.widthAnchor, constant: 0).isActive = true
+        addBookView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: 0).isActive = true
         addBookView.delegate = self 
     }
     
@@ -64,19 +64,19 @@ class AddBookViewController: UIViewController {
     }
     
     func clearTextFields() {
-        self.addBookView.authorTextField.text = ""
-        self.addBookView.titleTextField.text = ""
-        self.addBookView.categoriesTextField.text = ""
-        self.addBookView.publisherTextField.text = ""
+        addBookView.authorTextField.text = ""
+        addBookView.titleTextField.text = ""
+        addBookView.categoriesTextField.text = ""
+        addBookView.publisherTextField.text = ""
     }
     
     // MARK: - Navigation bar selector 
     func doneButtonCheck() {
         if (addBookView.authorTextField.text != "") || (addBookView.titleTextField.text != "") || (addBookView.categoriesTextField.text != "") || (addBookView.publisherTextField.text != "") {
-            self.doneButtonAlert()
+            doneButtonAlert()
         } else {
-            self.clearTextFields()
-            self.doneButton()
+            clearTextFields()
+            doneButton()
         }
     }
     
@@ -126,7 +126,7 @@ extension AddBookViewController {
         keyboardWillCoverCheck(notification: notification) { (willCover, keyboardHeight) in
             if willCover {
                 if (addBookView.publisherTextField.isEditing && addBookView.categoriesTextField.text == "") || (addBookView.publisherTextField.text == "" && addBookView.categoriesTextField.isEditing) {
-                    self.view.layoutIfNeeded()
+                    view.layoutIfNeeded()
                     UIView.animate(withDuration: 1, animations: {
                         self.addBookViewBottomConstraintConstant.constant = keyboardHeight! * 0.3
                         self.addBookViewTopConstraintConstant.constant = -(keyboardHeight! * 0.3)
@@ -139,8 +139,8 @@ extension AddBookViewController {
     
     func keyboardWillHide(notification: NSNotification) {
         guard let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue else { print("Error calc keyboard size"); return }
-        if self.addBookViewBottomConstraintConstant.constant == keyboardSize.size.height * 0.3 {
-            self.view.layoutIfNeeded()
+        if addBookViewBottomConstraintConstant.constant == keyboardSize.size.height * 0.3 {
+            view.layoutIfNeeded()
             UIView.animate(withDuration: 1, animations: {
                 self.addBookViewBottomConstraintConstant.constant = 0.0
                 self.addBookViewTopConstraintConstant.constant = 10.0
@@ -151,7 +151,7 @@ extension AddBookViewController {
     
     private func keyboardWillCoverCheck(notification: NSNotification, completion: (Bool, CGFloat?) -> Void) {
         guard let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue else { print("Error calc keyboard size"); return }
-        if self.view.frame.height/2 < (keyboardSize.height - 37) {
+        if view.frame.height/2 < (keyboardSize.height - 37) {
             completion(true, keyboardSize.height)
         }
         completion(false, nil)

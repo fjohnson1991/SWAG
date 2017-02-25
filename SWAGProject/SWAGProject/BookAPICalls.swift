@@ -14,14 +14,14 @@ struct BookAPICalls {
     static func serverRequest(with completion: @escaping (([[String: Any]], Bool) -> Void)) {
         let session = URLSession.shared
         let url = URL(string: Constants.serverBaseURL)
-        guard let unwrappedURL = url else {return}
+        guard let unwrappedURL = url else { print("Error unwrapping URL in GET in BAC"); return }
         let task = session.dataTask(with: unwrappedURL) { (data, response, error) in
             if error != nil {
                 completion([], false)
             }
             let httpResponse = response as! HTTPURLResponse
             if httpResponse.statusCode == 200 {
-                guard let data = data else { return }
+                guard let data = data else { print("Error unwrapping data in GET in BAC"); return }
                 do {
                     let responseJSON = try JSONSerialization.jsonObject(with: data, options: []) as! [[String: Any]]
                     completion(responseJSON, true)
@@ -33,7 +33,7 @@ struct BookAPICalls {
     
     // POST
     static func server(post author: String, categories: String?, title: String, publisher: String?, completion: @escaping (Bool) -> Void) {
-        guard let url = URL(string: Constants.serverBaseURL) else { return }
+        guard let url = URL(string: Constants.serverBaseURL) else { print("Error unwrapping URL in POST in BAC"); return }
         var urlRequest = URLRequest(url: url)
         var dictionary = [String: Any]()
         dictionary["title"] = title
@@ -41,7 +41,7 @@ struct BookAPICalls {
         dictionary["author"] = author
         dictionary["publisher"] = publisher
         let jsonData = try? JSONSerialization.data(withJSONObject: dictionary, options: [])
-        guard let unwrappedData = jsonData else { return }
+        guard let unwrappedData = jsonData else { print("Error unwrapping data in POST in BAC"); return }
         urlRequest.httpBody = unwrappedData
         urlRequest.httpMethod = "POST"
         urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -54,12 +54,7 @@ struct BookAPICalls {
             }
             let httpResponse = response as! HTTPURLResponse
             if httpResponse.statusCode == 200 {
-                guard let data = data else { return }
-                do {
-                    let response = try JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
-                    print(response)
-                    completion(true)
-                } catch {}
+                completion(true)
             } else { print(httpResponse.statusCode)}
         }
         task.resume()
@@ -67,17 +62,17 @@ struct BookAPICalls {
     
     // PUT
     static func server(update id: Int, dictionary:[String: Any], completion: @escaping (Bool) -> Void) {
-        guard let url = URL(string: "\(Constants.serverBaseURL)/\(id)") else { return }
+        guard let url = URL(string: "\(Constants.serverBaseURL)/\(id)") else { print("Error unwrapping URL in PUT in BAC"); return }
         var urlRequest = URLRequest(url: url)
         let jsonData = try? JSONSerialization.data(withJSONObject: dictionary, options: [])
-        guard let unwrappedData = jsonData else { return }
+        guard let unwrappedData = jsonData else { print("Error unwrapping data in PUT in BAC"); return }
         urlRequest.httpBody = unwrappedData
         urlRequest.httpMethod = "PUT"
         urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
         let session = URLSession.shared
         let task = session.dataTask(with: urlRequest) { (data, response, error) in
             if error != nil {
-                guard let error = error?.localizedDescription else { return }
+                guard let error = error?.localizedDescription else { print("Error unwrapping error in PUT in BAC"); return }
                 print(error)
                 completion(false)
             }
@@ -98,7 +93,7 @@ struct BookAPICalls {
             request.httpMethod = "DELETE"
             let task = session.dataTask(with: request, completionHandler: { (data, response, error) in
                 if error != nil {
-                    guard let error = error?.localizedDescription else { return }
+                    guard let error = error?.localizedDescription else { print("Error unwrapping error in DELETE (one) in BAC"); return }
                     print(error)
                     completion(false)
                 } else {
@@ -120,7 +115,7 @@ struct BookAPICalls {
             request.httpMethod = "DELETE"
             let task = session.dataTask(with: request, completionHandler: { (data, response, error) in
                 if error != nil {
-                    guard let error = error?.localizedDescription else { return }
+                    guard let error = error?.localizedDescription else { print("Error unwrapping error in DELETE (all) in BAC"); return }
                     print(error)
                     completion(false)
                 } else {
