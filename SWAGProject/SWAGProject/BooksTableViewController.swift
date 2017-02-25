@@ -68,7 +68,7 @@ class BooksTableViewController: UITableViewController {
     
     func noDataViewConfigure() {
         noDataView = NoDataView()
-        noDataView.frame = self.view.bounds
+        noDataView.frame = view.bounds
         view.addSubview(noDataView)
     }
     
@@ -120,9 +120,8 @@ class BooksTableViewController: UITableViewController {
     }
 }
 
-// MARK: - TableViewDelegate & TableViewDataSource funcs
+// MARK: - Handle TableViewDelegate & TableViewDataSource
 extension BooksTableViewController {
-    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -143,7 +142,7 @@ extension BooksTableViewController {
     }
 }
 
-// MARK: - Handle ClearBooksViewProtocol protocol
+// MARK: - Handle ClearBooksViewProtocol
 extension BooksTableViewController: ClearBooksViewProtocol {
     func executeDeleteWasClicked() {
         dataStore.deleteAllBooks { (success) in

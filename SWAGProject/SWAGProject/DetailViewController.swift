@@ -51,7 +51,6 @@ class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         configureLayout()
         setupViewConstraints()
     }
@@ -361,7 +360,6 @@ class DetailViewController: UIViewController {
 
 // MARK: - Handle FBSDKSharingDelegate protocol
 extension DetailViewController: FBSDKSharingDelegate {
-    
     func sharer(_ sharer: FBSDKSharing!, didCompleteWithResults results: [AnyHashable : Any]!) {
         print("RESULTS: \(results)")
     }
@@ -375,7 +373,7 @@ extension DetailViewController: FBSDKSharingDelegate {
     }
 }
 
-// MARK: - Handle ShareDropDownViewProtocol protocol
+// MARK: - Handle ShareDropDownViewProtocol
 extension DetailViewController: ShareDropDownViewProtocol {
     func facebookWasClicked() {
         let content : FBSDKShareLinkContent = FBSDKShareLinkContent()

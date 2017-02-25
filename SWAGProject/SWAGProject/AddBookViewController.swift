@@ -17,7 +17,6 @@ class AddBookViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         configureLayout()
         setUpNotifications()
     }
@@ -81,7 +80,7 @@ class AddBookViewController: UIViewController {
     }
     
     func doneButtonAlert() {
-        let yesAction = UIAlertAction(title: "Yes", style: .default) {(action: UIAlertAction) in
+        let yesAction = UIAlertAction(title: "Yes", style: .default) {(_) in
             self.clearTextFields()
             self.doneButton()
         }
@@ -92,21 +91,20 @@ class AddBookViewController: UIViewController {
     // MARK: - Navigation
     func doneButton() {
         let booksTableViewController: BooksTableViewController = BooksTableViewController()
-        self.navigationController?.pushViewController(booksTableViewController, animated: true)
+        navigationController?.pushViewController(booksTableViewController, animated: true)
         removeNotifications()
     }
 }
 
 // MARK: - Notification funcs
 extension AddBookViewController {
-    
     func invalidEntriesError() {
         presentAlertWithTitle(title: "Oops", message: "You must enter the book's title and author before submitting.")
     }
     
     func successfulSubmitBook() {
         let alertController = UIAlertController(title: "Great News!", message: "You have successfully submitted a book.", preferredStyle: .alert)
-        let OKAction = UIAlertAction(title: "OK", style: .default) {(action: UIAlertAction) in
+        let OKAction = UIAlertAction(title: "OK", style: .default) {(_) in
             self.clearTextFields()
             self.doneButton()
         }
@@ -115,7 +113,7 @@ extension AddBookViewController {
     }
     
     func areYouSure() {
-        let yesAction = UIAlertAction(title: "Yes", style: .default) {(action: UIAlertAction) in
+        let yesAction = UIAlertAction(title: "Yes", style: .default) {(_) in
             self.addBookView.delegate.submitButtonPressed()
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
@@ -158,9 +156,8 @@ extension AddBookViewController {
     }
 }
 
-// MARK: - Handle AddBookViewProtocol protocol 
+// MARK: - Handle AddBookViewProtocol
 extension AddBookViewController: AddBookViewProtocol {
-    
     func submitButtonPressed() {
         guard
             let title = addBookView.titleTextField.text,

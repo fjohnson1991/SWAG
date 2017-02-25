@@ -77,6 +77,7 @@ class ShareDropDownView: UIView {
     }
     
     private func setupViewConstraints() {
+        // facebookButton
         facebookButton.translatesAutoresizingMaskIntoConstraints = false
         addSubview(facebookButton)
         facebookButton.centerXAnchor.constraint(equalTo: centerXAnchor, constant: 0).isActive = true
@@ -84,6 +85,7 @@ class ShareDropDownView: UIView {
         facebookButton.widthAnchor.constraint(equalToConstant: 80).isActive = true
         facebookButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
         
+        // twitterButton
         twitterButton.translatesAutoresizingMaskIntoConstraints = false
         addSubview(twitterButton)
         twitterButton.centerXAnchor.constraint(equalTo: centerXAnchor, constant: 0).isActive = true
@@ -91,6 +93,7 @@ class ShareDropDownView: UIView {
         twitterButton.widthAnchor.constraint(equalToConstant: 80).isActive = true
         twitterButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
         
+        // cancelButton
         cancelButton.translatesAutoresizingMaskIntoConstraints = false
         addSubview(cancelButton)
         cancelButton.centerXAnchor.constraint(equalTo: centerXAnchor, constant: 0).isActive = true

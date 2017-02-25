@@ -28,8 +28,8 @@ extension UIFont {
 extension UITextField {
     func setLeftPaddingPoints(_ amount:CGFloat){
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: amount, height: self.frame.size.height))
-        self.leftView = paddingView
-        self.leftViewMode = .always
+        leftView = paddingView
+        leftViewMode = .always
     }
     
     func textField(change didOccur: Bool) {
@@ -65,7 +65,7 @@ extension UIViewController {
             (action: UIAlertAction) in print("Youve pressed OK Button")
         }
         alertController.addAction(OKAction)
-        self.present(alertController, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
 
     
@@ -73,6 +73,6 @@ extension UIViewController {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alertController.addAction(okAction)
         alertController.addAction(cancelAction)
-        self.present(alertController, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
 }
