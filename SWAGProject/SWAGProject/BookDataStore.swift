@@ -8,7 +8,7 @@
 
 import Foundation
 
-class BookDataStore {
+final class BookDataStore {
     
     static let sharedInstance = BookDataStore()
     private init() {}
