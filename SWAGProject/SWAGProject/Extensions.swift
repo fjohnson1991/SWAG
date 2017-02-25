@@ -67,7 +67,6 @@ extension UIViewController {
         alertController.addAction(OKAction)
         present(alertController, animated: true, completion: nil)
     }
-
     
     func presentAlertWith(title: String, message : String, okAction: UIAlertAction, cancelAction:UIAlertAction) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)

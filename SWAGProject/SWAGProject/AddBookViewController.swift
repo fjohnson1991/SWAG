@@ -69,7 +69,7 @@ class AddBookViewController: UIViewController {
         addBookView.publisherTextField.text = ""
     }
     
-    // MARK: - Navigation bar selector 
+    // MARK: - Navigation bar selector (done button)
     func doneButtonCheck() {
         if (addBookView.authorTextField.text != "") || (addBookView.titleTextField.text != "") || (addBookView.categoriesTextField.text != "") || (addBookView.publisherTextField.text != "") {
             doneButtonAlert()
