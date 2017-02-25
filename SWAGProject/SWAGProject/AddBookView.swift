@@ -70,6 +70,7 @@ class AddBookView: UIView, UITextFieldDelegate {
         textField.layer.cornerRadius = 5.0
         textField.layer.borderColor = UIColor.themeOrange.cgColor
         textField.setLeftPaddingPoints(10)
+        textField.autocapitalizationType = .words
     }
     
     private func setupViewConstraints() {
