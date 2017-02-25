@@ -4,13 +4,9 @@
 If you love reading and sharing books with your friends, but struggle to keep track of which friend has which exact book, then SWAG4PI is the perfect solution for you! Not only can you easily add new books to your collection, but you can also update the book's details to include which friend "checked out" the book and on what date. If you decide to give the book away, you can delete the book from your collection. Sharing books with your friends is fun and easy, and with SWAG4PI keeping track of those books is now fun and easy too!
 
 <img
-src="https://cloud.githubusercontent.com/assets/20174612/23333759/63139984-fb5f-11e6-80d9-557906d8e215.png" width = "200">  
-<img src="https://cloud.githubusercontent.com/assets/20174612/23333512/b85ee02e-fb5a-11e6-9032-c904265207fe.png" width = "200">
-<img src="https://cloud.githubusercontent.com/assets/20174612/23333556/500e07a6-fb5b-11e6-87f9-6560c717656f.png" width = "200">
+src="https://cloud.githubusercontent.com/assets/20174612/23333759/63139984-fb5f-11e6-80d9-557906d8e215.png" width = "200">    <img src="https://cloud.githubusercontent.com/assets/20174612/23333512/b85ee02e-fb5a-11e6-9032-c904265207fe.png" width = "200">    <img src="https://cloud.githubusercontent.com/assets/20174612/23333556/500e07a6-fb5b-11e6-87f9-6560c717656f.png" width = "200">
 
-<img src="https://cloud.githubusercontent.com/assets/20174612/23333527/ea2e0b02-fb5a-11e6-83da-1fa215a33c4c.png" width = "200">
-<img src="https://cloud.githubusercontent.com/assets/20174612/23333537/1d3e7f40-fb5b-11e6-8a2d-98de78fc38fd.png" width = "200">
-<img src="https://cloud.githubusercontent.com/assets/20174612/23333550/3f38db40-fb5b-11e6-86b4-28a4940d406c.png" width = "200">
+<img src="https://cloud.githubusercontent.com/assets/20174612/23333527/ea2e0b02-fb5a-11e6-83da-1fa215a33c4c.png" width = "200">    <img src="https://cloud.githubusercontent.com/assets/20174612/23333537/1d3e7f40-fb5b-11e6-8a2d-98de78fc38fd.png" width = "200">    <img src="https://cloud.githubusercontent.com/assets/20174612/23333550/3f38db40-fb5b-11e6-86b4-28a4940d406c.png" width = "200">
 
 #### Implementation Details
 SWAG4PI's architectural pattern is MVC. BooksTableViewController manages NoDataView, BookTableViewCell and ClearBooksView. DetailViewController manages DetailView and ShareDropDownView. AddBookViewController manages AddBookView. All three controllers interact with the Book model.
