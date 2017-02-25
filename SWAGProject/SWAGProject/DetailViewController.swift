@@ -118,7 +118,7 @@ class DetailViewController: UIViewController {
         // Segmented controller
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(segmentedControl)
-        segmentedControl.heightAnchor.constraint(equalToConstant: 17).isActive = true
+        segmentedControl.heightAnchor.constraint(equalToConstant: 22).isActive = true
         segmentedControl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
         segmentedControl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
         segmentedControl.topAnchor.constraint(equalTo: detailView.bottomAnchor, constant: 8).isActive = true
@@ -197,7 +197,7 @@ class DetailViewController: UIViewController {
             hideAllLabels()
             animateTransition()
             detailView.lastCheckedOutLabel.isHidden = false
-            detailView.lastCheckedOutLabel.text = "Last checked out by \(book.lastCheckedOutBy!) on \(detailView.formatLastCheckedOut(book.lastCheckedOut))"
+            detailView.lastCheckedOutLabel.text = "Last checked out by \(book.capitalizeWords(in: book.lastCheckedOutBy!)) on \(detailView.formatLastCheckedOut(book.lastCheckedOut))"
         }
     }
     
@@ -270,26 +270,26 @@ class DetailViewController: UIViewController {
     
     // MARK: - Update button selector
     func updatePressed() {
-        let alert = UIAlertController(title: "Update book?", message: "Please enter the book's updated information below.", preferredStyle: UIAlertControllerStyle.alert)
+        let alert = UIAlertController(title: "Would you like to update this book?", message: "Please enter the book's updated information below.", preferredStyle: UIAlertControllerStyle.alert)
         alert.addTextField { (titleTextField) in
             titleTextField.autocapitalizationType = .words
             titleTextField.autocorrectionType = .yes
-            titleTextField.placeholder = "Update title here"
+            titleTextField.placeholder = "Update title here."
         }
         alert.addTextField { (authorTextField) in
             authorTextField.autocapitalizationType = .words
             authorTextField.autocorrectionType = .yes
-            authorTextField.placeholder = "Update author here"
+            authorTextField.placeholder = "Update author here."
         }
         alert.addTextField { (publisherTextField) in
             publisherTextField.autocapitalizationType = .words
             publisherTextField.autocorrectionType = .yes
-            publisherTextField.placeholder = "Update publisher here"
+            publisherTextField.placeholder = "Update publisher here."
         }
         alert.addTextField { (tagsTextField) in
             tagsTextField.autocapitalizationType = .words
             tagsTextField.autocorrectionType = .yes
-            tagsTextField.placeholder = "Update tags here"
+            tagsTextField.placeholder = "Update tags here."
         }
         alert.addAction(UIAlertAction(title: "Submit", style: UIAlertActionStyle.default, handler: { [unowned alert] (_) in
             let titleTextField = alert.textFields![0]
@@ -382,15 +382,15 @@ extension DetailViewController: ShareDropDownViewProtocol {
     func facebookWasClicked() {
         let content : FBSDKShareLinkContent = FBSDKShareLinkContent()
         content.contentURL = URL(string: "http://www.SWAG4PI.com")
-        content.contentTitle = "\(book.title)"
-        content.contentDescription = "By: \(book.author)"
+        content.contentTitle = "\(book.capitalizeWords(in: book.title))"
+        content.contentDescription = "By: \(book.capitalizeWords(in: book.author))"
         FBSDKShareDialog.show(from: self, with: content, delegate: self)
     }
     
     func twitterWasClicked() {
         let vc = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
         guard let unwrappedVC = vc else { print("Error unwrapping twitterShare details in DVC"); return }
-        unwrappedVC.setInitialText("Share your thoughts on \(book.title) here.")
+        unwrappedVC.setInitialText("Share your thoughts on \(book.capitalizeWords(in: book.title)) here.")
         unwrappedVC.add(URL(string: "http://www.SWAG4PI.com"))
         present(unwrappedVC, animated: true, completion: nil)
     }
